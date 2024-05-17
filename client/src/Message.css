@@ -1,0 +1,39 @@
+
+#message{
+        display: flex;
+        background-color: rgb(251, 255, 241);  
+}
+#sent{
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: auto;
+    border-radius: 10px;
+    padding-left: 10px;
+    background-color: rgb(180, 197, 228);
+    color: black;
+}
+#recieve{
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-right: auto;
+    border-radius: 10px;
+    padding: 3px;
+   background-color: rgb(9, 12, 155);
+   color: whitesmoke;
+}
+#sent > .time{
+   text-align: end;
+}
+#recieve > .time{
+    text-align: start;
+}
+#recieve > #user{
+    text-align: center;
+    font-weight: bold;
+    color: whitesmoke;
+}
+#sent > #user{
+    text-align: center;
+   font-weight: bold;
+    color: black;
+}
