@@ -17,8 +17,8 @@ export default function Chat(){
       socket.on("recieve_message",(data)=>{
                 setMessage((prev)=>{
                    return [...prev ,{
-                         text:data,
-                         type:"recieve",
+                         text:data.text,
+                         user:data.user,
                          time: hr +":"+min
                    }];
                 })

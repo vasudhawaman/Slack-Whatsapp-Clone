@@ -7,11 +7,15 @@ import "./Input.css";
 import Emoji from "./Emoji";
 import io from "socket.io-client";
 const socket = io.connect("http://localhost:8000");
-export default function Input({setMessage}){
+export default function Input({setMessage, user}){
      const [text,setText] = useState("");
      
      function sendMessage(){
-          socket.emit("send_message",text);
+          socket.emit("send_message",{ 
+               text:text,
+               user:user
+
+          });
      }
      function handleChange(e){
            setText(e.target.value);
@@ -33,7 +37,7 @@ export default function Input({setMessage}){
           }
            setMessage((prev)=>{ return [...prev ,{
                 text:text,
-                type:"sent",
+                user:user,
                 time:hr+":"+min
            }]});
            sendMessage();
