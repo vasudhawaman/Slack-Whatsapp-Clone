@@ -1,8 +1,8 @@
 #emoji{
     display: none;
-    position: fixed;
+    position: sticky;
     z-index: 5;
-    right: 20px;
+    bottom: 20px;
     width: 10%;
     padding: 5px;
     background-color: rgb(162, 238, 221);

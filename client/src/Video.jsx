@@ -1,21 +1,21 @@
 import React, { useState,useRef } from "react";
 import './Voice.css';
-import KeyboardVoiceIcon from "@mui/icons-material/KeyboardVoice";
+import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import StopIcon from '@mui/icons-material/Stop';
-export default function Voice({setMessage}){
-     const [audioBlobs,setAudioblobs] = useState([]);
+export default function Video({setMessage}){
+     const [videoBlobs,setVideoblobs] = useState([]);
     const recorder= useRef(null);
      const [stream,setStream] = useState(null);
-    navigator.mediaDevices.getUserMedia({audio:true}).then((stream)=>{
+    navigator.mediaDevices.getUserMedia({audio:true,video:true}).then((stream)=>{
         setStream(stream);
       
 })
    
     function startRecording(){
         console.log("start");
-        document.getElementById("startVoice").style.display ="none";
-        document.getElementById("stopVoice").style.display ="block";
-        const media = new MediaRecorder(stream, { type:'audio/mp4' });
+        document.getElementById("startVideo").style.display ="none";
+        document.getElementById("stopVideo").style.display ="block";
+        const media = new MediaRecorder(stream, { type:'video/mp4' });
         //set the MediaRecorder instance to the mediaRecorder ref
         recorder.current = media;
         //invokes the start method to start the recording process
@@ -26,11 +26,11 @@ export default function Voice({setMessage}){
            if (event.data.size === 0) return;
            localAudioChunks.push(event.data);
         };
-        setAudioblobs(localAudioChunks);
+        setVideoblobs(localAudioChunks);
     }
      function stopRecording(){
-        document.getElementById("startVoice").style.display ="block";
-        document.getElementById("stopVoice").style.display ="none";
+        document.getElementById("startVideo").style.display ="block";
+        document.getElementById("stopVideo").style.display ="none";
         recorder.current.stop();
         let min =new Date().getMinutes();
            let hr = new Date().getHours();
@@ -41,10 +41,10 @@ export default function Voice({setMessage}){
                min = "0" + min;
           }
         recorder.current.onstop =(e)=>{
-            let audioData = new Blob(audioBlobs, 
-                { 'type': 'audio/mp4;' });
-                audioData.lastModifiedDate = new Date();
-                audioData.name = 'new.mp4';
+            let videoData = new Blob(videoBlobs, 
+                { 'type': 'video/mp4;' });
+                videoData.lastModifiedDate = new Date();
+                videoData.name = 'new.mp4';
                 var fr = new FileReader();
                 fr.onload = function () {
                     //  setSrc(fr.result);
@@ -52,7 +52,7 @@ export default function Voice({setMessage}){
                      return [...prev,{
                          type:'sent',
                          source:fr.result,
-                         file:'audio',
+                         file:'video',
                          time:hr+':'+min
 
                      }];
@@ -60,7 +60,7 @@ export default function Voice({setMessage}){
                    
        
              }
-                fr.readAsDataURL(audioData);
+                fr.readAsDataURL(videoData);
         }
         
      }   
@@ -69,8 +69,8 @@ export default function Voice({setMessage}){
 
         
         <div id="record" >
-            <button onClick={startRecording} type="button"id="startVoice"><KeyboardVoiceIcon style={{ color : "whitesmoke"}} /></button>
-            <button onClick={stopRecording} type="button" id="stopVoice" ><StopIcon /></button>
+            <button onClick={startRecording} type="button"id="startVideo"><CameraAltIcon style={{ color : "whitesmoke"}} /></button>
+            <button onClick={stopRecording} type="button" id="stopVideo" ><StopIcon /></button>
         </div>
      )
 }

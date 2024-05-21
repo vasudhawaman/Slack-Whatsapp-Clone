@@ -1,19 +1,21 @@
 import React,{useState,useEffect} from "react";
 import AttachFileIcon from '@mui/icons-material/AttachFile';
-import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice';
+import Video from "./Video";
 import SendIcon from '@mui/icons-material/Send';
 import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
 import "./Input.css";
 import Emoji from "./Emoji";
 import io from "socket.io-client";
+import Voice from "./Voice";
+import File from "./File";
 const socket = io.connect("http://localhost:8000");
-export default function Input({setMessage, user}){
+export default function Input({setMessage}){
      const [text,setText] = useState("");
      
      function sendMessage(){
           socket.emit("send_message",{ 
                text:text,
-               user:user
+               type:"sent"
 
           });
      }
@@ -37,24 +39,31 @@ export default function Input({setMessage, user}){
           }
            setMessage((prev)=>{ return [...prev ,{
                 text:text,
-                user:user,
-                time:hr+":"+min
+               type:"sent",
+                time:hr+":"+min,
+                file:"text"
            }]});
-           sendMessage();
+          //  sendMessage();
            setText("");
       }
      return(
     <div id="input">
         <form className="chat-input-form" onSubmit={handleForm}>
-           <AttachFileIcon />
+           <File setMessage={setMessage} />
+           <AttachFileIcon onClick={()=>{
+               document.getElementById("file").style.display ="block";
+           }}/>
            <textarea id="chat-input" type="text" placeholder="Write your Message here.." value={text} onChange={handleChange} name="text"/>
            <EmojiEmotionsIcon value={0}onClick={()=>{
                
                document.getElementById("emoji").style.display ="block"
            }}/>
           <Emoji addEmoji={addEmoji}  />
-           <KeyboardVoiceIcon style={{ color : "whitesmoke"}} />
-           <button><SendIcon style={{ color : "whitesmoke " , padding: "2px"}}/></button>
+          <Voice setMessage={setMessage}/>
+          <Video setMessage={setMessage}/>
+            <button id="messagebtn"><SendIcon style={{ color : "whitesmoke " , padding: "2px"}}/></button>
+          
+           
        </form>
         
     </div>

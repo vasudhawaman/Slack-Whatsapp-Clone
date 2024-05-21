@@ -1,6 +1,6 @@
 import React from 'react'
 // import 
-export default function() {
+export default function Right() {
   return (
     <div>
       
