@@ -1,46 +1,26 @@
-import React from "react"
-
-
-
-// npm install assemblyai
-
+import React ,{useState}from "react"
 import { AssemblyAI } from 'assemblyai'
-
-
-
-
-export default function VoiceToText({messages}){
-    
+export default function VoiceToText({cloudinary}){
+    const [text,setText] =useState(null);
         
     const client = new AssemblyAI({
         apiKey: "c8ef45894a9741dcab50a155f2a07590"
       })
-      
-      function convert(){
-          document.getElementById("startVoice").click()
-         document.getElementById('textTotext').style.display ="none";
-         document.getElementById('startVoice').style.display ="none"
-         document.getElementById('stop').addEventListener("click",(e)=>{
-               let l = messages.length;
-               const audioUrl = messages[l-1].source;
-
-        
-      
       const config = {
-        audio_url: audioUrl
+        audio_url: cloudinary
       }
       
       const run = async () => {
         const transcript = await client.transcripts.create(config)
-        console.log(transcript.text)
+        setText(transcript.text);
       }
-      
-
-         })
-      }
+         
       
       
-       return(<>
-          <button id="voiceTotext" type="button" onClick={convert}>Voice to text</button>
-       </>)
+       return(<div id="voiceTotext">  
+               {text ? text : null}
+             <button type="button" onClick={()=>{
+                 run();
+             }}>Voice to text</button>
+       </div>)
 }

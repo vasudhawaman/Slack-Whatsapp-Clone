@@ -37,12 +37,12 @@ export default function Chat(){
          <Message type="recieve" text ="welcome" time="8:59" grp="true" user="vasudha"/>
          <Message type="sent" text ="welcome" time="8:59" grp="true" user="vasudha"/>
          {message.map((m)=>{
-            return <Message type={m.type} text={m.text} time={m.time} file={m.file} source={m.source}/>;
+            return <Message type={m.type} text={m.text} time={m.time} file={m.file} source={m.source} cloudinary={m.cloudinary}/>;
          }) }
          
          </div>
         
-         <Input setMessage={setMessage} />
+         <Input setMessage={setMessage} message={message} />
         </div>
     );
 }

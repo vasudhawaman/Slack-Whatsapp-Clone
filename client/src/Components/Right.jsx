@@ -1,5 +1,4 @@
 import React from 'react'
-// import 
 export default function Right() {
   return (
     <div>

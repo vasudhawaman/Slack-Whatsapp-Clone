@@ -1,7 +1,7 @@
 
 #message{
         display: flex;
-        background-color: rgb(251, 255, 241);  
+        background: url('pattern.png'); 
 }
 #sent{
     margin-top: 5px;

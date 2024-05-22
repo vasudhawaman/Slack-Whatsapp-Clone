@@ -8,8 +8,9 @@ import Emoji from "./Emoji";
 import io from "socket.io-client";
 import Voice from "./Voice";
 import File from "./File";
+
 const socket = io.connect("http://localhost:8000");
-export default function Input({setMessage}){
+export default function Input({setMessage,message}){
      const [text,setText] = useState("");
      
      function sendMessage(){
@@ -62,8 +63,7 @@ export default function Input({setMessage}){
           <Voice setMessage={setMessage}/>
           <Video setMessage={setMessage}/>
             <button id="messagebtn"><SendIcon style={{ color : "whitesmoke " , padding: "2px"}}/></button>
-          
-           
+         
        </form>
         
     </div>

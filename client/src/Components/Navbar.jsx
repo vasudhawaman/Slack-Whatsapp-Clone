@@ -2,7 +2,7 @@ import React from 'react'
 
 export default  function Navbar() {
   return (
-    <div>
+    
         <div className="header">
                 <div className="userimg">
                     <img src="images/user.jpg" className="cover"/>
@@ -19,6 +19,6 @@ export default  function Navbar() {
                     </li>
                 </ul>
             </div>
-    </div>
+    
   )
 }
