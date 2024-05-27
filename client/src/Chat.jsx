@@ -6,7 +6,7 @@ import Profile from "./Profile";
 
 import io from "socket.io-client";
 const socket = io.connect("http://localhost:8000");
-export default function Chat(){
+export default function Chat({user}){
      const [message,setMessage] =useState([{ text: "You only live once", type:"sent", time:"7:58"},{ text: "You only live once", type:"recieve", time:"7:58"}]);
     
      let min =new Date().getMinutes();
@@ -17,32 +17,42 @@ export default function Chat(){
           }
      useEffect(()=>{
       socket.on("recieve_message",(data)=>{
+         console.log(data)
+               if(data.user === user){
                 setMessage((prev)=>{
                    return [...prev ,{
-                         text:data,
-                         type:"recieve",
+                         text:data.text,
+                        type :"sent",
                          time: hr +":"+min
-                   }];
+                   }]})
+                  }else{
+                     setMessage((prev)=>{
+                        return [...prev ,{
+                              text:data.text,
+                             type :"recieve",
+                              time: hr +":"+min
+                        }]})
+                  }  
                 })
-      })
+   
      },[socket]);
      
     return(
         <div id="chat">
-        <Profile user="Krish" link="pfp.png" />
+        <Profile  link="pfp.png" user={user}/>
 
          <div id="all"> 
          <Message type="sent" text ="hello how are you doing would you liek tog udnc" time="8:59" />
          <Message type="recieve" text ="welcome" time="8:59" />
          <Message type="recieve" text ="welcome" time="8:59" grp="true" user="vasudha"/>
          <Message type="sent" text ="welcome" time="8:59" grp="true" user="vasudha"/>
-         {message.map((m)=>{
-            return <Message type={m.type} text={m.text} time={m.time} file={m.file} source={m.source} cloudinary={m.cloudinary}/>;
+         {message.map((m,i)=>{
+            return <Message type={m.type} text={m.text} time={m.time} file={m.file} source={m.source} cloudinary={m.cloudinary} key={i} />;
          }) }
          
          </div>
         
-         <Input setMessage={setMessage} message={message} />
+         <Input setMessage={setMessage}  user={user}/>
         </div>
     );
 }

@@ -1,6 +1,6 @@
 #emoji{
     display: none;
-    position: sticky;
+    position: fixed;
     z-index: 5;
     bottom: 20px;
     width: 10%;

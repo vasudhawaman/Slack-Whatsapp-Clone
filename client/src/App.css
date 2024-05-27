@@ -13,13 +13,14 @@ body{
 }
 
 .container{
-  
-  width: 1240px;
+  display: flex;
   max-width: 100%;
   height: calc(100vh - 40px);
   background: #fff;
   box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.06), 0 2px 5px 0 rgba(0, 0, 0, 0.06);
-  display: flex;
+  z-index: 1;
+
+ 
 }
 
 .container .leftSide{

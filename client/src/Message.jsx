@@ -1,6 +1,7 @@
 import React from "react";
 import "./Message.css";
 import VoiceToText from "./VoiceToText";
+import Pdf from './Pdf';
 export default function Message(props){
    
     return(
@@ -15,7 +16,7 @@ export default function Message(props){
           { props.file === 'audio' ? <><audio id='image' width="200px" src={props.source} controls/>
           <VoiceToText cloudinary={props.cloudinary}/>
           </>  : null}
-          { props.file === 'pdf' ?  <iframe src={props.source} height="200" width="300" title="Iframe Example"/> : null}
+          { props.file === 'pdf' ?  <Pdf source={props.source} name={props.name} /> : null}
            <div id={props.type} className="time">
             {props.time}
            </div>
