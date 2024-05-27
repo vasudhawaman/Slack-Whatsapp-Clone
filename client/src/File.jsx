@@ -6,7 +6,7 @@ import './File.css';
   
       const [source ,setSrc] = useState("");
       const [type,setType] =useState("");
-
+      const [name,setName] = useState("");
   function typeOfFile(format){
         switch(format){
              case 'wav':
@@ -35,17 +35,14 @@ function handleChange(event) {
    console.log(fileType);
      let newFiletype = typeOfFile(fileType[1]);
      setType(newFiletype);
-     if(type !=='pdf'){
+     setName(fileType[0]);
       fr.onload = function () {
         setSrc(fr.result);
       //   document.getElementById('content').src =fr.result;
      }
      fr.readAsDataURL(selectedFile);
  
-     }else{
-        const blobUrl = URL.createObjectURL(selectedFile);
-        setSrc(blobUrl);
-     }
+     
     
    }
   
@@ -64,7 +61,8 @@ function handleChange(event) {
                 source:source,
                 file:type,
                 type:"sent",
-                time:hr+":"+min
+                time:hr+":"+min,
+                name:name
            }]});
   }
 

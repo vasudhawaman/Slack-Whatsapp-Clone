@@ -9,14 +9,15 @@ import io from "socket.io-client";
 import Voice from "./Voice";
 import File from "./File";
 
+
 const socket = io.connect("http://localhost:8000");
-export default function Input({setMessage,message}){
+export default function Input({setMessage,user}){
      const [text,setText] = useState("");
      
      function sendMessage(){
           socket.emit("send_message",{ 
                text:text,
-               type:"sent"
+               user: user,
 
           });
      }
@@ -38,13 +39,8 @@ export default function Input({setMessage,message}){
           if( min <10){
                min = "0" + min;
           }
-           setMessage((prev)=>{ return [...prev ,{
-                text:text,
-               type:"sent",
-                time:hr+":"+min,
-                file:"text"
-           }]});
-          //  sendMessage();
+           
+            sendMessage();
            setText("");
       }
      return(

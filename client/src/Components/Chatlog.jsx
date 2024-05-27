@@ -1,38 +1,12 @@
 import React from 'react'
 
 export default function Chatlog() {
+    const users =[{user:"User 1",time:"1:30",}{user:"User 2",time:"3:30",lastmessage:"Hello how are you",read:"unread",img:"images/img2.jpg"},{user:"User 3",time:"11:30",lastMessage :"Where are you right now",read:"",img:"images/img3.jpg"}]
     return (
 
         <div className="chatlist">
-            <div className="block active">
-                <div className="imgbx">
-                    <img src="images/img1.jpg" className="cover" />
-                </div>
-                <div className="details">
-                    <div className="listHead">
-                        <h4>User 1</h4>
-                        <p className="time">2:22</p>
-                    </div>
-                    <div className="message_p">
-                        <p>What do you mean</p>
-                    </div>
-                </div>
-            </div>
-            <div className="block unread">
-                <div className="imgbx">
-                    <img src="images/img2.jpg" className="cover" />
-                </div>
-                <div className="details">
-                    <div className="listHead">
-                        <h4>User2</h4>
-                        <p className="time">3:33</p>
-                    </div>
-                    <div className="message_p">
-                        <p>mere zikr ka zubaan pe suhag rakhna</p>
-                        <b>1</b>
-                    </div>
-                </div>
-            </div>
+           
+            
             <div className="block unread">
                 <div className="imgbx">
                     <img src="images/img3.jpg" className="cover" />

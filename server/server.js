@@ -31,6 +31,13 @@ io.on("connection",(socket)=>{
     socket.on("send_message",(data)=>{
         socket.broadcast.emit("recieve_message",data)
     })
+    socket.on("video_call",(data)=>{
+        socket.broadcast.emit("recieve_call",data);
+    })
+    socket.on("join_call",(data)=>{
+          socket.join("newrooom");
+          socket.to("newroom").emit("on-call",data);
+    })
 })
 server.listen( port ,()=>{
      console.log(`Server started on ${port}`);
