@@ -5,7 +5,6 @@ const fs =require("fs");
 const bodyParser =require('body-parser');
 const multer  = require('multer')
 const upload = multer({ dest: 'uploads/' })
-
 const app =express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -14,7 +13,7 @@ extended: false
 const cors =require('cors');
 const http = require('http');
 const {Server } = require('socket.io');
-
+app.set('view engine', 'ejs')
 const port =8000;
 // create a new connectionn 
 app.use(cors());
@@ -22,22 +21,30 @@ app.use(cors());
 const server = http.createServer(app);
 const io = new Server(server,{
     cors:{
-        origin: "http://localhost:3000",
+        origin: ["http://localhost:3000", "https://localhost:3001"],
         methods:["GET","POST"]
     }
 });
 
 io.on("connection",(socket)=>{
-    socket.on("send_message",(data)=>{
-        socket.broadcast.emit("recieve_message",data)
+    
+    socket.on("join_chat",(data)=>{
+        console.log(`user ${data.user} has joined ${data.room}`)
+        socket.join(data.room);
+    }); // join random chat
+    socket.on('send_message', (data) => {
+        socket.to(data.room).emit('recieve_message',data); 
+      });
+      socket.on("join_call",(data)=>{
+        socket.join(data.room);       
+  })
+  
+    socket.on("start_call",(data)=>{
+        console.log(data.room)
+        console.log(`user ${data.user} has joined ${data.room}`)
+        socket.to(data.room).emit("on-call",data);
     })
-    socket.on("video_call",(data)=>{
-        socket.broadcast.emit("recieve_call",data);
-    })
-    socket.on("join_call",(data)=>{
-          socket.join("newrooom");
-          socket.to("newroom").emit("on-call",data);
-    })
+    
 })
 server.listen( port ,()=>{
      console.log(`Server started on ${port}`);

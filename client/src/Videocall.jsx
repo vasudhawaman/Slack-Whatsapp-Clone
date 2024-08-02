@@ -1,57 +1,61 @@
 
-import React,{useEffect} from "react";
-import io from "socket.io-client";
-const socket = io.connect("http://localhost:8000");
+import React,{useState,useContext, useRef} from "react";
+import { SocketContext } from "./context/SocketContext";
+import Calling from "./Calling";
 export default function Videocall(){
-    useEffect(()=>{
-          socket.on('on-call',(data)=>{
+ const [user,setUser] =useState("");
+ const [room,setRoom]=useState("");
+ const [join,setJoin] =useState(false);
+ const [audio,setAudio] =useState(true);
+ const [video,setVideo] =useState(true);
+ const videoRef =useRef();
+  const {socket} =useContext(SocketContext)
+  // this is okay
+ function handleSubmit(e){
+     e.preventDefault();
+    socket.emit("join_call",{room:room,user:user});
+    socket.emit("start_call",{room:room,user:user});
+    setJoin(true)
+    
+     navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(
+       (stream) => {
+       
+         const myVideo = document.createElement('video');
+         const myDiv = document.createElement('div');
+           myVideo.muted = true;
+           const videoGrid = document.getElementById('video-grid');
+           myVideo.srcObject = stream
+           myVideo.addEventListener('loadedmetadata', () => {
+             myVideo.play()
+           })
+           videoGrid.append(myVideo)
+          
+       });
+}
 
-          })
-    },[socket]);
-    // const myPeer = new Peer(undefined, {
-    //     host: '/',
-    //     port: '3001'
-    //   })
-      const myVideo = document.createElement('video')
-      myVideo.muted = true
-      const peers = {}
-      navigator.mediaDevices.getUserMedia({
-        video: true,
-        audio: true
-      }).then(stream => {
-        addVideoStream(myVideo, stream)
-      
-        // myPeer.on('call', call => {
-        //   call.answer(stream)
-        //   const video = document.createElement('video')
-        //   call.on('stream', userVideoStream => {
-        //     addVideoStream(video, userVideoStream)
-        //   })
-        // }) 
-    })
-      
-    function connectToNewUser(userId, stream) {
-        // const call = myPeer.call(userId, stream)
-        // const video = document.createElement('video')
-        // call.on('stream', userVideoStream => {
-        //   addVideoStream(video, userVideoStream)
-        // })
-        // call.on('close', () => {
-        //   video.remove()
-        // })
-      
-        // peers[userId] = call
-      }
-      function addVideoStream(video, stream) {
-        video.srcObject = stream
-        video.addEventListener('loadedmetadata', () => {
-          video.play()
-        })
-        // videoGrid.append(video)
-      }
+
+
     return(
-        <div id="videocall">
-             
-        </div>
+      <div className="container">
+      <div className="leftSide">
+        
+         <form onSubmit={handleSubmit}>
+         <input type="text" value={room} onChange={(e)=>{
+             setRoom(e.target.value);
+         }}/>
+         <input type="text" value={user} onChange={(e)=>{
+             setUser(e.target.value);
+         }}/>
+         <button>Submit</button>
+         </form>
+         
+         
+       </div>
+       <div className="rightSide">
+      { join ?<Calling user={user}  /> : null}
+     </div>
+      
+      </div>
+       
     )
 }

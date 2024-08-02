@@ -1,42 +1,33 @@
-import React,{useState,useEffect} from "react";
+import React,{useState,useEffect, useContext} from "react";
 import "./Chat.css"
 import Message from "./Message";
 import Input from "./Input";
 import Profile from "./Profile";
+import { SocketContext } from "./context/SocketContext";
 
-import io from "socket.io-client";
-const socket = io.connect("http://localhost:8000");
-export default function Chat({user}){
-     const [message,setMessage] =useState([{ text: "You only live once", type:"sent", time:"7:58"},{ text: "You only live once", type:"recieve", time:"7:58"}]);
+export default function Chat({message,setMessage,user,room}){
     
-     let min =new Date().getMinutes();
+      const {socket} = useContext(SocketContext);
+      let min =new Date().getMinutes();
            let hr = new Date().getHours();
            
           if( min <10){
                min = "0" + min;
           }
-     useEffect(()=>{
-      socket.on("recieve_message",(data)=>{
-         console.log(data)
-               if(data.user === user){
-                setMessage((prev)=>{
-                   return [...prev ,{
-                         text:data.text,
-                        type :"sent",
-                         time: hr +":"+min
-                   }]})
-                  }else{
-                     setMessage((prev)=>{
-                        return [...prev ,{
-                              text:data.text,
-                             type :"recieve",
-                              time: hr +":"+min
-                        }]})
-                  }  
-                })
-   
-     },[socket]);
      
+      useEffect(()=>{
+     
+            socket.on("recieve_message",(data)=>{
+                        setMessage((prev)=>{
+                              return [...prev ,{
+                                    text:data.text,
+                                   type :"recieve",
+                                    time: hr +":"+min }]}) 
+                  }) 
+                  
+         console.log(message)
+           },[socket]);
+           
     return(
         <div id="chat">
         <Profile  link="pfp.png" user={user}/>
@@ -52,7 +43,7 @@ export default function Chat({user}){
          
          </div>
         
-         <Input setMessage={setMessage}  user={user}/>
+         <Input setMessage={setMessage} room={room} user={user}/>
         </div>
     );
 }

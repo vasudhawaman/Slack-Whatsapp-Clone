@@ -34,10 +34,10 @@ export default function Profile({user}){
        return(
          <div id="profile">
             <div id="pic">
-               
+               <img src="" />
             </div>
             <div id="username" >
-                {user}
+              {user}
             </div>
             <VideoCallIcon onClick={videoCall}/>
             { sendCall ? <button id="recieve" type="button" onClick={joinCall}>Recieve call</button> : null}

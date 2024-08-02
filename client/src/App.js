@@ -1,31 +1,30 @@
-import React ,{useState}from 'react';
+import React ,{useState,useContext,useEffect}from 'react';
 import './App.css';
-import Chat from './Chat';
-import Chatlog from './Components/Chatlog'
-import Navbar from './Components/Navbar';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  
+} from "react-router-dom";
+import Home from './pages/Home';
 import Videocall from './Videocall';
 function App() {
-   const [user,setUser] =useState("")
-  return (
-    <>
-     <div className="container">
-      <div className="leftSide">
-        <Navbar />
-        <Chatlog />
-        <input type="text" value={user} onChange={(e)=>{
-            setUser(e.target.value);
-        }}/>
-        
-      </div>
-      <div className="rightSide">
-      <Chat user={user}/>
-    </div>
+
+  return(
+        <div>
+          <Router>
+  <Routes>
+
+    <Route path='/' element={<Home />} />
+    <Route path='/call' element={<Videocall />} />
     
-   </div>
-   {/* <Videocall /> */}
-    </>
     
-  );
+  </Routes>
+
+</Router>
+        </div>
+  )
+  
 }
 
 export default App;

@@ -11,13 +11,6 @@ passport.use(new GoogleStrategy({
     callbackURL: "http://localhost:5000/auth/google/callback"
   },
   function(accessToken, refreshToken, profile, cb) {
-    // Here you would typically find or create a user in your database
-    // For example:
-    // User.findOrCreate({ googleId: profile.id }, function (err, user) {
-    //   return cb(err, user);
-    // });
-
-    // For now, we'll just return the profile information as the user object
     console.log(profile)
     return cb(null, profile);
   }

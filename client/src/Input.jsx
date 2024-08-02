@@ -1,29 +1,41 @@
-import React,{useState,useEffect} from "react";
+import React,{useState,useEffect, useContext} from "react";
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 import Video from "./Video";
 import SendIcon from '@mui/icons-material/Send';
 import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
 import "./Input.css";
 import Emoji from "./Emoji";
-import io from "socket.io-client";
 import Voice from "./Voice";
 import File from "./File";
+import { SocketContext } from "./context/SocketContext";
 
-
-const socket = io.connect("http://localhost:8000");
-export default function Input({setMessage,user}){
+export default function Input({setMessage,room,user}){
      const [text,setText] = useState("");
+     const {socket} = useContext(SocketContext);
+     let min =new Date().getMinutes();
+     let hr = new Date().getHours();
      
+    if( min <10){
+         min = "0" + min;
+    }
      function sendMessage(){
+          setMessage((prev)=>{
+               return [...prev ,{
+                     text:text,
+                    type :"sent",
+                     time: hr +":"+min
+               }]}) 
+        
           socket.emit("send_message",{ 
                text:text,
                user: user,
-
+               room:room
           });
+          
      }
      function handleChange(e){
            setText(e.target.value);
-           e.preventDefault();
+          
      }
      function addEmoji(e){
           setText((prev)=> {return prev + e.target.value});
@@ -39,10 +51,12 @@ export default function Input({setMessage,user}){
           if( min <10){
                min = "0" + min;
           }
-           
-            sendMessage();
+        
+           sendMessage();
+           console.log(user)
            setText("");
       }
+      
      return(
     <div id="input">
         <form className="chat-input-form" onSubmit={handleForm}>

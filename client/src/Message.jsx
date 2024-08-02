@@ -17,6 +17,7 @@ export default function Message(props){
           <VoiceToText cloudinary={props.cloudinary}/>
           </>  : null}
           { props.file === 'pdf' ?  <Pdf source={props.source} name={props.name} /> : null}
+          { props.file === 'other' ?   <a href={props.source} download={props.name} >Download {props.name}</a> : null }
            <div id={props.type} className="time">
             {props.time}
            </div>
