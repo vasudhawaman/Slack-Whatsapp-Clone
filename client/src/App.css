@@ -6,13 +6,13 @@
 
 body{
   display: flex;
-  justify-content: center;
-  align-items: center;
+   /* justify-content: center;
+  align-items: center; */
   min-height: 100vh;
-  background: linear-gradient(#009688 0%, #009688 130px, #d9dbd5 130px, #d9dbd5 100%);
+  background: linear-gradient(#009688 0%, #009688 130px, #d9dbd5 130px, #d9dbd5 100%); 
 }
 
-.container{
+ .container{
   display: flex;
   max-width: 100%;
   height: calc(100vh - 40px);
@@ -234,7 +234,8 @@ body{
 }
 
 /* Chatbox */
-.chatBox{
+
+ .chatBox{
   position: relative;
   width: 100%;
   height: calc(100% - 120px);
@@ -331,4 +332,4 @@ body{
   outline: none;
   border-radius: 30px;
   font-size: 1em;
-}
+} 

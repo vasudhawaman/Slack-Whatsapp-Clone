@@ -1,19 +1,23 @@
 #input{
-    border: 2px solid rgb(150, 147, 147);
-    background-color: rgb(162, 182, 236);
+    background-color: rgb(185, 231, 167);
     padding: 5px;
     z-index: 3;
-    /* position: sticky;
-    bottom: 0px; */
+    box-shadow: none;
+    border: none;
+    padding: 5px;
+     position: sticky;
+    bottom: 0px; 
 }
 .chat-input-form{
     display: flex;
     align-items: center;
 }
 .chat-input-form > button{
-    
-     border-radius: 100%;
-     background-color: rgb(9, 12, 155);
+      outline: none;
+      box-shadow: none;
+      border: 0cm;
+     border-radius: 1%;
+     background-color: rgb(185, 231, 167);
 }
 
 #chat-input{
@@ -24,4 +28,5 @@
     margin-right: 5px;
     width: 95%;
     border-radius: 5px;
+    border: none;
 }

@@ -40,7 +40,7 @@ export default function Calling({user,people}){
         socket.on("on-call",(data)=>{
               console.log(data)
 
-              navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(
+              navigator.mediaDevices.getUserMedia({ video: true, audio: false }).then(
                 (stream) => {
                  
                   const call = peer.call(data.user, stream);

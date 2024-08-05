@@ -13,18 +13,19 @@ extended: false
 const cors =require('cors');
 const http = require('http');
 const {Server } = require('socket.io');
-app.set('view engine', 'ejs')
 const port =8000;
 // create a new connectionn 
 app.use(cors());
 
 const server = http.createServer(app);
 const io = new Server(server,{
+    maxHttpBufferSize: 1e9,
     cors:{
         origin: ["http://localhost:3000", "https://localhost:3001"],
         methods:["GET","POST"]
-    }
-});
+    },
+    
+}); //max buffer set 
 
 io.on("connection",(socket)=>{
     
@@ -33,7 +34,16 @@ io.on("connection",(socket)=>{
         socket.join(data.room);
     }); // join random chat
     socket.on('send_message', (data) => {
-        socket.to(data.room).emit('recieve_message',data); 
+        console.log("emitted")
+        if(!data.file){
+            socket.to(data.room).emit('recieve_message',data); 
+        }else{
+                  
+                 // data.source = blob;
+                  console.log(data);
+                  socket.to(data.room).emit('recieve_message',data); 
+        }
+        
       });
       socket.on("join_call",(data)=>{
         socket.join(data.room);       

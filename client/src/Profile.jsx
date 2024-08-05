@@ -1,17 +1,17 @@
-import React,{useEffect, useState} from "react";
+import React,{useEffect, useState,useContext} from "react";
 import VideoCallIcon from '@mui/icons-material/VideoCall';
-import io from "socket.io-client";
 import "./Profile.css";
-const socket = io.connect("http://localhost:8000");
+import {SocketContext} from "./context/SocketContext"
 export default function Profile({user}){
              const [sendCall,setSendcall] =useState(false);
              const [recieve_call,setRecievecall] =useState(false);
              if(recieve_call){
                  document.getElementById("videocall").style.display ="block";
              }
+             const {socket} =useContext(SocketContext);
    useEffect(()=>{
         socket.on("recieve_call",(data)=>{
-                  if(data.user !== user) setSendcall(true);
+                   setSendcall(true);
                });
               
              },[socket]);
@@ -19,10 +19,7 @@ export default function Profile({user}){
                 socket.emit("join_call",{
                   user:user
                 });
-               socket.emit("video_call",{ 
-                 user:user
-            
-             });
+              
               } 
       function joinCall(){
                setRecievecall(true);

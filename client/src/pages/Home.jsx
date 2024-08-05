@@ -7,7 +7,7 @@ import { SocketContext } from "../context/SocketContext";
 export default function Home(){
     const [user,setUser] =useState("")
     const [room,setRoom] =useState("")
-    const [message,setMessage] =useState([{ text: "You only live once", type:"sent", time:"7:58"},{ text: "You only live once", type:"recieve", time:"7:58"}]);
+    const [message,setMessage] =useState([{ text: "Hello right there!", type:"sent", time:"7:58"},{ text: "You only live once", type:"recieve", time:"7:58"}]);
     const {socket} = useContext(SocketContext);
     let min =new Date().getMinutes();
             let hr = new Date().getHours();
@@ -19,7 +19,7 @@ export default function Home(){
     
     function handleSubmit(e){
      e.preventDefault();
-     localStorage.setItem("user",user);
+     //localStorage.setItem("user",user);
      socket.emit("join_chat",{room:room,user:user});
  }
    return (
