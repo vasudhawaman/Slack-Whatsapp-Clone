@@ -19,13 +19,14 @@ export default function Chat({message,setMessage,user,room}){
       useEffect(()=>{
      
             socket.on("recieve_message",(data)=>{
-                console.log("here")
+                console.log("here");
 
                 if(!data.file){
                         setMessage((prev)=>{ return [...prev ,{text:data.text, type :"recieve",time: hr +":"+min }] }) 
                         }else{
                             console.log(typeof(data.source))
-                                 let buffer = [data.source];
+                                 let buffer = [data.source]; // buffer to blob which is then read 
+                                 //blob requires mimetype
                              let blob = new Blob(buffer,{type:data.mimetype});
                                 let fr = new FileReader();
                                  fr.onload = function () {
@@ -35,6 +36,8 @@ export default function Chat({message,setMessage,user,room}){
                                          file:data.file,
                                          type:"recieve",
                                          time:hr+":"+min,
+                                         name:data.name,
+                                         mimetype:data.mimetype
                                        
                                     }]});
                                          
@@ -59,7 +62,7 @@ export default function Chat({message,setMessage,user,room}){
          {message.map((m,i)=>{
            
            
-            return <Message type={m.type} text={m.text} time={m.time} file={m.file} source={m.source} cloudinary={m.cloudinary} key={i} />;
+            return <Message type={m.type} text={m.text} time={m.time} file={m.file} source={m.source} cloudinary={m.cloudinary} key={i} name={m.name} mimetype={m.mimetype}/>;
          }) }
          <Input setMessage={setMessage} room={room} user={user}/>
          </div>

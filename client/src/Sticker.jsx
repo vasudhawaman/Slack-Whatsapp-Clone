@@ -1,10 +1,8 @@
  import React, { useEffect,useRef} from "react";
  import * as tfjs from "@tensorflow/tfjs"
  import * as bodySegmentation from "@tensorflow-models/body-segmentation"
- import * as fabric from "fabric";
-
- export default function Sticker(){
-    const canvasRef = useRef();
+ 
+ export default function Sticker({sticker,message}){
     async  function onLoad(){
      const img = document.getElementById('image');
      const segmenterConfig = {
@@ -30,19 +28,23 @@ await bodySegmentation.drawMask(
     canvas, img, backgroundDarkeningMask, opacity, maskBlurAmount, flipHorizontal);
 } 
      useEffect(()=>{
-        onLoad();
+      if(sticker)  onLoad();
      },[])
      
      return(
-        <>
         <div>
-        <canvas id="canvas"  width="100%" height="100%">
-         <img src="./vasudha.jpg" id="image"/>
-        </canvas>
-        </div>
         
+        <canvas id="canvas"  width="50px" height="50px" style={{display:"none"}}>
+        {sticker ?  <img src={sticker} id="image"/> :null}
+        <button onClick={()=>{
+           const canvas = document.getElementById("canvas");
+           const dataURL = canvas.toDataURL();
+           
+        }}>To Sticker</button>
+        </canvas>
+       
           
-        </>
+        </div>
         
         
     )

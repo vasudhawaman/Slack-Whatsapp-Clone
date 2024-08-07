@@ -16,10 +16,11 @@ function App() {
         <div>
           <Router>
   <Routes>
-    <Route path='/' element={<Home />} />
+    
     <Route path='/call' element={<Videocall />} />
      <Route path='/sticker' element={<Sticker />} /> 
-     <Route path='/new' element={<NewHome />} /> 
+     <Route path='/' element={<NewHome />} />
+     <Route path='/home' element={<Home />} /> 
   </Routes>
 
 </Router>

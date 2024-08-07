@@ -4,6 +4,7 @@ import Chat from "../Chat";
 import Search from "../Components/Search";
 import { SocketContext } from '../context/SocketContext';
 import Chatlog from "../Components/Chatlog";
+
 export default function NewHome(){
     const [user, setUser] = useState("")
   const [room, setRoom] = useState("")
@@ -29,21 +30,8 @@ export default function NewHome(){
            
             <aside className="chat-rooms">
             <Search />
-                <Chatlog user={user} />
+           
                 <ul>
-        <li class=""><a href="/chat/chat-1">chat-1</a></li>
-        <li class="selected"><a href="/chat/chat-2">chat-2</a></li>
-        <li class=""><a href="/chat/chat-3">chat-3</a></li>
-        <li class=""><a href="/chat/chat-1">chat-1</a></li>
-        <li class="selected"><a href="/chat/chat-2">chat-2</a></li>
-        <li class=""><a href="/chat/chat-3">chat-3</a></li>
-        <li class=""><a href="/chat/chat-1">chat-1</a></li>
-        <li class="selected"><a href="/chat/chat-2">chat-2</a></li>
-        <li class=""><a href="/chat/chat-3">chat-3</a></li>
-        <li class=""><a href="/chat/chat-1">chat-1</a></li>
-        <li class="selected"><a href="/chat/chat-2">chat-2</a></li>
-        <li class=""><a href="/chat/chat-3">chat-3</a></li>
-        <li class=""><a href="/chat/chat-1">chat-1</a></li>
         <li class="selected"><a href="/chat/chat-2">chat-2</a></li>
         <li class=""><a href="/chat/chat-3">chat-3</a></li>
         <li class=""><a href="/chat/chat-1">chat-1</a></li>

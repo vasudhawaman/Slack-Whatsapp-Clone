@@ -33,3 +33,6 @@
     border: none;
     width: 60%;
 }
+#sticker_file{
+    display: none;
+}

@@ -1,9 +1,10 @@
-import React, { useState,useRef } from "react";
+import React, { useState,useRef ,useContext} from "react";
 import './Voice.css';
 import KeyboardVoiceIcon from "@mui/icons-material/KeyboardVoice";
 import StopIcon from '@mui/icons-material/Stop';
 import axios from 'axios';
-export default function Voice({setMessage}){
+import { SocketContext } from "./context/SocketContext";
+export default function Voice({setMessage,room,user}){
      const [audioBlobs,setAudioblobs] = useState([]);
     const recorder= useRef(null);
      const [stream,setStream] = useState(null);
@@ -11,6 +12,7 @@ export default function Voice({setMessage}){
         setStream(stream);
       
 })
+  const {socket} =useContext(SocketContext);
    async function sendTocloud(){
     let date = Date.now();
     let time = Math.floor(Math.random()*1000);
@@ -91,6 +93,14 @@ export default function Voice({setMessage}){
        
              }
                 fr.readAsDataURL(audioData);
+                socket.emit("send_message",{ 
+                  source:audioData, // sent as buffer
+                  file:'audio',
+                  user: user,
+                  room:room,
+                  time:hr+":"+min,
+                  mimetype:'audio/mp4',
+             });
         }
         
      }   

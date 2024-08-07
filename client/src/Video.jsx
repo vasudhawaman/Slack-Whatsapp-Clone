@@ -1,16 +1,14 @@
-import React, { useState,useRef } from "react";
+import React, { useState,useRef, useContext } from "react";
 import './Voice.css';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import StopIcon from '@mui/icons-material/Stop';
-export default function Video({setMessage}){
+import { SocketContext } from "./context/SocketContext";
+export default function Video({setMessage,room,user}){
      const [videoBlobs,setVideoblobs] = useState([]);
     const recorder= useRef(null);
      const [stream,setStream] = useState(null);
-    navigator.mediaDevices.getUserMedia({audio:true,video:true}).then((stream)=>{
-        setStream(stream);
-      
-})
-   
+    navigator.mediaDevices.getUserMedia({audio:true,video:true}).then((stream)=>{setStream(stream);})
+   const {socket} =useContext(SocketContext)
     function startRecording(){
         console.log("start");
         document.getElementById("startVideo").style.display ="none";
@@ -55,12 +53,22 @@ export default function Video({setMessage}){
                          file:'video',
                          time:hr+':'+min
 
-                     }];
-                   });
+                     }];                  
+                    
+                    });
+                    
                    
        
-             }
-                fr.readAsDataURL(videoData);
+             } 
+             fr.readAsDataURL(videoData);
+                socket.emit("send_message",{ 
+                    source:videoData, // sent as buffer
+                    file:'video',
+                    user: user,
+                    room:room,
+                    time:hr+":"+min,
+                    mimetype:'video/mp4',
+               });
         }
         
      }   

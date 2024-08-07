@@ -8,11 +8,11 @@ import Emoji from "./Emoji";
 import Voice from "./Voice";
 import File from "./File";
 import { SocketContext } from "./context/SocketContext";
-
+import Sticker from "./Sticker";
 export default function Input({setMessage,room,user}){
      const [text,setText] = useState("");
      const [file,setFile] =useState("");
-     
+     const [sticker,setSticker] =useState("");
      const {socket} = useContext(SocketContext);
      let min =new Date().getMinutes();
      let hr = new Date().getHours();
@@ -51,6 +51,15 @@ export default function Input({setMessage,room,user}){
            console.log(user)
            setText("");
       }
+      function handleSticker(e){
+          var selectedFile = e.target.files[0];
+          var fr = new FileReader();
+        
+            fr.onload = function () {
+              setSticker(fr.result);
+           }
+           fr.readAsDataURL(selectedFile);
+      }
       
      return(
           <>
@@ -65,14 +74,14 @@ export default function Input({setMessage,room,user}){
                document.getElementById("emoji").style.display ="block"
            }}/>
           <Emoji addEmoji={addEmoji}  />
-          <Voice setMessage={setMessage}/>
-          <Video setMessage={setMessage}/>
+          <Voice setMessage={setMessage} room={room} user={user}/>
+          <Video setMessage={setMessage} room={room} user={user}/>
             <button id="messagebtn"><SendIcon style={{ color : "whitesmoke " , padding: "2px"}}/></button>
-         
        </form>
       
     </div>
      <File setMessage={setMessage} room={room} user={user} file={file} setFile={setFile}/>
+     {/* <Sticker /> */}
      </>
      )
 }

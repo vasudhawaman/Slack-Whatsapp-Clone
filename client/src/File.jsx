@@ -22,7 +22,7 @@ export function typeOfFile(format){
         default: 
           return 'other'  
   }
-}
+} // for creating ui components in message.jsx
 
 
  export default function File({setMessage,room,user,file,setFile}){
@@ -57,26 +57,27 @@ function handleChange(event) {
                min = "0" + min;
           }
 
-          console.log(file.type);
            setMessage((prev)=>{ return [...prev ,{
                 source:source, //base64URL
                 file:type, //type of file for messages set in img tag/video tag 
                 type:"sent",
                 time:hr+":"+min,
-                name:name
+                name:name,
+                mimetype:file.type
            }]});
            socket.emit("send_message",{ 
-            source:file, // sent as buffer
+            source:file, // sent as buffer cant send direct base64URL
             file:type,
             user: user,
             room:room,
             time:hr+":"+min,
-            mimetype:file.type
+            mimetype:file.type,
+            name:name
        });
        setFile("")
        setType("")
        setSrc("")
-       
+       setName("")
   }
 
   return (
