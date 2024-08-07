@@ -8,6 +8,7 @@
     align-items: left;
     height: 40px;
     padding: 5px;
+    z-index: 5;
 }
 #pic{
     display: flex;

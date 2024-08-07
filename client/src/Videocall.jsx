@@ -17,7 +17,7 @@ export default function Videocall(){
     socket.emit("start_call",{room:room,user:user});
     setJoin(true)
     
-     navigator.mediaDevices.getUserMedia({ video: true, audio: false }).then(
+     navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(
        (stream) => {
        
          const myVideo = document.createElement('video');

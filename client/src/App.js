@@ -9,19 +9,17 @@ import {
 import Home from './pages/Home';
 import Videocall from './Videocall';
 import Sticker from './Sticker'
+import NewHome from './pages/NewHome';
 function App() {
 
   return(
         <div>
           <Router>
   <Routes>
-
     <Route path='/' element={<Home />} />
     <Route path='/call' element={<Videocall />} />
      <Route path='/sticker' element={<Sticker />} /> 
-
-    
-    
+     <Route path='/new' element={<NewHome />} /> 
   </Routes>
 
 </Router>

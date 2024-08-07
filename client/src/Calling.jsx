@@ -1,7 +1,8 @@
 import React,{useEffect,useContext} from "react";
 import { SocketContext } from "./context/SocketContext";
 import {Peer} from "peerjs";
-export default function Calling({user,people}){
+import Control from "./Components/Control";
+export default function Calling({user,videoref}){
     const peer =new Peer(user,{
         host:"/",
         port:"3001"
@@ -40,7 +41,7 @@ export default function Calling({user,people}){
         socket.on("on-call",(data)=>{
               console.log(data)
 
-              navigator.mediaDevices.getUserMedia({ video: true, audio: false }).then(
+              navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(
                 (stream) => {
                  
                   const call = peer.call(data.user, stream);
@@ -58,7 +59,12 @@ export default function Calling({user,people}){
            
         },[socket]);
         return(
-            <div id="video-grid">
-            </div>
+          <div className="call">
+           <div id="video-grid">
+           </div>
+           <Control videoref={videoref}/>
+           
+          </div>
+           
         )
 }

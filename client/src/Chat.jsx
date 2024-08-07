@@ -51,20 +51,20 @@ export default function Chat({message,setMessage,user,room}){
         <Profile  link="pfp.png" user={user}/>
 
          <div id="all"> 
-         <Message type="sent" text ="Hello how are you doing right now!" time="8:59" />
+         {/* <Message type="sent" text ="Hello how are you doing right now!" time="8:59" />
          <Message type="recieve" text ="welcome" time="8:59" />
          <Message type="recieve" text ="welcome" time="8:59" grp="true" user="vasudha"/>
-         <Message type="sent" text ="welcome" time="8:59" grp="true" user="vasudha"/>
+         <Message type="sent" text ="welcome" time="8:59" grp="true" user="vasudha"/> */}
          {/* all messages here */}
          {message.map((m,i)=>{
            
            
             return <Message type={m.type} text={m.text} time={m.time} file={m.file} source={m.source} cloudinary={m.cloudinary} key={i} />;
          }) }
-         
-         </div>
-        
          <Input setMessage={setMessage} room={room} user={user}/>
+         </div>
+         
+        
         </div>
     );
 }

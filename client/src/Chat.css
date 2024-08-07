@@ -1,5 +1,13 @@
 #chat{
-    display: flex;
-    flex-direction: column;
+     display: flex;
+    flex-direction: column; 
     height: 100vh;
+    background: url('backgroundpart.png');
+    width: 100%;   
+   
 }
+
+ #all{
+    position: relative;
+    width: 100%;
+} 
