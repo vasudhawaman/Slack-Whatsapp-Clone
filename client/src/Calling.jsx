@@ -2,7 +2,7 @@ import React,{useEffect,useContext} from "react";
 import { SocketContext } from "./context/SocketContext";
 import {Peer} from "peerjs";
 import Control from "./Components/Control";
-export default function Calling({user,videoref}){
+export default function Calling({user,stream}){
     const peer =new Peer(user,{
         host:"/",
         port:"3001"
@@ -18,19 +18,22 @@ export default function Calling({user,videoref}){
       }
     
       peer.on("call", (call) => {
-        navigator.mediaDevices.getUserMedia(
-          { video: true, audio: true }).then
-          ((stream) => {
+       
+         
+            console.log(stream);
             call.answer(stream);
             console.log("called call")
             const video = document.createElement('video') // Answer the call with an A/V stream.
             call.on("stream", (remoteStream) => {
+             
               addVideoStream(video, remoteStream)
             });
             call.on('close', () => {
                 video.remove()
               })
-          });
+         
+         
+        
       });
    
     
@@ -40,10 +43,7 @@ export default function Calling({user,videoref}){
   
         socket.on("on-call",(data)=>{
               console.log(data)
-
-              navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(
-                (stream) => {
-                 
+                  console.log(stream);
                   const call = peer.call(data.user, stream);
                   
                   const video = document.createElement('video')
@@ -51,18 +51,15 @@ export default function Calling({user,videoref}){
                     addVideoStream(video, remoteStream)
                     console.log("called others")
                   });
-                 
-                });
-              
+            
          })
        
            
         },[socket]);
         return(
           <div className="call">
-           <div id="video-grid">
-           </div>
-           <Control videoref={videoref}/>
+           
+           {/* <Control videoref={videoref}/> */}
            
           </div>
            

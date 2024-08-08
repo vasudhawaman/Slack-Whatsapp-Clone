@@ -1,36 +1,56 @@
 
-import React,{useState,useContext, useRef} from "react";
+import React,{useState,useContext,useEffect} from "react";
 import { SocketContext } from "./context/SocketContext";
 import Calling from "./Calling";
 export default function Videocall(){
  const [user,setUser] =useState("");
  const [room,setRoom]=useState("");
  const [join,setJoin] =useState(false);
- const [audio,setAudio] =useState(true);
- const [video,setVideo] =useState(true);
- const videoRef =useRef();
-  const {socket} =useContext(SocketContext)
+ const [stream,setStream] =useState(null);
+
+  const {socket} =useContext(SocketContext);
+  useEffect(()=>{
+    navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(
+      (stream) => {
+        setStream(stream);
+      });
+
+  },[])
   // this is okay
  function handleSubmit(e){
      e.preventDefault();
     socket.emit("join_call",{room:room,user:user});
     socket.emit("start_call",{room:room,user:user});
-    setJoin(true)
-    
-     navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(
-       (stream) => {
-       
-         const myVideo = document.createElement('video');
-         const myDiv = document.createElement('div');
-           myVideo.muted = true;
-           const videoGrid = document.getElementById('video-grid');
-           myVideo.srcObject = stream
-           myVideo.addEventListener('loadedmetadata', () => {
-             myVideo.play()
+          setJoin(true)
+          console.log(stream,"myside")
+          const myVideo = document.createElement('video');
+          const myDiv = document.createElement('div');
+          const button1 = document.createElement('button');
+            myVideo.muted = true;
+            const videoGrid = document.getElementById('video-grid');
+            myVideo.srcObject = stream;
+            myVideo.addEventListener('loadedmetadata', () => {
+              myVideo.play();
+            })
+        //    videoGrid.append(myVideo)
+        button1.innerHTML ="Show cam";
+ button1.addEventListener('click',()=>{
+                  const videoTrack = stream.getTracks().find(track => track.kind === 'video');
+                  if(videoTrack.enabled){
+                      videoTrack.enabled = false;
+                      button1.innerHTML ="TURN CAM ON";
+                  }else{
+                    videoTrack.enabled = true;
+                    button1.innerHTML ="TURN CAM OFF";
+                  }
            })
-           videoGrid.append(myVideo)
+           myDiv.append(myVideo);
+           myDiv.append(button1);
+           videoGrid.append(myDiv);
           
-       });
+      
+          
+    
 }
 
 
@@ -52,9 +72,10 @@ export default function Videocall(){
          
        </div>
        <div className="rightSide">
-      { join ?<Calling user={user}  /> : null}
+      { join ?<Calling user={user}  stream={stream}/> : null}
      </div>
-      
+     <div id="video-grid">
+     </div>
       </div>
        
     )
