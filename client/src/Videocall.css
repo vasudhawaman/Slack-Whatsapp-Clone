@@ -1,3 +1,36 @@
 #video-grid{
     display: flex;
 }
+#video-grid > video{
+    width: 100%;
+}
+#controls{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    bottom: 5px;
+    background-color: black;
+    width: 100%;
+    padding: 5px;
+}
+#controls > button{
+    box-shadow: none;
+      border:none;
+      background-color: rgb(147, 147, 243);
+      border-radius: 3px;
+     margin-top: 10px;
+     margin-left: 20px;
+      padding: 5px;
+
+}
+#controls > button :hover{
+    box-shadow: none;
+      border:none;
+      background-color: rgb(248, 7, 7);
+      border-radius: 3px;
+     margin-top: 10px;
+     margin-left: 20px;
+      padding: 5px;
+      
+}

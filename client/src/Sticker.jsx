@@ -1,8 +1,11 @@
- import React, { useEffect,useRef} from "react";
+ import React, { useContext, useEffect,useState} from "react";
  import * as tfjs from "@tensorflow/tfjs"
  import * as bodySegmentation from "@tensorflow-models/body-segmentation"
- 
- export default function Sticker({sticker,message}){
+ import { SocketContext } from "./context/SocketContext";
+ export default function Sticker({setMessage,user,room,sticker,color}){
+   const {socket} =useContext(SocketContext)
+    const [final,setFinal]=useState(null);
+    const [loading,setLoading]=useState(true)
     async  function onLoad(){
      const img = document.getElementById('image');
      const segmenterConfig = {
@@ -15,7 +18,7 @@
      
   
 const foregroundColor = {r: 0, g: 0, b: 0, a:0};
-const backgroundColor = {r: 180, g: 197, b: 288, a: 255};
+const backgroundColor = {r:color.r, g:color.g, b:color.b, a: 255};
 const backgroundDarkeningMask = await bodySegmentation.toBinaryMask(
     segmentation, foregroundColor, backgroundColor);
 
@@ -26,24 +29,74 @@ const canvas = document.getElementById('canvas');
 
 await bodySegmentation.drawMask(
     canvas, img, backgroundDarkeningMask, opacity, maskBlurAmount, flipHorizontal);
+   
+   
 } 
+    
+let min =new Date().getMinutes();
+let hr = new Date().getHours();
+
+if( min <10){
+    min = "0" + min;
+}
+function sendMessage(dataURL){
+   setMessage((prev)=>{ return [...prev ,{
+      source:final, //base64URL
+      file:'image', //type of file for messages set in img tag/video tag 
+      type:"sent",
+      time:hr+":"+min,
+      mimetype:'image/jpeg'
+ }]});
+
+  function dataURLtoFile(dataurl, filename) {
+    var arr = dataurl.split(',');
+       let mime = arr[0].match(/:(.*?);/)[1];
+       let bstr = atob(arr[arr.length - 1]);
+       let n = bstr.length;
+       let  u8arr = new Uint8Array(n);
+    while(n--){
+        u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new File([u8arr], filename, {type:mime});
+ }
+ let myfile = dataURLtoFile(dataURL,'sticker.jpeg');
+ console.log(myfile);
+  socket.emit("send_message",{ 
+   source:myfile, // sent as buffer cant send direct base64URL
+   file:'image',
+   user: user,
+   room:room,
+   time:hr+":"+min,
+   mimetype:'image/jpeg',
+   
+ });
+     
+}
      useEffect(()=>{
-      if(sticker)  onLoad();
+       onLoad();
+      
      },[])
      
      return(
         <div>
         
-        <canvas id="canvas"  width="50px" height="50px" style={{display:"none"}}>
-        {sticker ?  <img src={sticker} id="image"/> :null}
-        <button onClick={()=>{
-           const canvas = document.getElementById("canvas");
-           const dataURL = canvas.toDataURL();
-           
-        }}>To Sticker</button>
+        <canvas id="canvas" hidden>
+        <img src={sticker} id="image" hidden/> 
+        
+       
         </canvas>
        
+         <>
+         {final ? <img src={final} height="50px" width="50px" /> :null }
+         <button onClick={()=>{
+           const canvas = document.getElementById("canvas");
+           const dataURL = canvas.toDataURL();
+           setFinal(dataURL);
+           sendMessage(dataURL);
+           
+        }}>To Sticker</button></>
           
+             
         </div>
         
         

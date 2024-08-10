@@ -25,8 +25,9 @@ export default function Videocall(){
           setJoin(true)
           console.log(stream,"myside")
           const myVideo = document.createElement('video');
-          const myDiv = document.createElement('div');
+          const myDiv =  document.getElementById('controls');
           const button1 = document.createElement('button');
+          const button2 = document.createElement('button');
             myVideo.muted = true;
             const videoGrid = document.getElementById('video-grid');
             myVideo.srcObject = stream;
@@ -35,7 +36,7 @@ export default function Videocall(){
             })
         //    videoGrid.append(myVideo)
         button1.innerHTML ="Show cam";
- button1.addEventListener('click',()=>{
+        button1.addEventListener('click',()=>{
                   const videoTrack = stream.getTracks().find(track => track.kind === 'video');
                   if(videoTrack.enabled){
                       videoTrack.enabled = false;
@@ -45,9 +46,20 @@ export default function Videocall(){
                     button1.innerHTML ="TURN CAM OFF";
                   }
            })
-           myDiv.append(myVideo);
+           button2.innerHTML ="Audio ON";
+           button2.addEventListener('click',()=>{
+                            const audioTrack = stream.getTracks().find(track => track.kind === 'audio');
+                            if(audioTrack.enabled){
+                                audioTrack.enabled = false;
+                                button2.innerHTML ="TURN Audio ON";
+                            }else{
+                              audioTrack.enabled = true;
+                              button2.innerHTML ="TURN Audio OFF";
+                            }
+                     })
            myDiv.append(button1);
-           videoGrid.append(myDiv);
+           myDiv.append(button2);
+           videoGrid.append(myVideo);
 }
     return(
       <div className="container">
@@ -65,11 +77,14 @@ export default function Videocall(){
          
          
        </div>
-       <div className="rightSide">
+       <div>
       { join ?<Calling user={user}  stream={stream}/> : null}
      </div>
-     <div id="video-grid">
-     </div>
+       <div id="video-grid">
+       </div>
+       <div id="controls">
+
+       </div>
       </div>
        
     )

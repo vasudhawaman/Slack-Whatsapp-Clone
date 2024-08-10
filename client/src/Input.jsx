@@ -3,6 +3,7 @@ import AttachFileIcon from '@mui/icons-material/AttachFile';
 import Video from "./Video";
 import SendIcon from '@mui/icons-material/Send';
 import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
+import StickyNote2TwoToneIcon from '@mui/icons-material/StickyNote2TwoTone';
 import "./Input.css";
 import Emoji from "./Emoji";
 import Voice from "./Voice";
@@ -10,6 +11,8 @@ import File from "./File";
 import { SocketContext } from "./context/SocketContext";
 import Sticker from "./Sticker";
 import SpeechToText from "./Components/SpeechToText";
+import StickerFile from "./StickerFile";
+
 export default function Input({setMessage,room,user}){
      const [text,setText] = useState("");
      const [file,setFile] =useState("");
@@ -52,15 +55,7 @@ export default function Input({setMessage,room,user}){
            console.log(user)
            setText("");
       }
-      function handleSticker(e){
-          var selectedFile = e.target.files[0];
-          var fr = new FileReader();
-        
-            fr.onload = function () {
-              setSticker(fr.result);
-           }
-           fr.readAsDataURL(selectedFile);
-      }
+      
       
      return(
           <>
@@ -78,11 +73,15 @@ export default function Input({setMessage,room,user}){
           <Voice setMessage={setMessage} room={room} user={user}/>
           <Video setMessage={setMessage} room={room} user={user}/>
             <button id="messagebtn"><SendIcon style={{ color : "whitesmoke " , padding: "2px"}}/></button>
+
        </form>
+       <StickyNote2TwoToneIcon onClick={()=>{
+            document.getElementById("sticker").style.display ="block";
+       }}/>
         <SpeechToText text={text} setText={setText} setMessage={setMessage} room={room} user={user}/>
     </div>
-     <File setMessage={setMessage}trxt room={room} user={user} file={file} setFile={setFile}/>
-     {/* <Sticker /> */}
+     <File setMessage={setMessage} room={room} user={user} file={file} setFile={setFile}/>
+    <StickerFile setMessage={setMessage} room={room} user={user}/>
      </>
      )
 }
