@@ -2,6 +2,7 @@
 import React,{useState,useContext,useEffect} from "react";
 import { SocketContext } from "./context/SocketContext";
 import Calling from "./Calling";
+import './Videocall.css';
 export default function Videocall(){
  const [user,setUser] =useState("");
  const [room,setRoom]=useState("");
@@ -12,7 +13,7 @@ export default function Videocall(){
   useEffect(()=>{
     navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(
       (stream) => {
-        setStream(stream);
+        setStream(stream); // gets stream of user
       });
 
   },[])
@@ -47,14 +48,7 @@ export default function Videocall(){
            myDiv.append(myVideo);
            myDiv.append(button1);
            videoGrid.append(myDiv);
-          
-      
-          
-    
 }
-
-
-
     return(
       <div className="container">
       <div className="leftSide">

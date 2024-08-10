@@ -9,6 +9,7 @@ import Voice from "./Voice";
 import File from "./File";
 import { SocketContext } from "./context/SocketContext";
 import Sticker from "./Sticker";
+import SpeechToText from "./Components/SpeechToText";
 export default function Input({setMessage,room,user}){
      const [text,setText] = useState("");
      const [file,setFile] =useState("");
@@ -78,9 +79,9 @@ export default function Input({setMessage,room,user}){
           <Video setMessage={setMessage} room={room} user={user}/>
             <button id="messagebtn"><SendIcon style={{ color : "whitesmoke " , padding: "2px"}}/></button>
        </form>
-      
+        <SpeechToText text={text} setText={setText} setMessage={setMessage} room={room} user={user}/>
     </div>
-     <File setMessage={setMessage} room={room} user={user} file={file} setFile={setFile}/>
+     <File setMessage={setMessage}trxt room={room} user={user} file={file} setFile={setFile}/>
      {/* <Sticker /> */}
      </>
      )
