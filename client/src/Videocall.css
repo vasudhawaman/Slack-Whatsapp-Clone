@@ -24,7 +24,7 @@
       padding: 5px;
 
 }
-#controls > button :hover{
+#controls > button:hover{
     box-shadow: none;
       border:none;
       background-color: rgb(248, 7, 7);

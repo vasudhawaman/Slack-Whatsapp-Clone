@@ -6,18 +6,19 @@
    const {socket} =useContext(SocketContext)
     const [final,setFinal]=useState(null);
     const [loading,setLoading]=useState(true)
+    const [send,setSend] = useState(false);
     async  function onLoad(){
-     const img = document.getElementById('image');
-     const segmenterConfig = {
-        runtime: 'tfjs', // or 'tfjs'
-        solutionPath: 'https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation',
-        modelType: 'general'
-      }
-     const segmenter = await bodySegmentation.createSegmenter(bodySegmentation.SupportedModels.MediaPipeSelfieSegmentation,segmenterConfig);
-     const segmentation = await segmenter.segmentPeople(img);
-     
-  
-const foregroundColor = {r: 0, g: 0, b: 0, a:0};
+    
+    try{
+      const img = document.getElementById('image');
+      const segmenterConfig = {
+         runtime: 'tfjs', // or 'tfjs'
+         solutionPath: 'https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation',
+         modelType: 'general'
+       }
+      const segmenter = await bodySegmentation.createSegmenter(bodySegmentation.SupportedModels.MediaPipeSelfieSegmentation,segmenterConfig);
+      const segmentation = await segmenter.segmentPeople(img);
+      const foregroundColor = {r: 0, g: 0, b: 0, a:0};
 const backgroundColor = {r:color.r, g:color.g, b:color.b, a: 255};
 const backgroundDarkeningMask = await bodySegmentation.toBinaryMask(
     segmentation, foregroundColor, backgroundColor);
@@ -30,6 +31,13 @@ const canvas = document.getElementById('canvas');
 await bodySegmentation.drawMask(
     canvas, img, backgroundDarkeningMask, opacity, maskBlurAmount, flipHorizontal);
    
+     
+      
+    } catch(err){
+        throw err;
+    }
+  
+
    
 } 
     
@@ -73,10 +81,20 @@ function sendMessage(dataURL){
      
 }
      useEffect(()=>{
-       onLoad();
+     try{
+      async function LoadImage() {
+         const result = await onLoad();
+         if(result) setLoading(false);
+         console.log(result);
+      }
+      LoadImage();
+    
+     }  catch(err){
+        alert("Model not loaded!");
+     }
       
-     },[])
-     
+     },[loading])
+    
      return(
         <div>
         
@@ -87,18 +105,28 @@ function sendMessage(dataURL){
         </canvas>
        
          <>
-         {final ? <img src={final} height="50px" width="50px" /> :null }
+         {final ? 
+         <> <img src={final} height="50px" width="50px" /> 
          <button onClick={()=>{
+          sendMessage(final);
+          
+       }}>Send Sticker</button>
+       </>
+         
+         :null }
+        {!loading? <button onClick={()=>{
            const canvas = document.getElementById("canvas");
            const dataURL = canvas.toDataURL();
            setFinal(dataURL);
-           sendMessage(dataURL);
            
-        }}>To Sticker</button></>
+        }}>To Sticker</button> : null }
+        
+
+         </>
           
              
-        </div>
         
+        </div>
         
     )
  }

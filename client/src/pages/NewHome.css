@@ -20,6 +20,7 @@
     overflow: auto;
   }  
   main.chat{
+      overflow: auto;
       height: 100vh;
       background: url('../backgroundpart.png');
       width: 100%;  

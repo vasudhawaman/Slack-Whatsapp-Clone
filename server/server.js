@@ -54,6 +54,11 @@ io.on("connection",(socket)=>{
         console.log(`user ${data.user} has joined ${data.room}`)
         socket.to(data.room).emit("on-call",data);
     })
+    socket.on("end-call",(data)=>{
+       
+        socket.to(data.room).emit("call-end",data);
+    })
+    
     
 })
 server.listen( port ,()=>{

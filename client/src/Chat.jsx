@@ -59,7 +59,7 @@ export default function Chat({message,setMessage,user,room}){
          <Message type="recieve" text ="welcome" time="8:59" grp="true" user="vasudha"/>
          <Message type="sent" text ="welcome" time="8:59" grp="true" user="vasudha"/> */}
          {/* all messages here */}
-         {message.map((m,i)=>{
+         { message.length >0 && message.map((m,i)=>{
            
            
             return <Message type={m.type} text={m.text} time={m.time} file={m.file} source={m.source} cloudinary={m.cloudinary} key={i} name={m.name} mimetype={m.mimetype}/>;

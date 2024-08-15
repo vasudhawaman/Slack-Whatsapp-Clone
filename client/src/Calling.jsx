@@ -30,10 +30,8 @@ export default function Calling({user,stream}){
             });
             call.on('close', () => {
                 video.remove()
-              })
-         
-         
-        
+                
+            })  
       });
    
     
@@ -58,9 +56,6 @@ export default function Calling({user,stream}){
         },[socket]);
         return(
           <div className="call">
-           
-           {/* <Control videoref={videoref}/> */}
-           
           </div>
            
         )

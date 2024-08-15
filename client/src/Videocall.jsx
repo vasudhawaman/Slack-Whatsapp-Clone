@@ -8,13 +8,15 @@ export default function Videocall(){
  const [room,setRoom]=useState("");
  const [join,setJoin] =useState(false);
  const [stream,setStream] =useState(null);
-
+ const [screen,setScreen] =useState(false)
   const {socket} =useContext(SocketContext);
   useEffect(()=>{
-    navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(
+    console.log("use effect ran ");
+   if(!stream) navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(
       (stream) => {
         setStream(stream); // gets stream of user
       });
+      
 
   },[])
   // this is okay
@@ -28,6 +30,8 @@ export default function Videocall(){
           const myDiv =  document.getElementById('controls');
           const button1 = document.createElement('button');
           const button2 = document.createElement('button');
+          const shareScreen = document.createElement('button');
+          const endCall = document.createElement('button');
             myVideo.muted = true;
             const videoGrid = document.getElementById('video-grid');
             myVideo.srcObject = stream;
@@ -57,8 +61,41 @@ export default function Videocall(){
                               button2.innerHTML ="TURN Audio OFF";
                             }
                      })
+             shareScreen.innerHTML ="Share screen";
+            shareScreen.addEventListener('click',()=>{
+                      setScreen(true)
+                      const displayMediaOptions = {
+                        video: {
+                          displaySurface: "browser",
+                        },
+                        audio: {
+                          suppressLocalAudioPlayback: false,
+                        },
+                        preferCurrentTab: false,
+                        selfBrowserSurface: "exclude",
+                        systemAudio: "include",
+                        surfaceSwitching: "include",
+                        monitorTypeSurfaces: "include",
+                      };
+                      navigator.mediaDevices.getDisplayMedia(displayMediaOptions).then((display)=>{
+                        
+                        myVideo.srcObject = display;
+                      });
+                      
+               })
+          endCall.innerHTML ="Leave Call";
+         endCall.addEventListener('click',()=>{
+               socket.emit("end-call",{
+                  room:room,
+                  user:user
+               });
+
+              
+         })
            myDiv.append(button1);
            myDiv.append(button2);
+           myDiv.append(shareScreen);
+           myDiv.append(endCall);
            videoGrid.append(myVideo);
 }
     return(
