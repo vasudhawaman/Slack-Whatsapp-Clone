@@ -1,0 +1,32 @@
+h1{
+    text-align: center;
+}
+@keyframes loadIn{
+    0%{
+        opacity: 0;
+        transform:translateY(-80px);
+    }
+    100%{
+        opacity:1;
+        transform:translateY(0px);
+    }
+}
+.container12{
+    width:70%;
+    margin-left: 15%;
+    background-color: rgba(0,0,0,0.7);
+    color: white;
+    height: 100%;
+}
+.cont2{
+    height: 100%;
+    width:70%;
+    margin-left: 15%;
+    animation: loadIn 1.3s;
+}
+@media screen and (max-width:800px) {
+    .container12{
+        width: 90%;
+        margin-left: 5%;
+    }
+}
