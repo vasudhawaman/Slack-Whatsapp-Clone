@@ -1,0 +1,89 @@
+.cont{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 3px solid #3d52d5;
+    width: 70%;
+}
+
+.user-profile{
+    color: #3d52d5;
+    width: 30%;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.2);
+    font-family: "Open Sans", sans-serif;
+    font-weight: 900;
+}
+.user-profile:hover{
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
+    transition: box-shadow 0.3s ease-in-out;
+    cursor: pointer;
+    background-color: #fdfff7;
+    border: 1px solid #3d52d5;
+    transition: background-color 0.3s ease-in-out;
+    transition: color 0.3s ease-in-out;
+    transition: border 0.3s ease-in-out;
+    transition: box-shadow 0.3s ease-in-out;
+    transition: transform 0.3s ease-in-out;
+    transform: translateY(-2px);
+}
+
+.username{
+    font-weight: 700;
+    margin-bottom: 10px;
+    font-size: 30px;    
+    text-align: center;
+    font-family: "Open Sans", sans-serif;
+    color: #3d52d5;
+}
+
+.username:hover{
+    color: #0b0ec3;
+    transition: color 0.3s ease-in-out;
+}
+
+.userImage{
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    object-fit: cover;
+    border:2px solid #3d52d5;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.618);
+}
+
+.edit{
+    height: 40px;
+    width: 130px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color:#3d52d5 ;
+    color: #fdfff7;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+.edit:hover{
+    background-color: #0b0ec3;
+    color: #fdfff7;
+    transition: background-color 0.3s ease-in-out;
+    transition: color 0.3s ease-in-out;
+    cursor: pointer;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.586);
+}
+
+.user-info{
+    margin-top: 20px;
+    color: #666;
+    font-size: 18px;
+    font-family: "Open Sans", sans-serif;
+}
+.status{
+    margin-top: 20px;
+    color: #666;
+    font-size: 16px;
+    font-family: "Open Sans", sans-serif;
+}

@@ -1,0 +1,26 @@
+#startVoice{
+    background-color: transparent;
+    border: none;
+    outline: none;
+    box-shadow: none;
+}
+#stopVoice{
+    display: none;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    box-shadow: none;
+}
+#startVideo{
+    background-color: transparent;
+    border: none;
+    outline: none;
+    box-shadow: none;
+}
+#stopVideo{
+    display: none;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    box-shadow: none;
+}

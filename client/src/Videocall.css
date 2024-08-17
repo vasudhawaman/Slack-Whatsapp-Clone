@@ -1,0 +1,47 @@
+#video-grid{
+    display: flex;
+    flex-wrap: wrap;
+  width: 100%;
+  
+}
+#video-grid > video{
+    flex: 50%;
+}
+#controls{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: black;
+    width: 100%;
+    padding: 5px;
+}
+#controls > button{
+    box-shadow: none;
+      border:none;
+      color: rgb(147, 147, 243);
+      background-color: black;
+      border-radius: 3px;
+     margin-top: 10px;
+     margin-left: 20px;
+    padding: 5px;
+}
+#controls > button > svg{
+    font-size: larger;
+}
+#controls > button:hover{
+    box-shadow: none;
+      border:none;
+      color: rgb(248, 7, 7);
+      border-radius: 3px;
+     margin-top: 10px;
+     margin-left: 20px;
+      padding: 5px;
+      
+}
+@media (max-width: 800px) {
+    #video-grid >video {
+      flex: 100%;
+    }
+  }
+  
+  

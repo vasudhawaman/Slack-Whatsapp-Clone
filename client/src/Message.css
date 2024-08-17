@@ -1,0 +1,49 @@
+/* different for diff */
+#message{
+        display: flex;
+        z-index:2;
+}
+
+#sent{
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: auto;
+    border-radius: 20px 0px 0px 20px;
+    padding-left: 5%;
+    padding-right: 2%;
+    padding-top: 5px; 
+    background-color: rgb(185, 231, 167);
+    color: black;
+         
+}
+#recieve{
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-right: auto;
+    border-radius: 0px 20px 20px 0px;
+    padding-right: 5%;
+    padding-left: 2%;
+    padding-top: 5px; 
+   background-color: #009688;
+   color: whitesmoke;
+}
+#sent > .time{
+   text-align: end;
+   font-size: x-small;
+}
+#recieve > .time{
+    text-align: start;
+    font-size: x-small;
+}
+#recieve > #user{
+    text-align: center;
+    color: whitesmoke;
+    font-size: x-small;
+    
+}
+#sent > #user{
+    text-align: center;
+   font-weight: bold;
+    color: black;
+    
+}

@@ -1,0 +1,11 @@
+.video_user{
+    display: flex;
+    padding:5px;
+    border-radius: 2px;
+    background-color: rgb(100, 133, 122);
+
+}
+.video{
+    width:100%;
+    border-radius: 2px;
+}

@@ -1,0 +1,24 @@
+#profile{
+    display:flex;
+    position: sticky;
+    top: 0px;
+    flex-direction: row;
+    background-color: rgb(162, 238, 221);
+    border-bottom: 2px solid rgb(197, 196, 196) ;
+    align-items: left;
+    height: 40px;
+    padding: 5px;
+    z-index: 5;
+}
+#pic{
+    display: flex;
+    margin: 3px;
+    border-radius: 100%;
+}
+#user{
+    
+    width: 100%;
+    margin-left: 5%;
+    text-align: center;
+
+}

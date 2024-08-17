@@ -1,0 +1,12 @@
+#chat{
+     display: flex;
+    flex-direction: column; 
+    height: 100vh;
+    width: 100%;   
+   
+}
+
+ #all{
+    position: relative;
+    width: 100%;
+} 
