@@ -30,17 +30,12 @@ export default function NewHome(){
            
             <aside className="chat-rooms">
             <Search />
+            <div className="logs">
+            <Chatlog onClick={()=>{
+                document.getElementById("main").style.display = "block";
+            }}/>
+            </div>
            
-                <ul>
-        <li class="selected"><a href="/chat/chat-2">chat-2</a></li>
-        <li class=""><a href="/chat/chat-3">chat-3</a></li>
-        <li class=""><a href="/chat/chat-1">chat-1</a></li>
-        <li class="selected"><a href="/chat/chat-2">chat-2</a></li>
-        <li class=""><a href="/chat/chat-3">chat-3</a></li>
-        <li class=""><a href="/chat/chat-1">chat-1</a></li>
-        <li class="selected"><a href="/chat/chat-2">chat-2</a></li>
-        <li class=""><a href="/chat/chat-3">chat-3</a></li>
-      </ul>
             </aside>
             <main className="chat" id="main">
 

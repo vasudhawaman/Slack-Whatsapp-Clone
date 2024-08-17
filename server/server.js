@@ -46,7 +46,9 @@ io.on("connection",(socket)=>{
         
       });
       socket.on("join_call",(data)=>{
-        socket.join(data.room);       
+        console.log(`${data.user} is requesting to join`);
+        socket.join(data.room);    
+        socket.to(data.room).emit("recieve_call",data);   
   })
   
     socket.on("start_call",(data)=>{

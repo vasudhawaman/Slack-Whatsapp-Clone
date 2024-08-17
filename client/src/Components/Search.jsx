@@ -5,11 +5,10 @@ export default function Search(){
     return(
         <div className="top">
            <div className="search">
-            
             <textarea className="search-input" type="text" placeholder="Write your Message here.."  name="text"/>
             <NotificationsActiveIcon />
        </div>
-        </div>
+     </div>
        
         
            

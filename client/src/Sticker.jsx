@@ -19,20 +19,18 @@
       const segmenter = await bodySegmentation.createSegmenter(bodySegmentation.SupportedModels.MediaPipeSelfieSegmentation,segmenterConfig);
       const segmentation = await segmenter.segmentPeople(img);
       const foregroundColor = {r: 0, g: 0, b: 0, a:0};
-const backgroundColor = {r:color.r, g:color.g, b:color.b, a: 255};
-const backgroundDarkeningMask = await bodySegmentation.toBinaryMask(
+      const backgroundColor = {r:color.r, g:color.g, b:color.b, a: 255};
+       const backgroundDarkeningMask = await bodySegmentation.toBinaryMask(
     segmentation, foregroundColor, backgroundColor);
 
-const opacity = 0.99;
-const maskBlurAmount = 3;
-const flipHorizontal = false;
-const canvas = document.getElementById('canvas');
+      const opacity = 0.99;
+      const maskBlurAmount = 3;
+      const flipHorizontal = false;
+      const canvas = document.getElementById('canvas');
 
-await bodySegmentation.drawMask(
+      await bodySegmentation.drawMask(
     canvas, img, backgroundDarkeningMask, opacity, maskBlurAmount, flipHorizontal);
-   
-     
-      
+  
     } catch(err){
         throw err;
     }
@@ -85,7 +83,7 @@ function sendMessage(dataURL){
       async function LoadImage() {
          const result = await onLoad();
          if(result) setLoading(false);
-         console.log(result);
+         
       }
       LoadImage();
     
@@ -107,14 +105,14 @@ function sendMessage(dataURL){
          <>
          {final ? 
          <> <img src={final} height="50px" width="50px" /> 
-         <button onClick={()=>{
+         <button type="button" onClick={()=>{
           sendMessage(final);
           
        }}>Send Sticker</button>
        </>
          
          :null }
-        {!loading? <button onClick={()=>{
+        {!loading? <button type="button" onClick={()=>{
            const canvas = document.getElementById("canvas");
            const dataURL = canvas.toDataURL();
            setFinal(dataURL);

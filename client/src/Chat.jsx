@@ -51,13 +51,10 @@ export default function Chat({message,setMessage,user,room}){
            
     return(
         <div id="chat">
-        <Profile  link="pfp.png" user={user}/>
+        <Profile  link="pfp.png" user={user} room={room}/>
 
          <div id="all"> 
-         {/* <Message type="sent" text ="Hello how are you doing right now!" time="8:59" />
-         <Message type="recieve" text ="welcome" time="8:59" />
-         <Message type="recieve" text ="welcome" time="8:59" grp="true" user="vasudha"/>
-         <Message type="sent" text ="welcome" time="8:59" grp="true" user="vasudha"/> */}
+        
          {/* all messages here */}
          { message.length >0 && message.map((m,i)=>{
            
@@ -66,7 +63,14 @@ export default function Chat({message,setMessage,user,room}){
          }) }
          <Input setMessage={setMessage} room={room} user={user}/>
          </div>
+         <dialog id="callRecieve">
+          
+            <div>
+               <p>Incoming Call</p>
+               
+            </div>
          
+         </dialog>
         
         </div>
     );

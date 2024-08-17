@@ -83,14 +83,16 @@ function handleChange(event) {
   return (
     
        <div id="file">
+        <form id="form">
           <CloseIcon onClick={()=>{
                 document.getElementById("file").style.display ="none";
+                document.getElementById("form").reset();
             }} style={{ paddingLeft: "2%"}}/>
           <input type="file" name="avatar"  onChange={handleChange}/>
           { type === 'image' ?  <img id='content' width="200px"/> : null}
           { type === 'video' ?  <video id='content' width="200px" controls/> : null}
           <button onClick={addTochat} type="button" id="startVoice"><SendIcon style={{ color : "whitesmoke " , padding: "2px"}}/></button>
-          
+          </form>
          </div>
          
    

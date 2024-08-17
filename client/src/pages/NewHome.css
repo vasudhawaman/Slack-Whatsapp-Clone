@@ -17,13 +17,23 @@
       position: static !important;
     }
     box-sizing: border-box;
-    overflow: auto;
+    overflow:auto;
   }  
+  main{
+    @media (max-width: 600px) {
+      display: none !important;
+    }
+  }
   main.chat{
+   
       overflow: auto;
       height: 100vh;
       background: url('../backgroundpart.png');
       width: 100%;  
-      
+    
+   
+  }
+  .logs{
+    margin-top: 50px;
   }
   

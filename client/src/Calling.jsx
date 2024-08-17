@@ -1,5 +1,6 @@
 import React,{useEffect,useContext} from "react";
 import { SocketContext } from "./context/SocketContext";
+import {useNavigate} from "react-router-dom";
 import {Peer} from "peerjs";
 import Control from "./Components/Control";
 export default function Calling({user,stream}){
@@ -7,7 +8,7 @@ export default function Calling({user,stream}){
         host:"/",
         port:"3001"
       });
-      
+      const Navigate = useNavigate();
       function addVideoStream(video, stream) {
         const videoGrid = document.getElementById('video-grid');
         video.srcObject = stream
@@ -51,6 +52,10 @@ export default function Calling({user,stream}){
                   });
             
          })
+         socket.on("call-end",(data)=>{
+          Navigate("/");
+      }) 
+ 
        
            
         },[socket]);
