@@ -84,6 +84,10 @@ io.on("connection", (socket) => {
 
         socket.to(data.room).emit("call-end", data);
     })
+    socket.on("typing", (data) => {
+
+        socket.to(data.room).emit("userIsTyping", data);
+    })
 
 
 })

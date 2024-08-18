@@ -1,4 +1,7 @@
 #input{
+    @media (max-width: 600px) {
+        width: 0%;
+      }
     background-color: rgb(162, 238, 221);
     padding: 5px;
     z-index: 3;
