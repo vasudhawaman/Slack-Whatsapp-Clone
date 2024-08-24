@@ -4,7 +4,7 @@ import Chat from "../Chat";
 import Search from "../Components/Search";
 import { SocketContext } from '../context/SocketContext';
 import Chatlog from "../Components/Chatlog";
-
+import useWindowDimensions from "../Components/Dimensions";
 export default function NewHome() {
   const [user, setUser] = useState("")
   const [room, setRoom] = useState("")
@@ -26,9 +26,7 @@ export default function NewHome() {
           'Content-Type': 'application/json',
         },
       })
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
+     
       const json = await response.json();
       setdata(json);
     }

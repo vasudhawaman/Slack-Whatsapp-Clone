@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({
 const cors = require('cors');
 const http = require('http');
 const { Server } = require('socket.io');
-const port = 5000;
+const port = 8000;
 // create a new connectionn 
 app.use(session({
     secret: 'mysecret',
