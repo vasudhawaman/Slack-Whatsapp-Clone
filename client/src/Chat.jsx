@@ -5,6 +5,7 @@ import Input from "./Input";
 import Profile from "./Profile";
 import { SocketContext } from "./context/SocketContext";
 
+  
 export default function Chat({message,setMessage,user,room}){
     
       const {socket} = useContext(SocketContext);
@@ -19,7 +20,6 @@ export default function Chat({message,setMessage,user,room}){
       useEffect(()=>{
      
             socket.on("recieve_message",(data)=>{
-                console.log("here");
 
                 if(!data.file){
                         setMessage((prev)=>{ return [...prev ,{text:data.text, type :"recieve",time: hr +":"+min }] }) 
@@ -61,16 +61,10 @@ export default function Chat({message,setMessage,user,room}){
            
             return <Message type={m.type} text={m.text} time={m.time} file={m.file} source={m.source} cloudinary={m.cloudinary} key={i} name={m.name} mimetype={m.mimetype}/>;
          }) }
-         <Input setMessage={setMessage} room={room} user={user}/>
+        
          </div>
-         <dialog id="callRecieve">
-          
-            <div>
-               <p>Incoming Call</p>
-               
-            </div>
+         <Input setMessage={setMessage} room={room} user={user}/>
          
-         </dialog>
         
         </div>
     );

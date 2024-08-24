@@ -39,3 +39,8 @@
 #sticker_file{
     display: none;
 }
+#message-button{
+    @media (max-width: 600px) {
+        width: 0%;
+      }
+}

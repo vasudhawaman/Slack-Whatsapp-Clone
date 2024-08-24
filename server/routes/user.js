@@ -45,7 +45,7 @@ router.post('/cheak', [
                         service: "gmail",
                         auth: {
                             user: process.env.EMAIL_USER,
-                            pass: EMAIL_PASS
+                            pass: process.env.EMAIL_PASS
                         }
                     })
 
@@ -107,7 +107,8 @@ router.post('/signup', [
                         let q4 = "SELECT * FROM users WHERE email=?"
                         db.query(q4, [req.body.email], async (err, user) => {
                             if (user.length > 0) {
-                                const data = { id: user.id }
+                                console.log("user after signup",user)
+                                const data = { id: user[0].id }
                                 const token = await jwt.sign(data, JWT_SECRET, { expiresIn: '7 days' })
                                 return res.cookie('token_for_talkpal', token, {
                                     maxAge: 30 * 24 * 60 * 60 * 1000,
@@ -313,6 +314,7 @@ router.delete('/delete', verifyToken, async (req, res) => {
 // })
 
 router.get('/allusers', verifyToken, (req, res) => {
+    console.log(req.id);
     const q = "SELECT * FROM users WHERE id !=?"
     db.query(q, [req.id], (err, result) => {
         console.log(req.id)
@@ -369,7 +371,7 @@ router.post('/createroom',verifyToken, async (req, res) => {
     const q = 'SELECT roomid FROM whatsapp.room ORDER BY roomid DESC';
     db.query(q, (err, result) => {
         if (err) throw err
-        const roomid = result[0].roomid + 1;
+        const roomid = result[0].roomid + 1; //new room id => same time insert this into connection roomid 
         const q1 = "INSERT INTO room (userids,roomid) VALUES (?,?)"
         db.query(q1, [req.id, roomid], (err, result) => {
             if (err) throw err 

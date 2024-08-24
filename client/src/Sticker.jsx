@@ -82,7 +82,7 @@ function sendMessage(dataURL){
      try{
       async function LoadImage() {
          const result = await onLoad();
-         if(result) setLoading(false);
+         // if(result) setLoading(false);
          
       }
       LoadImage();
@@ -107,12 +107,13 @@ function sendMessage(dataURL){
          <> <img src={final} height="50px" width="50px" /> 
          <button type="button" onClick={()=>{
           sendMessage(final);
+          setFinal(null);
           
        }}>Send Sticker</button>
        </>
          
          :null }
-        {!loading? <button type="button" onClick={()=>{
+        {loading? <button type="button" onClick={()=>{
            const canvas = document.getElementById("canvas");
            const dataURL = canvas.toDataURL();
            setFinal(dataURL);
