@@ -8,6 +8,8 @@ import Chatlog from "../Components/Chatlog";
 export default function NewHome() {
   const [user, setUser] = useState("")
   const [room, setRoom] = useState("")
+  const  dimension = useWindowDimensions();
+  console.log(dimension);
   const [message, setMessage] = useState([]);
   const users = [{ user: "User 1", time: "1:30" }, { user: "User 2", time: "3:30", lastmessage: "Hello how are you", read: "unread", img: "images/img2.jpg" }, { user: "User 3", time: "11:30", lastMessage: "Where are you right now", read: "", img: "images/img3.jpg" }]
   const { socket } = useContext(SocketContext);

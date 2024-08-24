@@ -13,19 +13,14 @@
     }
   }
   aside.chat-rooms {
-    @media (min-width: 600px) {
-      position: static !important;
-    }
     box-sizing: border-box;
     overflow:auto;
   }  
-  main{
-    @media (max-width: 600px) {
-      display: none !important;
-    }
-  }
+  
   main.chat{
-   
+    @media (max-width: 600px) {
+      width: 0%;
+    }
       overflow: auto;
       height: 100vh;
       background: url('../backgroundpart.png');

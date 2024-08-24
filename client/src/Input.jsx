@@ -41,7 +41,10 @@ export default function Input({setMessage,room,user}){
      }
      function handleChange(e){
            setText(e.target.value);
-          
+           socket.emit("typing",{
+               room:room,
+               user:user
+           });
      }
      function addEmoji(e){
           setText((prev)=> {return prev + e.target.value});

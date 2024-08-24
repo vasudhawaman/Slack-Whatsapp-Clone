@@ -4,6 +4,11 @@ const path = require('path');
 const fs = require("fs");
 const bodyParser = require('body-parser');
 const multer = require('multer')
+const express = require("express");
+const path = require('path');
+const fs = require("fs");
+const bodyParser = require('body-parser');
+const multer = require('multer')
 const upload = multer({ dest: 'uploads/' })
 const session=require('express-session');
 const passport=require('passport');
@@ -14,9 +19,13 @@ require('./OAuth/googleOauth')
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: false
+    extended: false
 }));
 const cors = require('cors');
+const cors = require('cors');
 const http = require('http');
+const { Server } = require('socket.io');
+const port = 8000;
 const { Server } = require('socket.io');
 const port = 8000;
 // create a new connectionn 
@@ -44,13 +53,21 @@ app.use(cors({
 
 const server = http.createServer(app);
 const io = new Server(server, {
+const io = new Server(server, {
     maxHttpBufferSize: 1e9,
+    cors: {
     cors: {
         origin: ["http://localhost:3000", "https://localhost:3001"],
         methods: ["GET", "POST"]
+        methods: ["GET", "POST"]
     },
 
+
 }); //max buffer set 
+app.use('/register', require('./routes/user'));
+io.on("connection", (socket) => {
+
+    socket.on("join_chat", (data) => {
 app.use('/register', require('./routes/user'));
 io.on("connection", (socket) => {
 
@@ -67,7 +84,17 @@ io.on("connection", (socket) => {
             // data.source = blob;
             console.log(data);
             socket.to(data.room).emit('recieve_message', data);
+        if (!data.file) {
+            socket.to(data.room).emit('recieve_message', data);
+        } else {
+
+            // data.source = blob;
+            console.log(data);
+            socket.to(data.room).emit('recieve_message', data);
         }
+
+    });
+    socket.on("join_call", (data) => {
 
     });
     socket.on("join_call", (data) => {
@@ -77,8 +104,14 @@ io.on("connection", (socket) => {
     })
 
     socket.on("start_call", (data) => {
+        socket.join(data.room);
+        socket.to(data.room).emit("recieve_call", data);
+    })
+
+    socket.on("start_call", (data) => {
         console.log(data.room)
         console.log(`user ${data.user} has joined ${data.room}`)
+        socket.to(data.room).emit("on-call", data);
         socket.to(data.room).emit("on-call", data);
     })
     socket.on("end-call", (data) => {
@@ -109,4 +142,5 @@ app.post('/upload', upload.single('avatar'), function (req, res, next) {
     // req.body will hold the text fields, if there were any
     console.log(req.file);
     console.log("uploaded");
+})
 })
