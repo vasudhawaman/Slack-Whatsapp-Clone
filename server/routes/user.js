@@ -44,13 +44,13 @@ router.post('/cheak', [
                     const transporter = nodemailer.createTransport({
                         service: "gmail",
                         auth: {
-                            user: "krishpathak20@gmail.com",
-                            pass: "ozav lnnj uvvb satg"
+                            user: process.env.EMAIL_USER,
+                            pass: EMAIL_PASS
                         }
                     })
 
                     const mailoptions = {
-                        from: "krishpathak20@gmail.com",
+                        from: process.env.EMAIL_USER,
                         to: req.body.email,
                         subject: `OTP for TalkPal`,
                         html: `<p>The OTP for logging in the TalkPal is ${otp}.</p><br></br><p>Do not share it with anyone.</p>`
@@ -157,7 +157,10 @@ router.post('/login', [
                 return res.status(400).json({ error: "User does not exist" });
             }
             const user = result[0];
-            const passwordCompare = await bcrypt.compare(password, user.password);
+            const stringPassword= password.toString()
+            const passwordCompare = await bcrypt.compare(stringPassword, user.password);
+            console.log('Plain Text Password Type:', typeof password);
+            console.log('Hashed Password Type:', typeof user.password);
             if (!passwordCompare) {
                 return res.status(400).json({ error: "Invalid Credentials" });
             }
@@ -214,13 +217,13 @@ router.post('/checkmail', async (req, res) => {
         const transporter = nodemailer.createTransport({
             service: "gmail",
             auth: {
-                user: "krishpathak20@gmail.com",
-                pass: "ozav lnnj uvvb satg"
+                user: process.env.EMAIL_USER,
+                pass: EMAIL_PASS
             }
         })
 
         const mailoptions = {
-            from: "krishpathak20@gmail.com",
+            from: process.env.EMAIL_USER,
             to: req.body.email,
             subject: `OTP for TalkPal`,
             html: `<p>The OTP for changing password in the TalkPal is ${otp}.</p><br></br><p>Do not share it with anyone.</p>`
@@ -365,23 +368,23 @@ router.post('/connect', verifyToken, async (req, res) => {
     })
 })
 
-router.post('/createroom',verifyToken, async (req, res) => {
+router.post('/createroom', verifyToken, async (req, res) => {
     const q = 'SELECT roomid FROM whatsapp.room ORDER BY roomid DESC';
     db.query(q, (err, result) => {
         if (err) throw err
         const roomid = result[0].roomid + 1;
         const q1 = "INSERT INTO room (userids,roomid) VALUES (?,?)"
         db.query(q1, [req.id, roomid], (err, result) => {
-            if (err) throw err 
-            console.log("yeye"+roomid)
+            if (err) throw err
+            console.log("yeye" + roomid)
             console.log("Room created successfully")
             const q2 = "INSERT INTO room (userids,roomid) VALUES (?,?)"
             db.query(q2, [req.body.receiver, roomid], (err, result) => {
                 if (err) throw err
                 console.log("Room created successfully with other user")
-                const q4="UPDATE connections SET status=1 WHERE receiver=? and sender=? "
-                db.query(q4,[req.id,req.body.receiver],(err,result)=>{
-                    if(err) throw err
+                const q4 = "UPDATE connections SET status=1 WHERE receiver=? and sender=? "
+                db.query(q4, [req.id, req.body.receiver], (err, result) => {
+                    if (err) throw err
                     console.log("Connection status updated")
                     res.json({ success: "Room created successfully" })
                 })
@@ -395,28 +398,34 @@ router.post('/createroom',verifyToken, async (req, res) => {
     // })
 })
 
-router.post('/contacts',async (req,res)=>{
-    const q="SELECT roomid FROM room WHERE userids=?";
-    db.query(q,10,(err,result)=>{
-        if(err) throw err;
-        var allcontact=[];
-        result.map(async (r)=>{
-            const q1="SELECT * FROM users WHERE id IN (SELECT userids FROM room WHERE roomid=? && userids!=?)";
-            db.query(q1,[r.roomid,10],async(err,users)=>{
-                if(err) throw err;
-                allcontact.push(users[0]);
-            })
-        })
-        res.json(allcontact);
-    })
+router.post('/contacts',verifyToken, async (req, res) => {
+    const roomQuery = "SELECT roomid FROM room WHERE userids=?";
+    const room = await new Promise((resolve, reject) => {
+        db.query(roomQuery, [req.id], (err, result) => {
+            if (err) reject(err);
+            else resolve(result);
+        });
+    });
+    const allContactsPromises = room.map((r) => {
+        const userQuery = "SELECT * FROM users WHERE id IN (SELECT userids FROM room WHERE roomid=? AND userids!=?)";
+        return new Promise((resolve, reject) => {
+            db.query(userQuery, [r.roomid, req.id], (err, users) => {
+                if (err) reject(err);
+                else resolve(users);
+            });
+        });
+    });
+    const allContactResult = await Promise.all(allContactsPromises);
+    const allcontact = allContactResult.flat();
+    res.json(allcontact);
 })
 
-router.delete('/reject',verifyToken,async(req,res)=>{
-    const q="DELETE FROM connections WHERE receiver=? and sender=?";
-    db.query(q,[req.id,req.body.receiver],(err,result)=>{
-        if(err) throw err;
+router.delete('/reject', verifyToken, async (req, res) => {
+    const q = "DELETE FROM connections WHERE receiver=? and sender=?";
+    db.query(q, [req.id, req.body.receiver], (err, result) => {
+        if (err) throw err;
         console.log("Deleted connection succesfully");
-        res.json({success:"Deleted user successfully"})
+        res.json({ success: "Deleted user successfully" })
     })
 })
 

@@ -5,7 +5,7 @@ export default function Welcome2() {
   const [credentials,setcredentials]=useState({username:"",password:""})
   const handlesubmit=async (e)=>{
     e.preventDefault();
-    const url='http://localhost:5000/register/login';
+    const url='http://localhost:8000/register/login';
         const response = await fetch(url, {
             method: "POST",
             credentials: 'include',
@@ -17,7 +17,7 @@ export default function Welcome2() {
           const json= await response.json();
           console.log(json);
           if(json.message==='success'){
-            window.location.href='/allusers'
+            window.location.href='/'
           }else{
             alert('Invalid credentials')
           }
@@ -41,7 +41,7 @@ export default function Welcome2() {
     </div>
     <div className='forget'><Link to='/forget'>Forget Password?</Link></div>
     <Link to='http://localhost:5000/auth/google'><button className='google1'>Sign in with google</button></Link>
-    <p className="ask1">Don't have an account?<a href="/">Sign up</a></p>
+    <p className="ask1">Don't have an account?<a href="/register">Sign up</a></p>
     </div>
     
 

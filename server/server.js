@@ -9,6 +9,7 @@ const session=require('express-session');
 const passport=require('passport');
 const cookieParser=require('cookie-parser');
 const app = express();
+app.use(express.json());
 require('./OAuth/googleOauth')
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -33,7 +34,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(express.json());
+
 app.use(cookieParser());
 app.use(cors({
     origin: 'http://localhost:3000' || 'http://localhost:3001',

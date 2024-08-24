@@ -8,8 +8,8 @@ env.config();
 const oauth2Endpoint = 'https://accounts.google.com/o/oauth2/v2/auth';
 const JWT_SECRET = "krishkrish@123";
 passport.use(new GoogleStrategy({
-    clientID: '177767707429-50mdqrr1v6qv003o56biku9iq0ejmckj.apps.googleusercontent.com',
-    clientSecret: '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',
+    clientID: process.env.CLIENT_ID,
+    clientSecret: process.env.CLIENT_SECRET,
     callbackURL: 'http://localhost:5000/auth/google/callback',
     redirect_uri: 'http://localhost:3001',
     passReqToCallback: true
@@ -45,20 +45,6 @@ passport.use(new GoogleStrategy({
                 })
             }
         })
-        // if (!user) {
-        //     user = new User({
-        //         username: profile.displayName,
-        //         email: profile.emails[0].value
-        //     });
-        //     await user.save();
-        // }
-        // const data1 = {
-        //     user: {
-        //         id: user.id
-        //     }
-        // }
-
-
         return done(null, { profile });
     }));
 

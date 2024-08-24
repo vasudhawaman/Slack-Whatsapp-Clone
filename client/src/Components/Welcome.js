@@ -20,7 +20,7 @@ const Welcome = ({ setOtpState }) => {
         else {
 
             if (credentials.password === credentials.cpassword) {
-                const url = 'http://localhost:5000/register/cheak';
+                const url = 'http://localhost:8000/register/cheak';
                 const response = await fetch(url, {
                     method: "POST",
                     credentials: 'include',
