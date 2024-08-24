@@ -8,17 +8,16 @@ import useWindowDimensions from "../Components/Dimensions";
 export default function NewHome() {
   const [user, setUser] = useState("")
   const [room, setRoom] = useState("")
-  const  dimension = useWindowDimensions();
-  console.log(dimension);
+  // const  dimension = useWindowDimensions();
   const [message, setMessage] = useState([]);
   const users = [{ user: "User 1", time: "1:30" }, { user: "User 2", time: "3:30", lastmessage: "Hello how are you", read: "unread", img: "images/img2.jpg" }, { user: "User 3", time: "11:30", lastMessage: "Where are you right now", read: "", img: "images/img3.jpg" }]
   const { socket } = useContext(SocketContext);
   let min = new Date().getMinutes();
   let hr = new Date().getHours();
   const [data, setdata] = useState(null);
-  const[bool,setbool]=useEffect(null);
+  const[users1,setusers]=useState();
   useEffect(() => {
-    const url = 'http://localhost:8000/register/contacts';
+    const url = `${process.env}/register/contacts`;
     const fetchdata = async () => {
       const response = await fetch(url, {
         method: 'POST',
@@ -31,19 +30,15 @@ export default function NewHome() {
         throw new Error('Network response was not ok');
       }
       const json = await response.json();
-      console.log(json);
       setdata(json);
     }
     fetchdata();
     console.log(data);
-    if(data){
-      setbool(true);
-    }
-  }, [bool])
-  // useEffect(() => {
-  //     setuser(data);
-  //     console.log(user);
-  // }, [data])
+  }, [])
+  useEffect(() => {
+      setusers(data);
+      console.log(user);
+  }, [data])
   if (min < 10) {
     min = "0" + min;
   }
@@ -61,13 +56,14 @@ export default function NewHome() {
         <aside className="chat-rooms">
           <Search />
           <div className="logs">
+            {console.log(users1)}
           {
-            Array.isArray(data) && data.map((d) => {
-              
-                <Chatlog onClick={() => {
+            Array.isArray(users1) && users1.map((d)=> {
+              return(
+                <Chatlog data={d} onClick={() => {
                   document.getElementById("main").style.display = "block";
                 }} />
-              
+              )
             })
           }
             </div>

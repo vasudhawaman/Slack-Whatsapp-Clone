@@ -409,9 +409,9 @@ router.post('/contacts',verifyToken, async (req, res) => {
         });
     });
     const allContactsPromises = room.map((r) => {
-        const userQuery = "SELECT * FROM users WHERE id IN (SELECT userids FROM room WHERE roomid=? AND userids!=?)";
+        const userQuery = "SELECT * FROM users INNER JOIN room ON room.userids=users.id AND room.roomid=? WHERE id IN (SELECT userids FROM room WHERE roomid=? AND userids!=?)";
         return new Promise((resolve, reject) => {
-            db.query(userQuery, [r.roomid, req.id], (err, users) => {
+            db.query(userQuery, [r.roomid,r.roomid,req.id], (err, users) => {
                 if (err) reject(err);
                 else resolve(users);
             });
