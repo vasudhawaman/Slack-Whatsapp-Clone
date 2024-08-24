@@ -6,6 +6,7 @@ const passport=require('passport')
 const app = express();
 const port = 5000;
 const session=require('express-session');
+// connectToMongo();
 require('./OAuth/googleOauth')
 app.use(session({
   secret: 'mysecret',

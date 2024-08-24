@@ -3,7 +3,7 @@ import './UserFile.css'
 const ConnectionFile = ({user}) => {
     console.log(user)
     const handleonclick=async ()=>{
-        const url='http://localhost:5000/register/createroom';
+        const url='http://localhost:8000/register/createroom';
         const response=await fetch(url,{
             method:'POST',
             credentials:'include',
@@ -16,7 +16,7 @@ const ConnectionFile = ({user}) => {
         console.log(res);
     }
     const handleonreject=async()=>{
-        const url='http://localhost:5000/register/reject';
+        const url='http://localhost:8000/register/reject';
         const response= await fetch(url,{
             method:'DELETE',
             credentials:'include',

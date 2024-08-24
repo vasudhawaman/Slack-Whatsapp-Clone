@@ -10,6 +10,7 @@ const passport=require('passport');
 const cookieParser=require('cookie-parser');
 const db =require("./db");
 const app = express();
+app.use(express.json());
 require('./OAuth/googleOauth')
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -34,7 +35,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(express.json());
+
 app.use(cookieParser());
 app.use(cors({
     origin: 'http://localhost:3000' || 'http://localhost:3001',
@@ -49,6 +50,7 @@ const io = new Server(server, {
         origin: ["http://localhost:3000", "https://localhost:3001"],
         methods: ["GET", "POST"]
     },
+
 
 }); //max buffer set 
 app.use('/register', require('./routes/user'));
@@ -87,7 +89,9 @@ io.on("connection", (socket) => {
                 if (err) throw err;})
 
             socket.to(data.room).emit('recieve_message', data);
-        }
+
+    }});
+    socket.on("join_call", (data) => {
 
     });
     socket.on("join_call", (data) => {
@@ -97,17 +101,19 @@ io.on("connection", (socket) => {
     })
 
     socket.on("start_call", (data) => {
+        socket.join(data.room);
+        socket.to(data.room).emit("recieve_call", data);
+    })
+
+    socket.on("start_call", (data) => {
         console.log(data.room)
         console.log(`user ${data.user} has joined ${data.room}`)
+        socket.to(data.room).emit("on-call", data);
         socket.to(data.room).emit("on-call", data);
     })
     socket.on("end-call", (data) => {
 
         socket.to(data.room).emit("call-end", data);
-    })
-    socket.on("typing", (data) => {
-
-        socket.to(data.room).emit("userIsTyping", data);
     })
 
 
@@ -134,3 +140,4 @@ app.post('/upload', upload.single('avatar'), function (req, res, next) {
     console.log(req.file);
     console.log("uploaded");
 })
+

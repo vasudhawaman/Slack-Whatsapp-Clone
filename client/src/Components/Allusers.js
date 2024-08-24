@@ -4,9 +4,9 @@ import UserFile from './UserFile';
 const Allusers = () => {
     const[user,setUsers]=useState();
     const[data,setdata]=useState()
-    const url="http://localhost:5000/register/allusers"
 
     useEffect(() => {
+      const url="http://localhost:8000/register/allusers"
       const getdata=async()=>{
         const response=await fetch(url,{
             method: "GET",
