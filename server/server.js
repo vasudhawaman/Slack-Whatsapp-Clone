@@ -63,30 +63,30 @@ io.on("connection", (socket) => {
     socket.on('send_message', (data) => {
         console.log("emitted")
         console.log("message:",data) // save in db under user id as mine data.user 
-        if(!data.file){
-            // purely text based
-            let q = "INSERT INTO files(`user_id`,`room_id`,`text`,`type`,`time`) VALUES (?,?,?,?,?)"
-                    db.query(q, [data.user, data.room, data.text,data.type,data.time], async (err, user) => {
-                        if (err) throw err;})
+        // if(!data.file){
+        //     // purely text based
+        //     let q = "INSERT INTO files(`user_id`,`room_id`,`text`,`type`,`time`) VALUES (?,?,?,?,?)"
+        //             db.query(q, [data.user, data.room, data.text,data.type,data.time], async (err, user) => {
+        //                 if (err) throw err;})
 
-        }
+        // }
        
         if (!data.file) {
-            let q1 ="SELECT * FROM files WHERE user_id=? AND room_id=? ORDER BY DESC id";
-            db.query(q1, [data.user, data.room], async (err, user) => {
-                if (err) throw err;}).then((result)=>{
-                    console.log(result);
-                    socket.to(data.room).emit('recieve_message', data);
-                })
-
+            // let q1 ="SELECT * FROM files WHERE user_id=? AND room_id=? ORDER BY DESC id";
+            // db.query(q1, [data.user, data.room], async (err, user) => {
+            //     if (err) throw err;}).then((result)=>{
+            //         console.log(result);
+            //         socket.to(data.room).emit('recieve_message', data);
+            //     })
+            socket.to(data.room).emit('recieve_message', data);
             
         } else {
-            let q = "INSERT INTO files(`user_id`,`room_id`,`file`,`type`,`time`,`filename`,`mimetype`,`text`) VALUES (?,?,?,?,?,?,?,?)"
-            // data.file is of type buffer so convert to blob then store 
-            let buffer = [data.source];
-            let blob = new Blob(buffer,{type:data.mimetype});
-            db.query(q, [data.user, data.room, blob,data.type,data.time,data.filename], async (err, user) => {
-                if (err) throw err;})
+            // let q = "INSERT INTO files(`user_id`,`room_id`,`file`,`type`,`time`,`filename`,`mimetype`,`text`) VALUES (?,?,?,?,?,?,?,?)"
+            // // data.file is of type buffer so convert to blob then store 
+            // let buffer = [data.source];
+            // let blob = new Blob(buffer,{type:data.mimetype});
+            // db.query(q, [data.user, data.room, blob,data.type,data.time,data.filename], async (err, user) => {
+            //     if (err) throw err;})
 
             socket.to(data.room).emit('recieve_message', data);
 
