@@ -219,7 +219,7 @@ router.post('/checkmail', async (req, res) => {
             service: "gmail",
             auth: {
                 user: process.env.EMAIL_USER,
-                pass: EMAIL_PASS
+                pass: process.env.EMAIL_PASS
             }
         })
 

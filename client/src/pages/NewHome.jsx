@@ -17,7 +17,7 @@ export default function NewHome() {
   const [data, setdata] = useState(null);
   const[users1,setusers]=useState();
   useEffect(() => {
-    const url = `${process.env}/register/contacts`;
+    const url = `http://localhost:8000/register/contacts`;
     const fetchdata = async () => {
       const response = await fetch(url, {
         method: 'POST',
@@ -26,9 +26,7 @@ export default function NewHome() {
           'Content-Type': 'application/json',
         },
       })
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
+     
       const json = await response.json();
       setdata(json);
     }
