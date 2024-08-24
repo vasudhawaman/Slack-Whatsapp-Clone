@@ -47,7 +47,7 @@ const Welcome = ({ setOtpState }) => {
         }
     };
     const handleOnClick2 = () => {
-        window.location.href = 'http://localhost:5000/auth/google';
+        window.location.href = 'http://localhost:8000/auth/google';
     }
     const handleOnChange = (e) => {
         setcredentials({ ...credentials, [e.target.name]: e.target.value })
