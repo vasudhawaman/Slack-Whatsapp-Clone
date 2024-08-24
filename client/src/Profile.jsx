@@ -8,34 +8,35 @@ import {useNavigate} from "react-router-dom"
 import 'react-toastify/dist/ReactToastify.css';
 
 export default function Profile({user,room}){
+  const [userdata,setData] =useState({room:room,user:user});
             const  dimension = useWindowDimensions();
             const Navigate = useNavigate();
             const [typing,setTyping] = useState(false)
              const {socket} =useContext(SocketContext);
              const AcceptCallButton =({closeToast}) =>{
                  return <span onClick={()=>{
-                  socket.emit("join_call",{room:room,user:user});
                   socket.emit("start_call",{room:room,user:user});
                       Navigate(`/call?user=${user}&room=${room}`);
                       closeToast()
                   }}>📞</span>;
              }
    useEffect(()=>{
-        socket.on("recieve_call",(data)=>{
-          console.log(data);
+                 console.log(userdata)
+             socket.on("recieve_call",(data)=>{
                     toast(`Receive call!`);
                });
-               socket.on("userIsTyping",(data)=>{
+                    socket.on("userIsTyping",(data)=>{
                            setTyping(true);
                      });
-              
+                     socket.on("on-call",(data)=>{
+
+                      Navigate(`/call?user=${userdata.user}&room=${userdata.room}`);
+                });
+         
              },[socket]);
      function videoCall(){
-                socket.emit("join_call",{
-                  user:user,
-                  room:room
-                });
-              
+                socket.emit("join_call",{room:room,user:user});
+               
               } 
       
        return(

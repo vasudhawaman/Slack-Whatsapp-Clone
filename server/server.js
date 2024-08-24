@@ -91,24 +91,15 @@ io.on("connection", (socket) => {
             socket.to(data.room).emit('recieve_message', data);
 
     }});
-    socket.on("join_call", (data) => {
-
-    });
+    
     socket.on("join_call", (data) => {
         console.log(`${data.user} is requesting to join`);
-        socket.join(data.room);
-        socket.to(data.room).emit("recieve_call", data);
-    })
-
-    socket.on("start_call", (data) => {
-        socket.join(data.room);
         socket.to(data.room).emit("recieve_call", data);
     })
 
     socket.on("start_call", (data) => {
         console.log(data.room)
         console.log(`user ${data.user} has joined ${data.room}`)
-        socket.to(data.room).emit("on-call", data);
         socket.to(data.room).emit("on-call", data);
     })
     socket.on("end-call", (data) => {

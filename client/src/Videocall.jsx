@@ -7,7 +7,6 @@ import './Videocall.css';
 import { useLocation } from "react-router-dom";
 export default function Videocall(){
 
- const [join,setJoin] =useState(false);
  const [stream,setStream] =useState(null);
  const Navigate = useNavigate();
   const {socket} =useContext(SocketContext);
@@ -20,26 +19,26 @@ export default function Videocall(){
  if(!stream) navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(
     (stream) => {
       setStream(stream); // gets stream of user
+      JoinedCall(stream);
     });
+    
  socket.on("call-end",(data)=>{
       Navigate("/");
   }) 
   
 },[socket])
   // this is okay
- function JoinedCall(){
-    
-    
-          setJoin(true)
+ function JoinedCall(stream){
+
           console.log(stream,"myside")
           const myVideo = document.createElement('video');
-          const myDiv =  document.getElementById('controls');
+          const myDiv =  document?.getElementById('controls');
           const button1 = document.createElement('button');
           const button2 = document.createElement('button');
           const shareScreen = document.createElement('button');
           const endCall = document.createElement('button');
             myVideo.muted = true;
-            const videoGrid = document.getElementById('video-grid');
+            const videoGrid = document?.getElementById('video-grid');
             myVideo.srcObject = stream;
             myVideo.addEventListener('loadedmetadata', () => {
               myVideo.play();
@@ -101,11 +100,11 @@ export default function Videocall(){
            myDiv.append(endCall);
            videoGrid.append(myVideo);
 }
-JoinedCall()
+ 
     return(
       <div className="container">
        <div>
-      { join ?<Calling user={user}  stream={stream}/> : null}
+      <Calling user={user}  stream={stream}/> 
      </div>
        <div id="video-grid">
        </div>

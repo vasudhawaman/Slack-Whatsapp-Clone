@@ -41,7 +41,6 @@ export default function Calling({user,stream}){
     useEffect(()=>{
   
         socket.on("on-call",(data)=>{
-              console.log(data)
                   console.log(stream);
                   const call = peer.call(data.user, stream);
                   
