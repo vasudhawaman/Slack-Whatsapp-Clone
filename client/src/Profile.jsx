@@ -6,6 +6,7 @@ import {SocketContext} from "./context/SocketContext"
 import { ToastContainer, toast } from 'react-toastify';
 import {useNavigate} from "react-router-dom"
 import 'react-toastify/dist/ReactToastify.css';
+
 export default function Profile({user,room}){
             const  dimension = useWindowDimensions();
             const Navigate = useNavigate();
@@ -13,6 +14,8 @@ export default function Profile({user,room}){
              const {socket} =useContext(SocketContext);
              const AcceptCallButton =({closeToast}) =>{
                  return <span onClick={()=>{
+                  socket.emit("join_call",{room:room,user:user});
+                  socket.emit("start_call",{room:room,user:user});
                       Navigate(`/call?user=${user}&room=${room}`);
                       closeToast()
                   }}>📞</span>;

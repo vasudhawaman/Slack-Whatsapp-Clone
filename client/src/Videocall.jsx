@@ -24,13 +24,12 @@ export default function Videocall(){
  socket.on("call-end",(data)=>{
       Navigate("/");
   }) 
-  JoinedCall()
+  
 },[socket])
   // this is okay
  function JoinedCall(){
     
-     socket.emit("join_call",{room:room,user:user});
-     socket.emit("start_call",{room:room,user:user});
+    
           setJoin(true)
           console.log(stream,"myside")
           const myVideo = document.createElement('video');
@@ -102,7 +101,7 @@ export default function Videocall(){
            myDiv.append(endCall);
            videoGrid.append(myVideo);
 }
-
+JoinedCall()
     return(
       <div className="container">
        <div>
