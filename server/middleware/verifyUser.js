@@ -7,7 +7,7 @@ async function verifyToken(req, res, next) {
         res.status(404).send("Unauthorised access of user")
     }
     try {
-       
+    
         const user =await jwt.verify(req.cookies.token_for_talkpal, JWT_SECRET);
         console.log("user",user)
         req.id = user.id;

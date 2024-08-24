@@ -73,7 +73,8 @@ const Welcome = ({ setOtpState }) => {
                         <button className="login" onClick={handleOnClick} >Sign Up</button>
                     </div>
                 </div>
-                <Link to='http://localhost:5000/auth/google'><button className='google' onClick={handleOnClick2} >Sign up with google</button></Link>
+
+                <div className='goog'><Link to='http://localhost:5000/auth/google'><button className='google' onClick={handleOnClick2} >Sign up with google</button></Link></div>
                 <p className="ask">Already have an account?<a href="/signin">Login</a></p>
             </div>
         </>
