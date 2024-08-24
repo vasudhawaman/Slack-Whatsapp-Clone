@@ -48,7 +48,7 @@ app.get('/auth/google',
   passport.authenticate('google', { scope: ['profile', 'email'] }));
 
 app.get('/auth/google/callback',
-  passport.authenticate('google', { failureRedirect: 'http://localhost:3001' }),
+  passport.authenticate('google', { failureRedirect: 'http://localhost:3002' }),
   (req, res) => {
        const {token}=req.user;
        console.log(token) 

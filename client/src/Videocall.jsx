@@ -4,29 +4,33 @@ import {useNavigate} from "react-router-dom"
 import { SocketContext } from "./context/SocketContext";
 import Calling from "./Calling";
 import './Videocall.css';
+import { useLocation } from "react-router-dom";
 export default function Videocall(){
- const [user,setUser] =useState("");
- const [room,setRoom]=useState("");
+
  const [join,setJoin] =useState(false);
  const [stream,setStream] =useState(null);
  const Navigate = useNavigate();
   const {socket} =useContext(SocketContext);
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const user = queryParams.get("user");
+  const room = queryParams.get("room");
   useEffect(()=>{
-    console.log("use effect ran ");
-   if(!stream) navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(
-      (stream) => {
-        setStream(stream); // gets stream of user
-      });
-      socket.on("call-end",(data)=>{
-        Navigate("/");
-    }) 
-
-  },[socket])
+  console.log("use effect ran ");
+ if(!stream) navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(
+    (stream) => {
+      setStream(stream); // gets stream of user
+    });
+ socket.on("call-end",(data)=>{
+      Navigate("/");
+  }) 
+  JoinedCall()
+},[socket])
   // this is okay
- function handleSubmit(e){
-     e.preventDefault();
-    socket.emit("join_call",{room:room,user:user});
-    socket.emit("start_call",{room:room,user:user});
+ function JoinedCall(){
+    
+     socket.emit("join_call",{room:room,user:user});
+     socket.emit("start_call",{room:room,user:user});
           setJoin(true)
           console.log(stream,"myside")
           const myVideo = document.createElement('video');
@@ -49,8 +53,8 @@ export default function Videocall(){
                   const videoTrack = stream.getTracks().find(track => track.kind === 'video');
                   if(videoTrack.enabled){
                       videoTrack.enabled = false;
-                      button1.innerHTML =`<svg xmlns="http://www.w3.org/2000/svg" width="46" height="46" fill="currentColor" class="bi bi-camera-video-off" viewBox="0 0 16 16">
-  <path fill-rule="evenodd" d="M10.961 12.365a2 2 0 0 0 .522-1.103l3.11 1.382A1 1 0 0 0 16 11.731V4.269a1 1 0 0 0-1.406-.913l-3.111 1.382A2 2 0 0 0 9.5 3H4.272l.714 1H9.5a1 1 0 0 1 1 1v6a1 1 0 0 1-.144.518zM1.428 4.18A1 1 0 0 0 1 5v6a1 1 0 0 0 1 1h5.014l.714 1H2a2 2 0 0 1-2-2V5c0-.675.334-1.272.847-1.634zM15 11.73l-3.5-1.555v-4.35L15 4.269zm-4.407 3.56-10-14 .814-.58 10 14z"/>
+                      button1.innerHTML =`<svg xmlns="http://www.w3.org/2000/svg" width="46" height="46" fill="currentColor" class="bi bi-camera-video" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M0 5a2 2 0 0 1 2-2h7.5a2 2 0 0 1 1.983 1.738l3.11-1.382A1 1 0 0 1 16 4.269v7.462a1 1 0 0 1-1.406.913l-3.111-1.382A2 2 0 0 1 9.5 13H2a2 2 0 0 1-2-2zm11.5 5.175 3.5 1.556V4.269l-3.5 1.556zM2 4a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h7.5a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1z"/>
 </svg>`;
                   }else{
                     videoTrack.enabled = true;
@@ -98,22 +102,9 @@ export default function Videocall(){
            myDiv.append(endCall);
            videoGrid.append(myVideo);
 }
+
     return(
       <div className="container">
-      <div className="leftSide">
-        
-         <form onSubmit={handleSubmit}>
-         <input type="text" value={room} onChange={(e)=>{
-             setRoom(e.target.value);
-         }}/>
-         <input type="text" value={user} onChange={(e)=>{
-             setUser(e.target.value);
-         }}/>
-         <button>Submit</button>
-         </form>
-         
-         
-       </div>
        <div>
       { join ?<Calling user={user}  stream={stream}/> : null}
      </div>

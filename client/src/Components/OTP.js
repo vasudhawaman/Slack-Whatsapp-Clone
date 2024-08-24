@@ -25,7 +25,7 @@ export default function OTP({otpState}) {
             const json = await response.json();
             console.log(json);
             if(json.message==='success'){
-                Navigate('/allusers')
+                Navigate('/')
             }
             else{
                 alert(json.message)

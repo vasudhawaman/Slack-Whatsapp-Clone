@@ -8,6 +8,7 @@ const upload = multer({ dest: 'uploads/' })
 const session=require('express-session');
 const passport=require('passport');
 const cookieParser=require('cookie-parser');
+const db =require("./db");
 const app = express();
 app.use(express.json());
 require('./OAuth/googleOauth')
@@ -18,8 +19,7 @@ app.use(bodyParser.urlencoded({
 const cors = require('cors');
 const http = require('http');
 const { Server } = require('socket.io');
-const port = 8000;
-
+const port = 5000;
 // create a new connectionn 
 app.use(session({
     secret: 'mysecret',
@@ -45,7 +45,7 @@ app.use(cors({
 
 const server = http.createServer(app);
 const io = new Server(server, {
-    maxHttpBufferSize: 1e9,
+    maxHttpBufferSize: 1e9, // max 100MB for files 
     cors: {
         origin: ["http://localhost:3000", "https://localhost:3001"],
         methods: ["GET", "POST"]
@@ -59,15 +59,35 @@ io.on("connection", (socket) => {
     socket.on("join_chat", (data) => {
         console.log(`user ${data.user} has joined ${data.room}`)
         socket.join(data.room);
-    }); // join random chat
+    }); // join a chat that already exists 
     socket.on('send_message', (data) => {
         console.log("emitted")
-        if (!data.file) {
-            socket.to(data.room).emit('recieve_message', data);
-        } else {
+        console.log("message:",data) // save in db under user id as mine data.user 
+        if(!data.file){
+            // purely text based
+            let q = "INSERT INTO files(`user_id`,`room_id`,`text`,`type`,`time`) VALUES (?,?,?,?,?)"
+                    db.query(q, [data.user, data.room, data.text,data.type,data.time], async (err, user) => {
+                        if (err) throw err;})
 
-            // data.source = blob;
-            console.log(data);
+        }
+       
+        if (!data.file) {
+            let q1 ="SELECT * FROM files WHERE user_id=? AND room_id=? ORDER BY DESC id";
+            db.query(q1, [data.user, data.room], async (err, user) => {
+                if (err) throw err;}).then((result)=>{
+                    console.log(result);
+                    socket.to(data.room).emit('recieve_message', data);
+                })
+
+            
+        } else {
+            let q = "INSERT INTO files(`user_id`,`room_id`,`file`,`type`,`time`,`filename`,`mimetype`,`text`) VALUES (?,?,?,?,?,?,?,?)"
+            // data.file is of type buffer so convert to blob then store 
+            let buffer = [data.source];
+            let blob = new Blob(buffer,{type:data.mimetype});
+            db.query(q, [data.user, data.room, blob,data.type,data.time,data.filename], async (err, user) => {
+                if (err) throw err;})
+
             socket.to(data.room).emit('recieve_message', data);
 
     }});

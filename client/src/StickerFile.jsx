@@ -19,10 +19,13 @@ export default function StickerFile({setMessage,room,user}){
     }
     return(
         <div id="sticker">
-            <form id="stickerItem">
+     <form id="stickerItem">
         <CloseIcon onClick={()=>{
               document.getElementById("sticker").style.display ="none";
               document.getElementById("stickerItem").reset();
+              setImgSticky(false);
+              setSticker("");
+              setColor(null);
               
           }} style={{ paddingLeft: "2%"}}/>
        {color ? <input type="file" name="avatar"  onChange={handleSticker}/> : null}
