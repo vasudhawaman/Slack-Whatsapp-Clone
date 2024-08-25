@@ -62,7 +62,11 @@ export default function Voice({setMessage,room,user}){
         document.getElementById("stopVoice").style.display ="none";
         recorder.current.stop();
         let min =new Date().getMinutes();
-           let hr = new Date().getHours();
+           let hr = new Date().getHours(); 
+           let date = new Date().getDate();
+           let month = new Date().getMonth() +1;
+           let year = new Date().getFullYear();
+           let dateObj = `${date}/${month}/${year}`;
            const height =  document.getElementById("message").offsetHeight;
           
            window.scrollTo(window.innerWidth,window.innerHeight + height);
@@ -85,7 +89,8 @@ export default function Voice({setMessage,room,user}){
                          source:fr.result,
                          file:'audio',
                          time:hr+':'+min,
-                         cloudinary: url
+                         cloudinary: url,
+                         date:dateObj
 
                      }];
                    });
@@ -100,6 +105,7 @@ export default function Voice({setMessage,room,user}){
                   room:room,
                   time:hr+":"+min,
                   mimetype:'audio/mp4',
+                  date:dateObj
              });
         }
         

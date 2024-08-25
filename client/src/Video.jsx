@@ -32,6 +32,10 @@ export default function Video({setMessage,room,user}){
         recorder.current.stop();
         let min =new Date().getMinutes();
            let hr = new Date().getHours();
+           let date = new Date().getDate();
+     let month = new Date().getMonth() +1;
+     let year = new Date().getFullYear();
+     let dateObj = `${date}/${month}/${year}`;
            const height =  document.getElementById("message").offsetHeight;
           
            window.scrollTo(window.innerWidth,window.innerHeight + height);
@@ -51,8 +55,8 @@ export default function Video({setMessage,room,user}){
                          type:'sent',
                          source:fr.result,
                          file:'video',
-                         time:hr+':'+min
-
+                         time:hr+':'+min,
+                         date:dateObj
                      }];                  
                     
                     });
@@ -68,6 +72,7 @@ export default function Video({setMessage,room,user}){
                     room:room,
                     time:hr+":"+min,
                     mimetype:'video/mp4',
+                    date:dateObj
                });
         }
         

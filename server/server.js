@@ -63,34 +63,38 @@ io.on("connection", (socket) => {
     socket.on('send_message', (data) => {
         console.log("emitted")
         console.log("message:",data) // save in db under user id as mine data.user 
-        // if(!data.file){
-        //     // purely text based
-        //     let q = "INSERT INTO files(`user_id`,`room_id`,`text`,`type`,`time`) VALUES (?,?,?,?,?)"
-        //             db.query(q, [data.user, data.room, data.text,data.type,data.time], async (err, user) => {
-        //                 if (err) throw err;})
+         if(!data.file){
+             // purely text based
+           
+               try{
+                let q = "INSERT INTO files(`user`,`room_id`,`text`,`time`,`date`) VALUES (?,?,?,?,?)"
+                console.log(typeof(data.room));
+               db.query(q, [data.user,data.room, data.text,data.time,data.date],(err,result)=>{
+                if(err) throw err;
+                console.log(result);
+               });
+            }catch(err){
+                console.log(err);
+            }
+    }else {
+             try{
+                console.log(data);
+                 let q = "INSERT INTO files(`user`,`room_id`,`file`,`time`,`filename`,`mimetype`,`text`,`date`) VALUES (?,?,?,?,?,?,?,?)"
+            //  data.file is of type buffer so convert to blob then store 
+                // filesstored as buffer but which is
+                db.query(q, [data.user, data.room,data.source,data.time,data.name,data.mimetype,data.text,data.date],(err,result)=>{
+                  if(err) throw err;
+                     console.log(result);
+                       })
+            }catch(err){
+                console.log(err);
+            }
+                    
 
-        // }
-       
-        if (!data.file) {
-            // let q1 ="SELECT * FROM files WHERE user_id=? AND room_id=? ORDER BY DESC id";
-            // db.query(q1, [data.user, data.room], async (err, user) => {
-            //     if (err) throw err;}).then((result)=>{
-            //         console.log(result);
-            //         socket.to(data.room).emit('recieve_message', data);
-            //     })
-            socket.to(data.room).emit('recieve_message', data);
-            
-        } else {
-            // let q = "INSERT INTO files(`user_id`,`room_id`,`file`,`type`,`time`,`filename`,`mimetype`,`text`) VALUES (?,?,?,?,?,?,?,?)"
-            // // data.file is of type buffer so convert to blob then store 
-            // let buffer = [data.source];
-            // let blob = new Blob(buffer,{type:data.mimetype});
-            // db.query(q, [data.user, data.room, blob,data.type,data.time,data.filename], async (err, user) => {
-            //     if (err) throw err;})
-
-            socket.to(data.room).emit('recieve_message', data);
-
-    }});
+    }
+    socket.to(data.room).emit('recieve_message', data);
+        
+  });
     
     socket.on("join_call", (data) => {
         console.log(`${data.user} is requesting to join`);
@@ -109,6 +113,7 @@ io.on("connection", (socket) => {
 
 
 })
+
 app.get('/auth/google',
     passport.authenticate('google', { scope: ['profile', 'email'] }));
 

@@ -50,9 +50,12 @@ function handleChange(event) {
    }
   
   function addTochat(){
-    let min =new Date().getMinutes();
+           let min =new Date().getMinutes();
            let hr = new Date().getHours();
-          
+           let date = new Date().getDate();
+           let month = new Date().getMonth() +1;
+           let year = new Date().getFullYear();
+           let dateObj = `${date}/${month}/${year}`;
           if( min <10){
                min = "0" + min;
           }
@@ -63,7 +66,8 @@ function handleChange(event) {
                 type:"sent",
                 time:hr+":"+min,
                 name:name,
-                mimetype:file.type
+                mimetype:file.type,
+                date:dateObj
            }]});
            socket.emit("send_message",{ 
             source:file, // sent as buffer cant send direct base64URL
@@ -72,7 +76,8 @@ function handleChange(event) {
             room:room,
             time:hr+":"+min,
             mimetype:file.type,
-            name:name
+            name:name,
+            date:dateObj
        });
        setFile("")
        setType("")

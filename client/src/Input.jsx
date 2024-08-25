@@ -20,7 +20,10 @@ export default function Input({setMessage,room,user}){
      const {socket} = useContext(SocketContext);
      let min =new Date().getMinutes();
      let hr = new Date().getHours();
-     
+     let date = new Date().getDate();
+     let month = new Date().getMonth() +1;
+     let year = new Date().getFullYear();
+     let dateObj = `${date}/${month}/${year}`;
     if( min <10){
          min = "0" + min;
     }
@@ -29,13 +32,16 @@ export default function Input({setMessage,room,user}){
                return [...prev ,{
                      text:text,
                     type :"sent",
-                     time: hr +":"+min
+                     time: hr +":"+min,
+                     date: dateObj
                }]}) 
         
           socket.emit("send_message",{ 
                text:text,
                user: user,
-               room:room
+               room:room,
+               time: hr +":"+min,
+               date:dateObj
           });
           
      }

@@ -4,15 +4,18 @@ import Message from "./Message";
 import Input from "./Input";
 import Profile from "./Profile";
 import { SocketContext } from "./context/SocketContext";
-
-  
+import {UserContext} from "./context/UserContext";
 export default function Chat({message,setMessage,user,room}){
     
       const {socket} = useContext(SocketContext);
      
-      let min =new Date().getMinutes();
+     
+           let min =new Date().getMinutes();
            let hr = new Date().getHours();
-           
+           let date = new Date().getDate();
+           let month = new Date().getMonth() +1;
+           let year = new Date().getFullYear();
+           let dateObj = `${date}/${month}/${year}`;
           if( min <10){
                min = "0" + min;
           }
@@ -22,7 +25,9 @@ export default function Chat({message,setMessage,user,room}){
             socket.on("recieve_message",(data)=>{
 
                 if(!data.file){
-                        setMessage((prev)=>{ return [...prev ,{text:data.text, type :"recieve",time: hr +":"+min }] }) 
+                        setMessage((prev)=>{ return [...prev ,{text:data.text,   type :"recieve",time: hr +":"+min,
+                         date:data.dateObj
+                         }] }) 
                         }else{
                             console.log(typeof(data.source))
                                  let buffer = [data.source]; // buffer to blob which is then read 
@@ -37,8 +42,8 @@ export default function Chat({message,setMessage,user,room}){
                                          type:"recieve",
                                          time:hr+":"+min,
                                          name:data.name,
-                                         mimetype:data.mimetype
-                                       
+                                         mimetype:data.mimetype,
+                                         date:data.dateObj
                                     }]});
                                          
                                    }

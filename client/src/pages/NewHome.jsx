@@ -3,14 +3,17 @@ import './NewHome.css';
 import Chat from "../Chat";
 import Search from "../Components/Search";
 import { SocketContext } from '../context/SocketContext';
+import { UserContext } from "../context/UserContext";
 import Chatlog from "../Components/Chatlog";
 import useWindowDimensions from "../Components/Dimensions";
 export default function NewHome() {
   const [user, setUser] = useState()
   const [room, setRoom] = useState("")
+  const  {current} = useContext(UserContext);
+
   // const  dimension = useWindowDimensions();
   const [message, setMessage] = useState([]);
-  const users = [{ user: "User 1", time: "1:30" }, { user: "User 2", time: "3:30", lastmessage: "Hello how are you", read: "unread", img: "images/img2.jpg" }, { user: "User 3", time: "11:30", lastMessage: "Where are you right now", read: "", img: "images/img3.jpg" }]
+  
   const { socket } = useContext(SocketContext);
   let min = new Date().getMinutes();
   let hr = new Date().getHours();
@@ -44,16 +47,12 @@ export default function NewHome() {
 
   useEffect(() => {
     
-    if (user && room) {
-      console.log(user,room)
-      socket.emit("join_chat", { room: room, user: user });
+    if (room) {
+      socket.emit("join_chat", { room: room, user: current.username });
     }
-  }, [user, room])
+  }, [room])
   
-  function handleSubmit(e) {
-    e.preventDefault();
-    socket.emit("join_chat", { room: room, user: user });
-  }
+  
   return (
     <div className="home">
 

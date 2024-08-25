@@ -3,6 +3,7 @@ import VideoCallIcon from '@mui/icons-material/VideoCall';
 import "./Profile.css";
 import useWindowDimensions from './Components/Dimensions'
 import {SocketContext} from "./context/SocketContext"
+import {UserContext} from "./context/UserContext";
 import { ToastContainer, toast } from 'react-toastify';
 import {useNavigate} from "react-router-dom"
 import 'react-toastify/dist/ReactToastify.css';
@@ -10,18 +11,20 @@ import 'react-toastify/dist/ReactToastify.css';
 export default function Profile({user,room}){
   const [userdata,setData] =useState({room:room,user:user});
             const  dimension = useWindowDimensions();
+            const  {current} = useContext(UserContext);
+            console.log(current);
             const Navigate = useNavigate();
             const [typing,setTyping] = useState(false)
              const {socket} =useContext(SocketContext);
              const AcceptCallButton =({closeToast}) =>{
                  return <span onClick={()=>{
-                  socket.emit("start_call",{room:room,user:user});
+                  socket.emit("join_call",{room:room,user:user});
                       Navigate(`/call?user=${user}&room=${room}`);
                       closeToast()
                   }}>📞</span>;
              }
    useEffect(()=>{
-                 console.log(userdata)
+                
              socket.on("recieve_call",(data)=>{
                     toast(`Receive call!`);
                });
