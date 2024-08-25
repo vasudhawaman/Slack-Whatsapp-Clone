@@ -1,9 +1,12 @@
 .cont{
+    padding: 10px;
+    margin-top: 10%;
+    margin-left: 20%;
     display: flex;
     flex-direction: column;
     align-items: center;
     border: 3px solid #3d52d5;
-    width: 70%;
+    width: 60%;
 }
 
 .user-profile{

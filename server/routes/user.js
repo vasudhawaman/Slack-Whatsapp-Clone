@@ -8,8 +8,9 @@ const nodemailer = require('nodemailer')
 const jwt = require('jsonwebtoken');
 const verifyToken = require('../middleware/verifyUser');
 const db = require('../db');
-const JWT_SECRET = "krishkrish@123"
-
+const JWT_SECRET = "krishkrish@123";
+const multer = require('multer');
+const upload = multer({ storage: multer.memoryStorage() });
 router.post('/cheak', [
     body('email', "Enter the correct email").isEmail(),
     body('password', "Enter mininmun 6 letter passowrd").isLength(6)
@@ -107,7 +108,7 @@ router.post('/signup', [
                         let q4 = "SELECT * FROM users WHERE email=?"
                         db.query(q4, [req.body.email], async (err, user) => {
                             if (user.length > 0) {
-                                console.log("user after signup",user)
+                                console.log("user after signup", user)
                                 const data = { id: user[0].id }
                                 const token = await jwt.sign(data, JWT_SECRET, { expiresIn: '7 days' })
                                 return res.cookie('token_for_talkpal', token, {
@@ -158,7 +159,7 @@ router.post('/login', [
                 return res.status(400).json({ error: "User does not exist" });
             }
             const user = result[0];
-            const stringPassword= password.toString()
+            const stringPassword = password.toString()
             const passwordCompare = await bcrypt.compare(stringPassword, user.password);
             console.log('Plain Text Password Type:', typeof password);
             console.log('Hashed Password Type:', typeof user.password);
@@ -273,7 +274,6 @@ router.get('/getinfo', verifyToken, async (req, res) => {
     const q1 = "SELECT * FROM users where id=?"
     db.query(q1, [req.id], (err, user) => {
         if (err) throw err
-        console.log(user)
         res.json(user[0])
     })
     // user.username = req.body.username;
@@ -283,17 +283,29 @@ router.get('/getinfo', verifyToken, async (req, res) => {
     // res.json(user);
 })
 
-router.post('/changeinfo', verifyToken, async (req, res) => {
-    const q1 = "SELECT * FROM users where id=?"
-    db.query(q1, [req.id], (err, user) => {
+router.put('/updateinfo', verifyToken, upload.single('image'), (req, res) => {
+    if(!req.file){
+        return res.json({ error: "No file uploaded" });
+    }
+    const userId = req.id;
+    console.log(req.file);
+    const mimetype = req.file.mimetype;
+    const imageData = req.file.buffer;
+    const query = "UPDATE users SET image=?, filename=? WHERE id=?";
+    db.query(query, [imageData, mimetype, userId], (err, result) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ error: err.message });
+        }
+        res.json({ success: "Info has been updated" });
+    });
+});
+
+router.put('/updatestatus',verifyToken,(req,res)=>{
+    const q = "UPDATE users SET status=? WHERE (id=?)"
+    db.query(q, [req.body.status, req.id], (err, result) => {
         if (err) throw err
-        console.log(user[0])
-        const q3 = "UPDATE users SET status=? , image=? WHERE (id=?)"
-        db.query(q3, [req.body.status, req.body.image, req.id], (err, result) => {
-            if (err) throw err
-            console.log("Info has been updated")
-            res.json({ success: "Info has been updated" })
-        })
+        res.json({ success: "Status has been updated" })
     })
 })
 
@@ -400,7 +412,7 @@ router.post('/createroom', verifyToken, async (req, res) => {
     // })
 })
 
-router.post('/contacts',verifyToken, async (req, res) => {
+router.post('/contacts', verifyToken, async (req, res) => {
     const roomQuery = "SELECT roomid FROM room WHERE userids=?";
     const room = await new Promise((resolve, reject) => {
         db.query(roomQuery, [req.id], (err, result) => {
@@ -411,7 +423,7 @@ router.post('/contacts',verifyToken, async (req, res) => {
     const allContactsPromises = room.map((r) => {
         const userQuery = "SELECT * FROM users INNER JOIN room ON room.userids=users.id AND room.roomid=? WHERE id IN (SELECT userids FROM room WHERE roomid=? AND userids!=?)";
         return new Promise((resolve, reject) => {
-            db.query(userQuery, [r.roomid,r.roomid,req.id], (err, users) => {
+            db.query(userQuery, [r.roomid, r.roomid, req.id], (err, users) => {
                 if (err) reject(err);
                 else resolve(users);
             });
@@ -429,6 +441,11 @@ router.delete('/reject', verifyToken, async (req, res) => {
         console.log("Deleted connection succesfully");
         res.json({ success: "Deleted user successfully" })
     })
+})
+
+router.post('/update', async (req, res) => {
+    const { image, status } = req.body;
+
 })
 
 module.exports = router;
