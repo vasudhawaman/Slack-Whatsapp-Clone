@@ -39,73 +39,79 @@ export default function Voice({ setMessage, room, user }) {
     } catch (error) {
       return null;
     }
-  }
-  function startRecording() {
-    console.log("start");
-    document.getElementById("startVoice").style.display = "none";
-    document.getElementById("stopVoice").style.display = "block";
-    const media = new MediaRecorder(stream, { type: 'audio/mp4' });
-    //set the MediaRecorder instance to the mediaRecorder ref
-    recorder.current = media;
-    //invokes the start method to start the recording process
-    recorder.current.start();
-    let localAudioChunks = [];
-    recorder.current.ondataavailable = (event) => {
-      if (typeof event.data === "undefined") return;
-      if (event.data.size === 0) return;
-      localAudioChunks.push(event.data);
-    };
-    setAudioblobs(localAudioChunks);
-  }
-  function stopRecording() {
-    document.getElementById("startVoice").style.display = "block";
-    document.getElementById("stopVoice").style.display = "none";
-    recorder.current.stop();
-    let min = new Date().getMinutes();
-    let hr = new Date().getHours();
-    const height = document.getElementById("message").offsetHeight;
-
-    window.scrollTo(window.innerWidth, window.innerHeight + height);
-    if (min < 10) {
-      min = "0" + min;
+   }
+    function startRecording(){
+        console.log("start");
+        document.getElementById("startVoice").style.display ="none";
+        document.getElementById("stopVoice").style.display ="block";
+        const media = new MediaRecorder(stream, { type:'audio/mp4' });
+        //set the MediaRecorder instance to the mediaRecorder ref
+        recorder.current = media;
+        //invokes the start method to start the recording process
+        recorder.current.start();
+        let localAudioChunks = [];
+        recorder.current.ondataavailable = (event) => {
+           if (typeof event.data === "undefined") return;
+           if (event.data.size === 0) return;
+           localAudioChunks.push(event.data);
+        };
+        setAudioblobs(localAudioChunks);
     }
-    recorder.current.onstop = async (e) => {
-      const url = await sendTocloud();
-      console.log(url);
-      let audioData = new Blob(audioBlobs,
-        { 'type': 'audio/mp4;' });
-      audioData.lastModifiedDate = new Date();
-      audioData.name = 'new.mp4';
-      var fr = new FileReader();
-      fr.onload = function () {
-        //  setSrc(fr.result);
-        setMessage((prev) => {
-          return [...prev, {
-            type: 'sent',
-            source: fr.result,
-            file: 'audio',
-            time: hr + ':' + min,
-            cloudinary: url
+     function stopRecording(){
+        document.getElementById("startVoice").style.display ="block";
+        document.getElementById("stopVoice").style.display ="none";
+        recorder.current.stop();
+        let min =new Date().getMinutes();
+           let hr = new Date().getHours(); 
+           let date = new Date().getDate();
+           let month = new Date().getMonth() +1;
+           let year = new Date().getFullYear();
+           let dateObj = `${date}/${month}/${year}`;
+           const height =  document.getElementById("message").offsetHeight;
+          
+           window.scrollTo(window.innerWidth,window.innerHeight + height);
+          if( min <10){
+               min = "0" + min;
+          }
+        recorder.current.onstop = async (e)=>{
+               const url = await sendTocloud();
+               console.log(url);
+            let audioData = new Blob(audioBlobs, 
+                { 'type': 'audio/mp4;' });
+                audioData.lastModifiedDate = new Date();
+                audioData.name = 'new.mp4';
+                var fr = new FileReader();
+                fr.onload = function () {
+                    //  setSrc(fr.result);
+                   setMessage((prev)=>{
+                     return [...prev,{
+                         type:'sent',
+                         source:fr.result,
+                         file:'audio',
+                         time:hr+':'+min,
+                         cloudinary: url,
+                         date:dateObj
 
-          }];
-        });
-
-
-      }
-      fr.readAsDataURL(audioData);
-      socket.emit("send_message", {
-        source: audioData, // sent as buffer
-        file: 'audio',
-        user: user,
-        room: room,
-        time: hr + ":" + min,
-        mimetype: 'audio/mp4',
-      });
-    }
-
-  }
-
-  return (
+                     }];
+                   });
+                   
+       
+             }
+                fr.readAsDataURL(audioData);
+                socket.emit("send_message",{ 
+                  source:audioData, // sent as buffer
+                  file:'audio',
+                  user: user,
+                  room:room,
+                  time:hr+":"+min,
+                  mimetype:'audio/mp4',
+                  date:dateObj
+             });
+        }
+        
+     }   
+   
+     return(
 
 
     <div id="record" >

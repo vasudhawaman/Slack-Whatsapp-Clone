@@ -4,54 +4,57 @@ import Message from "./Message";
 import Input from "./Input";
 import Profile from "./Profile";
 import { SocketContext } from "./context/SocketContext";
+import {UserContext} from "./context/UserContext";
+export default function Chat({message,setMessage,user,room}){
+    
+      const {socket} = useContext(SocketContext);
+     
+     
+           let min =new Date().getMinutes();
+           let hr = new Date().getHours();
+           let date = new Date().getDate();
+           let month = new Date().getMonth() +1;
+           let year = new Date().getFullYear();
+           let dateObj = `${date}/${month}/${year}`;
+          if( min <10){
+               min = "0" + min;
+          }
+     
+      useEffect(()=>{
+     
+            socket.on("recieve_message",(data)=>{
 
-
-export default function Chat({ message, setMessage, user, room }) {
-
-    const { socket } = useContext(SocketContext);
-
-    let min = new Date().getMinutes();
-    let hr = new Date().getHours();
-
-    if (min < 10) {
-        min = "0" + min;
-    }
-
-    useEffect(() => {
-
-        socket.on("recieve_message", (data) => {
-
-            if (!data.file) {
-                setMessage((prev) => { return [...prev, { text: data.text, type: "recieve", time: hr + ":" + min }] })
-            } else {
-                console.log(typeof (data.source))
-                let buffer = [data.source]; // buffer to blob which is then read 
-                //blob requires mimetype
-                let blob = new Blob(buffer, { type: data.mimetype });
-                let fr = new FileReader();
-                fr.onload = function () {
-
-                    setMessage((prev) => {
-                        return [...prev, {
-                            source: fr.result,
-                            file: data.file,
-                            type: "recieve",
-                            time: hr + ":" + min,
-                            name: data.name,
-                            mimetype: data.mimetype
-
-                        }]
-                    });
-
-                }
-                fr.readAsDataURL(blob);
-            }
-        })
-
-
-    }, [socket]);
-
-    return (
+                if(!data.file){
+                        setMessage((prev)=>{ return [...prev ,{text:data.text,   type :"recieve",time: hr +":"+min,
+                         date:data.dateObj
+                         }] }) 
+                        }else{
+                            console.log(typeof(data.source))
+                                 let buffer = [data.source]; // buffer to blob which is then read 
+                                 //blob requires mimetype
+                             let blob = new Blob(buffer,{type:data.mimetype});
+                                let fr = new FileReader();
+                                 fr.onload = function () {
+                                  
+                                     setMessage((prev)=>{ return [...prev ,{
+                                         source:fr.result,
+                                         file:data.file,
+                                         type:"recieve",
+                                         time:hr+":"+min,
+                                         name:data.name,
+                                         mimetype:data.mimetype,
+                                         date:data.dateObj
+                                    }]});
+                                         
+                                   }
+                                   fr.readAsDataURL(blob);           
+                  }
+                })
+                  
+       
+           },[socket]);
+           
+    return(
         <div id="chat">
             <Profile link="pfp.png" user={user} room={room} />
 

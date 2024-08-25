@@ -41,7 +41,10 @@
     
 let min =new Date().getMinutes();
 let hr = new Date().getHours();
-
+let date = new Date().getDate();
+let month = new Date().getMonth() +1;
+let year = new Date().getFullYear();
+let dateObj = `${date}/${month}/${year}`;
 if( min <10){
     min = "0" + min;
 }
@@ -51,7 +54,8 @@ function sendMessage(dataURL){
       file:'image', //type of file for messages set in img tag/video tag 
       type:"sent",
       time:hr+":"+min,
-      mimetype:'image/jpeg'
+      mimetype:'image/jpeg',
+      date:dateObj
  }]});
 
   function dataURLtoFile(dataurl, filename) {
@@ -74,7 +78,7 @@ function sendMessage(dataURL){
    room:room,
    time:hr+":"+min,
    mimetype:'image/jpeg',
-   
+   date:date
  });
      
 }
