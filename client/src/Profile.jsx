@@ -1,11 +1,11 @@
-import React,{useEffect,useContext, useState} from "react";
+import React, { useEffect, useContext, useState } from "react";
 import VideoCallIcon from '@mui/icons-material/VideoCall';
 import "./Profile.css";
 import useWindowDimensions from './Components/Dimensions'
 import {SocketContext} from "./context/SocketContext"
 import {UserContext} from "./context/UserContext";
 import { ToastContainer, toast } from 'react-toastify';
-import {useNavigate} from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import 'react-toastify/dist/ReactToastify.css';
 
 export default function Profile({user,room}){

@@ -40,7 +40,7 @@ export default function Welcome2() {
     {/* </div> */}
     </div>
     <div className='forget'><Link to='/forget'>Forget Password?</Link></div>
-    <div className='goog'><Link to='http://localhost:5000/auth/google'><button className='google1'>Sign in with google</button></Link></div>
+    <div className='goog'><Link to='http://localhost:8000/auth/google'><button className='google1'>Sign in with google</button></Link></div>
     <p className="ask1">Don't have an account?<a href="/register">Sign up</a></p>
     </div>
     

@@ -21,6 +21,7 @@ import ForgetPass from './Components/Forgetpass';
 import Emoji1 from './Components/Emoji';
 import Allusers from './Components/Allusers';
 import Connection from './Components/Connection'
+import EditProfile from './Components/EditProfile';
 function App() {
   const [otpState, setOtpState] = useState(null);
   const [otp1, setotp] = useState(null)
@@ -40,10 +41,11 @@ function App() {
           <Route path='/forget' element={<ForgetPass setotp={setotp} />} />
           <Route path='/otp1' element={<OTP1 otp1={otp1} />} />
           <Route path='/password' element={<Password otp1={otp1} />} />
-          <Route path='/userprofile' element={<User />} />
+          {/* <Route path='/userprofile' element={<User />} /> */}
           <Route path='/emoji' element={<Emoji1 />} />
           <Route path='/allusers' element={<Allusers />} />
           <Route path='/connection' element={<Connection />} />
+          <Route path='/userprofile' element={<EditProfile/>}/>
         </Routes>
 
       </Router>

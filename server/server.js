@@ -5,10 +5,10 @@ const fs = require("fs");
 const bodyParser = require('body-parser');
 const multer = require('multer')
 const upload = multer({ dest: 'uploads/' })
-const session=require('express-session');
-const passport=require('passport');
-const cookieParser=require('cookie-parser');
-const db =require("./db");
+const session = require('express-session');
+const passport = require('passport');
+const cookieParser = require('cookie-parser');
+const db = require("./db");
 const app = express();
 app.use(express.json());
 require('./OAuth/googleOauth')

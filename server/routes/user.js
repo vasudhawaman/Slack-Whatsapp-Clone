@@ -8,8 +8,11 @@ const nodemailer = require('nodemailer')
 const jwt = require('jsonwebtoken');
 const verifyToken = require('../middleware/verifyUser');
 const db = require('../db');
-const JWT_SECRET = "krishkrish@123"
+const JWT_SECRET = "krishkrish@123";
+const multer = require('multer');
+const upload = multer({ storage: multer.memoryStorage() });
 
+// Register
 router.post('/cheak', [
     body('email', "Enter the correct email").isEmail(),
     body('password', "Enter mininmun 6 letter passowrd").isLength(6)
@@ -18,7 +21,6 @@ router.post('/cheak', [
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
     }
-    // let user = await User.findOne({ email: req.body.email });
     let responseSent = 0;
     let q1 = "SELECT * FROM users WHERE email=?";
     db.query(q1, [req.body.email], (err, emailResults) => {
@@ -67,9 +69,10 @@ router.post('/cheak', [
             })
         }
     })
-    // let name = await User.findOne({ username: req.body.username });
 }
 )
+
+// Login
 router.post('/signup', [
     body('email', "Enter the correct email").isEmail(),
     body('password', "Enter mininmun 6 letter passowrd").isLength(6)
@@ -80,7 +83,6 @@ router.post('/signup', [
     }
     try {
         let responseSent = 0;
-        // let user = await User.findOne({ email: req.body.email });
         let q1 = "SELECT * FROM users WHERE email=?";
         db.query(q1, [req.body.email], (err, user) => {
             if (user.length > 0) {
@@ -89,7 +91,6 @@ router.post('/signup', [
             }
             if (!responseSent) {
                 let q2 = "SELECT * FROM users WHERE username=?"
-                // let name = await User.findOne({ username: req.body.username });
                 db.query(q2, [req.body.username], async (err, name) => {
                     console.log(name)
                     if (name.length > 0) {
@@ -107,7 +108,7 @@ router.post('/signup', [
                         let q4 = "SELECT * FROM users WHERE email=?"
                         db.query(q4, [req.body.email], async (err, user) => {
                             if (user.length > 0) {
-                                console.log("user after signup",user)
+                                console.log("user after signup", user)
                                 const data = { id: user[0].id }
                                 const token = await jwt.sign(data, JWT_SECRET, { expiresIn: '7 days' })
                                 return res.cookie('token_for_talkpal', token, {
@@ -119,27 +120,11 @@ router.post('/signup', [
                 })
             }
         })
-
-        // if (name) {
-        //     return res.status(400).send("The person which has this username already exist. Choose different username");
-        // }
-        // const password = req.body.password;
-        // const salt = await bcrypt.genSalt(10);
-        // const secPass = await bcrypt.hash(password, salt)
-
-        // user = new User({
-        //     username: req.body.username,
-        //     email: req.body.email,
-        //     password: secPass
-        // })
-        // await user.save();
-
-
     } catch (err) {
         return res.status(404).send("Sorry! Server error has been detected")
     }
-
 })
+
 //Login for user data
 router.post('/login', [
     body('password', "Enter mininmun 6 letter passowrd").isLength(6)
@@ -151,14 +136,13 @@ router.post('/login', [
     }
     const { username, password } = req.body;
     try {
-        // let user = await User.findOne({ username: req.body.username });
         const q1 = "SELECT * FROM users WHERE username=?"
         db.query(q1, [req.body.username], async (err, result) => {
             if (result.length === 0) {
                 return res.status(400).json({ error: "User does not exist" });
             }
             const user = result[0];
-            const stringPassword= password.toString()
+            const stringPassword = password.toString()
             const passwordCompare = await bcrypt.compare(stringPassword, user.password);
             console.log('Plain Text Password Type:', typeof password);
             console.log('Hashed Password Type:', typeof user.password);
@@ -172,24 +156,6 @@ router.post('/login', [
                 maxAge: 30 * 24 * 60 * 60 * 1000,
             }).json({ message: "success" })
         })
-        // if (!user) {
-        //     return res.status(400).send("Sorry! User has been not exist");
-        // }
-
-        // const passwordCompare = await bcrypt.compare(password, user.password);
-
-        // if (!passwordCompare) {
-        //     return res.status(400).json({ error: "Invalid Credentials" });
-        // }
-
-        // const data = {
-        //     user: {
-        //         username: user.username,
-        //         password: user.password
-        //     }
-        // }
-        // const data1 = user;
-
     }
     catch {
         return res.send(404).send("Sorry! Server error has been detected")
@@ -202,7 +168,6 @@ router.post('/checkmail', async (req, res) => {
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
     }
-    // let user = await User.findOne({ email: req.body.email });
     let q1 = "SELECT * FROM users WHERE email=?"
     db.query(q1, [req.body.email], (err, user) => {
         if (user.length === 0) {
@@ -244,7 +209,6 @@ router.post('/checkmail', async (req, res) => {
 )
 
 router.put('/changepass', async (req, res) => {
-    // let user = await User.findOne({ email: req.body.email });
     let q1 = "SELECT * FROM users WHERE email=?"
     db.query(q1, [req.body.email], async (err, result) => {
         if (err) throw err
@@ -259,7 +223,6 @@ router.put('/changepass', async (req, res) => {
                     console.log("Password has been updated")
                     res.json({ success: "Password has been updated" })
                 })
-                // user.password = secPass;
             }
             else {
                 return res.status(500).json({ message: "New password is same as old password" })
@@ -269,36 +232,43 @@ router.put('/changepass', async (req, res) => {
 })
 
 router.get('/getinfo', verifyToken, async (req, res) => {
-    // const user = await User.findById(req.id);
     const q1 = "SELECT * FROM users where id=?"
     db.query(q1, [req.id], (err, user) => {
         if (err) throw err
-        console.log(user)
         res.json(user[0])
     })
-    // user.username = req.body.username;
-    // user.status = req.body.status;
-    // user.image = req.body.image;
-    // user.save();
-    // res.json(user);
 })
 
-router.post('/changeinfo', verifyToken, async (req, res) => {
-    const q1 = "SELECT * FROM users where id=?"
-    db.query(q1, [req.id], (err, user) => {
-        if (err) throw err
-        console.log(user[0])
-        const q3 = "UPDATE users SET status=? , image=? WHERE (id=?)"
-        db.query(q3, [req.body.status, req.body.image, req.id], (err, result) => {
+router.put('/updateinfo', verifyToken, upload.single('image'), (req, res) => {
+    if (!req.file) {
+        return res.json({ error: "No file uploaded" });
+    }
+    const userId = req.id;
+    console.log(req.file);
+    const mimetype = req.file.mimetype;
+    const imageData = req.file.buffer;
+    const query = "UPDATE users SET image=?, filename=? WHERE id=?";
+    db.query(query, [imageData, mimetype, userId], (err, result) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ error: err.message });
+        }
+        res.json({ success: "Info has been updated" });
+    });
+});
+
+router.put('/updatestatus', verifyToken, (req, res) => {
+    if (req.body.status) {
+        const q = "UPDATE users SET status=? WHERE (id=?)"
+        db.query(q, [req.body.status, req.id], (err, result) => {
             if (err) throw err
-            console.log("Info has been updated")
-            res.json({ success: "Info has been updated" })
+            res.json({ success: "Status has been updated" })
         })
-    })
+    }
 })
 
 router.post('/logout', verifyToken, async (req, res) => {
-    res.clearCookie('token_for_talkpal')
+    res.clearCookie('token_for_talkpal').json("cookiecleared")
 })
 
 router.delete('/delete', verifyToken, async (req, res) => {
@@ -311,11 +281,6 @@ router.delete('/delete', verifyToken, async (req, res) => {
     })
 })
 
-// router.post('/info',async (req,res)=>{
-//     const [rows] =await new Promise((re) db.query('SELECT * FROM users WHERE email = ?', [req.body.email]));
-//     res.send(rows);
-// })
-
 router.get('/allusers', verifyToken, (req, res) => {
     console.log(req.id);
     const q = "SELECT * FROM users WHERE id !=?"
@@ -327,20 +292,6 @@ router.get('/allusers', verifyToken, (req, res) => {
 })
 
 router.post('/connection', verifyToken, async (req, res) => {
-    // const q1="SELECT * FROM users WHERE id=?"
-    // db.query(q1,[req.id],(err,sender)=>{
-    //     if(err) throw err
-    //     const q2="SELECT * FROM users WHERE id=?"
-    //     db.query(q2,[req.body.receiver],(err,receiver)=>{
-    //         if(err) throw err
-    //         const q3="INSERT INTO connections (`sender`,`receiver`,`status`) VALUES (?,?,?)"
-    //         db.query(q3,[req.iq,req.body.receiver,0],(err,result)=>{
-    //             if(err) throw err
-    //             console.log("Connection established")
-    //             res.json({ success: "Connection established" })
-    //         })
-    //     })
-    // }) 
     console.log("hello", req.id)
     const q1 = "SELECT * FROM connections WHERE `sender`=? AND `receiver`=?"
     db.query(q1, [req.id, req.body.receiver], (err, result) => {
@@ -393,14 +344,9 @@ router.post('/createroom', verifyToken, async (req, res) => {
             })
         })
     })
-    // const q='INSERT INTO room (userids) VALUE (?)'
-    // db.query(q,[req.id],(err,result)=>{
-    //     if(err) throw err
-    //     const q1="INSER INTO room (userids) VALUE (?)"
-    // })
 })
 
-router.post('/contacts',verifyToken, async (req, res) => {
+router.post('/contacts', verifyToken, async (req, res) => {
     const roomQuery = "SELECT roomid FROM room WHERE userids=?";
     const room = await new Promise((resolve, reject) => {
         db.query(roomQuery, [req.id], (err, result) => {
@@ -411,7 +357,7 @@ router.post('/contacts',verifyToken, async (req, res) => {
     const allContactsPromises = room.map((r) => {
         const userQuery = "SELECT * FROM users INNER JOIN room ON room.userids=users.id AND room.roomid=? WHERE id IN (SELECT userids FROM room WHERE roomid=? AND userids!=?)";
         return new Promise((resolve, reject) => {
-            db.query(userQuery, [r.roomid,r.roomid,req.id], (err, users) => {
+            db.query(userQuery, [r.roomid, r.roomid, req.id], (err, users) => {
                 if (err) reject(err);
                 else resolve(users);
             });
@@ -429,6 +375,11 @@ router.delete('/reject', verifyToken, async (req, res) => {
         console.log("Deleted connection succesfully");
         res.json({ success: "Deleted user successfully" })
     })
+})
+
+router.post('/update', async (req, res) => {
+    const { image, status } = req.body;
+
 })
 
 module.exports = router;

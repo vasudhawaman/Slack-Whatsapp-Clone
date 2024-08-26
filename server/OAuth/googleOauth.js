@@ -10,7 +10,7 @@ const JWT_SECRET = "krishkrish@123";
 passport.use(new GoogleStrategy({
     clientID: process.env.CLIENT_ID,
     clientSecret: process.env.CLIENT_SECRET,
-    callbackURL: 'http://localhost:5000/auth/google/callback',
+    callbackURL: 'http://localhost:8000/auth/google/callback',
     redirect_uri: 'http://localhost:3001',
     passReqToCallback: true
 },

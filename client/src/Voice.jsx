@@ -1,4 +1,4 @@
-import React, { useState,useRef ,useContext} from "react";
+import React, { useState, useRef, useContext } from "react";
 import './Voice.css';
 import KeyboardVoiceIcon from "@mui/icons-material/KeyboardVoice";
 import StopIcon from '@mui/icons-material/Stop';
@@ -17,29 +17,29 @@ export default function Voice({setMessage,room,user}){
   const {current} =useContext(UserContext);
    async function sendTocloud(){
     let date = Date.now();
-    let time = Math.floor(Math.random()*1000);
+    let time = Math.floor(Math.random() * 1000);
     let formData = new FormData();
-    let audioData = new Blob(audioBlobs, 
-        { 'type': 'audio/mp4;' });
-        audioData.lastModifiedDate = new Date();
-        audioData.name = 'new.mp4';
-    formData.append("file",audioData);
+    let audioData = new Blob(audioBlobs,
+      { 'type': 'audio/mp4;' });
+    audioData.lastModifiedDate = new Date();
+    audioData.name = 'new.mp4';
+    formData.append("file", audioData);
     formData.append("upload_preset", 'vasudha');
-     let fileName = date +'_'+time;
+    let fileName = date + '_' + time;
     formData.append("public_id", fileName);
-    try{
-      const response =  await axios.post("https://api.cloudinary.com/v1_1/dptvzw1kc/video/upload",formData);
-      if(response){
+    try {
+      const response = await axios.post("https://api.cloudinary.com/v1_1/dptvzw1kc/video/upload", formData);
+      if (response) {
         console.log(response.data);
-        const {secure_url} = response.data; // wrokeddd yay
-      return secure_url;
-     
-    }else{
+        const { secure_url } = response.data; // wrokeddd yay
+        return secure_url;
+
+      } else {
         throw "e";
-    }
-      
-    }catch(error){
-       return null;
+      }
+
+    } catch (error) {
+      return null;
     }
    }
     function startRecording(){
@@ -115,10 +115,10 @@ export default function Voice({setMessage,room,user}){
    
      return(
 
-        
-        <div id="record" >
-            <button onClick={startRecording} type="button"id="startVoice"><KeyboardVoiceIcon style={{ color : "whitesmoke"}} /></button>
-            <button onClick={stopRecording} type="button" id="stopVoice" ><StopIcon /></button>
-        </div>
-     )
+
+    <div id="record" >
+      <button onClick={startRecording} type="button" id="startVoice"><KeyboardVoiceIcon style={{ color: "whitesmoke" }} /></button>
+      <button onClick={stopRecording} type="button" id="stopVoice" ><StopIcon /></button>
+    </div>
+  )
 }

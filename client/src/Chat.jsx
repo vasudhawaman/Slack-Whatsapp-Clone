@@ -1,4 +1,4 @@
-import React,{useState,useEffect, useContext} from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./Chat.css"
 import Message from "./Message";
 import Input from "./Input";
@@ -70,7 +70,7 @@ export default function Chat({message,setMessage,user,room}){
            
     return(
         <div id="chat">
-        <Profile  link="pfp.png" user={user} room={room}/>
+            <Profile link="pfp.png" user={user} room={room} />
 
          <div id="all"> 
         
