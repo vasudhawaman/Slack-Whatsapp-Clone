@@ -5,10 +5,10 @@ const fs = require("fs");
 const bodyParser = require('body-parser');
 const multer = require('multer')
 const upload = multer({ dest: 'uploads/' })
-const session=require('express-session');
-const passport=require('passport');
-const cookieParser=require('cookie-parser');
-const db =require("./db");
+const session = require('express-session');
+const passport = require('passport');
+const cookieParser = require('cookie-parser');
+const db = require("./db");
 const app = express();
 app.use(express.json());
 require('./OAuth/googleOauth')
@@ -62,40 +62,40 @@ io.on("connection", (socket) => {
     }); // join a chat that already exists 
     socket.on('send_message', (data) => {
         console.log("emitted")
-        console.log("message:",data) // save in db under user id as mine data.user 
-         if(!data.file){
-             // purely text based
-           
-               try{
-                let q = "INSERT INTO files(`user`,`room_id`,`text`,`time`,`date`) VALUES (?,?,?,?,?)"
-                console.log(typeof(data.room));
-               db.query(q, [data.user,data.room, data.text,data.time,data.date],(err,result)=>{
-                if(err) throw err;
-                console.log(result);
-               });
-            }catch(err){
-                console.log(err);
-            }
-    }else {
-             try{
-                console.log(data);
-                 let q = "INSERT INTO files(`user`,`room_id`,`file`,`time`,`filename`,`mimetype`,`text`,`date`) VALUES (?,?,?,?,?,?,?,?)"
-            //  data.file is of type buffer so convert to blob then store 
-                // filesstored as buffer but which is
-                db.query(q, [data.user, data.room,data.source,data.time,data.name,data.mimetype,data.text,data.date],(err,result)=>{
-                  if(err) throw err;
-                     console.log(result);
-                       })
-            }catch(err){
-                console.log(err);
-            }
-                    
+        console.log("message:", data) // save in db under user id as mine data.user 
+        if (!data.file) {
+            // purely text based
 
-    }
-    socket.to(data.room).emit('recieve_message', data);
-        
-  });
-    
+            try {
+                let q = "INSERT INTO files(`user`,`room_id`,`text`,`time`,`date`) VALUES (?,?,?,?,?)"
+                console.log(typeof (data.room));
+                db.query(q, [data.user, data.room, data.text, data.time, data.date], (err, result) => {
+                    if (err) throw err;
+                    console.log(result);
+                });
+            } catch (err) {
+                console.log(err);
+            }
+        } else {
+            try {
+                console.log(data);
+                let q = "INSERT INTO files(`user`,`room_id`,`file`,`time`,`filename`,`mimetype`,`text`,`date`) VALUES (?,?,?,?,?,?,?,?)"
+                //  data.file is of type buffer so convert to blob then store 
+                // filesstored as buffer but which is
+                db.query(q, [data.user, data.room, data.source, data.time, data.name, data.mimetype, data.text, data.date], (err, result) => {
+                    if (err) throw err;
+                    console.log(result);
+                })
+            } catch (err) {
+                console.log(err);
+            }
+
+
+        }
+        socket.to(data.room).emit('recieve_message', data);
+
+    });
+
     socket.on("join_call", (data) => {
         console.log(`${data.user} is requesting to join`);
         socket.to(data.room).emit("recieve_call", data);

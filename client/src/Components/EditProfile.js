@@ -62,6 +62,20 @@ const EditProfile = () => {
         setdata({ ...data, [name]: value })
         console.log(data)
     }
+    const onLogout=async()=>{
+        const url = "http://localhost:8000/register/logout";
+        const response = await fetch(url, {
+            method: 'POST',
+            credentials: 'include',
+            headers:{
+                'Content-Type': 'application/json'
+            }
+        });
+        console.log("hello");
+        const data = await response.json();
+        console.log(data);
+        window.location.href = '/register';
+    }
     return (
         <div>
             <div className='cont'>
@@ -76,7 +90,8 @@ const EditProfile = () => {
                         <h2 className='username'>{info.username}</h2>
                         <div className='user-info' >Email-Id: {info.email}</div>
                         <input className='status' value={data.status} name='status' id="status" onChange={onHandleChange}></input>
-                        <button onClick={onHandleSubmit}>Submit</button>
+                        <button onClick={onHandleSubmit} className="edit">Submit</button>
+                        <button onClick={onLogout} className="edit">Logout</button>
                     </>
                 ) : (
                     <p>Loading...</p>

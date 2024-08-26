@@ -6,6 +6,7 @@ import { SocketContext } from '../context/SocketContext';
 import { UserContext } from "../context/UserContext";
 import Chatlog from "../Components/Chatlog";
 import useWindowDimensions from "../Components/Dimensions";
+import Default from "./Default";
 export default function NewHome() {
   const [user, setUser] = useState()
   const [room, setRoom] = useState("")
@@ -71,10 +72,9 @@ export default function NewHome() {
           </div>
 
         </aside>
-        <main className="chat" id="main">
-
+       {user? <main className="chat" id="main">
           <Chat message={message} setMessage={setMessage} user={user} room={room} />
-        </main>
+        </main>:<Default/>}
       </section>
     </div>
   )
