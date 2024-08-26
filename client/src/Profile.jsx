@@ -46,13 +46,13 @@ export default function Profile({user,room}){
         <>
         <div id="profile">
         {dimension.width<600 ? <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16" onClick={()=>{
-                   const element= document.querySelector(".chat-rooms");
-                   element.style.display = "block";
-                   const chat = document.querySelector(".chat");
+              const element= document.querySelector(".chat-rooms");
+              element.style.display = "block";
+             const chat = document.querySelector(".chat");
            const input = document.querySelector("#input");
            const form = document.querySelector(".chat-input-form");
-          
-           console.log(chat);
+           const profile = document.querySelector("#profile");
+           profile.style.display ="none";
            chat.style.width ="0%";
            input.style.width ="0%";
               }}>

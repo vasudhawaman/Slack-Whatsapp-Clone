@@ -3,12 +3,14 @@ import './Voice.css';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import StopIcon from '@mui/icons-material/Stop';
 import { SocketContext } from "./context/SocketContext";
+import { UserContext } from "./context/UserContext";
 export default function Video({setMessage,room,user}){
      const [videoBlobs,setVideoblobs] = useState([]);
     const recorder= useRef(null);
      const [stream,setStream] = useState(null);
     navigator.mediaDevices.getUserMedia({audio:true,video:true}).then((stream)=>{setStream(stream);})
    const {socket} =useContext(SocketContext)
+   const {current} =useContext(UserContext);
     function startRecording(){
         console.log("start");
         document.getElementById("startVideo").style.display ="none";
@@ -68,7 +70,7 @@ export default function Video({setMessage,room,user}){
                 socket.emit("send_message",{ 
                     source:videoData, // sent as buffer
                     file:'video',
-                    user: user,
+                    user:current.username,
                     room:room,
                     time:hr+":"+min,
                     mimetype:'video/mp4',

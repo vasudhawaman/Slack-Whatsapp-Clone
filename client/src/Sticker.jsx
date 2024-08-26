@@ -2,8 +2,10 @@
  import * as tfjs from "@tensorflow/tfjs"
  import * as bodySegmentation from "@tensorflow-models/body-segmentation"
  import { SocketContext } from "./context/SocketContext";
- export default function Sticker({setMessage,user,room,sticker,color}){
+ import { UserContext } from "./context/UserContext";
+ export default function Sticker({setMessage,room,sticker,color}){
    const {socket} =useContext(SocketContext)
+    const {current}=useContext(UserContext);
     const [final,setFinal]=useState(null);
     const [loading,setLoading]=useState(true)
     const [send,setSend] = useState(false);
@@ -74,7 +76,7 @@ function sendMessage(dataURL){
   socket.emit("send_message",{ 
    source:myfile, // sent as buffer cant send direct base64URL
    file:'image',
-   user: user,
+   user:current.username,
    room:room,
    time:hr+":"+min,
    mimetype:'image/jpeg',

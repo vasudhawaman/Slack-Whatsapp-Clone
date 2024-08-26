@@ -59,6 +59,12 @@ io.on("connection", (socket) => {
     socket.on("join_chat", (data) => {
         console.log(`user ${data.user} has joined ${data.room}`)
         socket.join(data.room);
+        let q = "SELECT * FROM files WHERE room_id=? order by id asc"
+         db.query(q, [data.room],(err,result)=>{
+           if(err) throw err;
+           console.log(result);
+           io.to(data.room).emit('recieve_message',result);
+        })
     }); // join a chat that already exists 
     socket.on('send_message', (data) => {
         console.log("emitted")
@@ -67,9 +73,9 @@ io.on("connection", (socket) => {
              // purely text based
            
                try{
-                let q = "INSERT INTO files(`user`,`room_id`,`text`,`time`,`date`) VALUES (?,?,?,?,?)"
+                let q = "INSERT INTO files(`user`,`room_id`,`text`,`time`,`date`,`filename`) VALUES (?,?,?,?,?,?)"
                 console.log(typeof(data.room));
-               db.query(q, [data.user,data.room, data.text,data.time,data.date],(err,result)=>{
+               db.query(q, [data.user,data.room, data.text,data.time,data.date,"txt"],(err,result)=>{
                 if(err) throw err;
                 console.log(result);
                });
@@ -79,20 +85,32 @@ io.on("connection", (socket) => {
     }else {
              try{
                 console.log(data);
-                 let q = "INSERT INTO files(`user`,`room_id`,`file`,`time`,`filename`,`mimetype`,`text`,`date`) VALUES (?,?,?,?,?,?,?,?)"
+                 let q = "INSERT INTO files(`user`,`room_id`,`file`,`time`,`filename`,`mimetype`,`text`,`date`,`type`) VALUES (?,?,?,?,?,?,?,?,?)"
             //  data.file is of type buffer so convert to blob then store 
                 // filesstored as buffer but which is
-                db.query(q, [data.user, data.room,data.source,data.time,data.name,data.mimetype,data.text,data.date],(err,result)=>{
+                db.query(q, [data.user, data.room,data.source,data.time,data.name,data.mimetype,data.text,data.date,data.file],(err,result)=>{
                   if(err) throw err;
                      console.log(result);
                        })
             }catch(err){
                 console.log(err);
             }
-                    
-
     }
-    socket.to(data.room).emit('recieve_message', data);
+    try{
+        console.log(data);
+          let q = "SELECT * FROM files WHERE room_id=? order by id asc"
+        // //  data.file is of type buffer so convert to blob then store 
+         // filesstored as buffer but which is
+         db.query(q, [data.room],(err,result)=>{
+           if(err) throw err;
+           console.log(result);
+           io.to(data.room).emit('recieve_message',result);
+        })
+        
+    }catch(err){
+        console.log(err);
+    }
+    
         
   });
     

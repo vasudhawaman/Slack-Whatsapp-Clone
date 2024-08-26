@@ -12,12 +12,13 @@ import { SocketContext } from "./context/SocketContext";
 import Sticker from "./Sticker";
 import SpeechToText from "./Components/SpeechToText";
 import StickerFile from "./StickerFile";
-
+import { UserContext } from "./context/UserContext";
 export default function Input({setMessage,room,user}){
      const [text,setText] = useState("");
      const [file,setFile] =useState("");
      const [sticker,setSticker] =useState("");
      const {socket} = useContext(SocketContext);
+     const {current} = useContext(UserContext);
      let min =new Date().getMinutes();
      let hr = new Date().getHours();
      let date = new Date().getDate();
@@ -28,17 +29,10 @@ export default function Input({setMessage,room,user}){
          min = "0" + min;
     }
      function sendMessage(){
-          setMessage((prev)=>{
-               return [...prev ,{
-                     text:text,
-                    type :"sent",
-                     time: hr +":"+min,
-                     date: dateObj
-               }]}) 
-        
+         
           socket.emit("send_message",{ 
                text:text,
-               user: user,
+               user:current.username,
                room:room,
                time: hr +":"+min,
                date:dateObj

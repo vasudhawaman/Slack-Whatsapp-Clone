@@ -23,33 +23,47 @@ export default function Chat({message,setMessage,user,room}){
       useEffect(()=>{
      
             socket.on("recieve_message",(data)=>{
-
-                if(!data.file){
-                        setMessage((prev)=>{ return [...prev ,{text:data.text,   type :"recieve",time: hr +":"+min,
-                         date:data.dateObj
-                         }] }) 
-                        }else{
-                            console.log(typeof(data.source))
-                                 let buffer = [data.source]; // buffer to blob which is then read 
-                                 //blob requires mimetype
-                             let blob = new Blob(buffer,{type:data.mimetype});
-                                let fr = new FileReader();
-                                 fr.onload = function () {
-                                  
-                                     setMessage((prev)=>{ return [...prev ,{
-                                         source:fr.result,
-                                         file:data.file,
-                                         type:"recieve",
-                                         time:hr+":"+min,
-                                         name:data.name,
-                                         mimetype:data.mimetype,
-                                         date:data.dateObj
-                                    }]});
-                                         
-                                   }
-                                   fr.readAsDataURL(blob);           
-                  }
-                })
+                // console.log("data",data)
+               
+                 const promiseArr = data.map((m)=>{
+                    return new Promise((resolve) => {
+                        if (m.filename !== "txt") {
+                            let buffer = [m.file]; // buffer to blob which is then read
+                            let blob = new Blob(buffer, { type: m.mimetype });
+                            let fr = new FileReader();
+                
+                            fr.onload = function () {
+                                resolve({
+                                    source: fr.result,
+                                    file: m.type,
+                                    time: m.time,
+                                    name: m.filename,
+                                    mimetype: m.mimetype,
+                                    date: m.date,
+                                    user: m.user
+                                });
+                            };
+                
+                            fr.readAsDataURL(blob);
+                        } else {
+                            resolve({
+                                text: m.text,
+                                time: m.time,
+                                date: m.date,
+                                user: m.user
+                            });
+                        }
+                    })
+                   
+                 })
+                 
+                   console.log("promiseArr",promiseArr)
+                   Promise.all(promiseArr).then((results) => {
+                    setMessage(results);
+                  });
+              
+            
+            })
                   
        
            },[socket]);
@@ -64,7 +78,7 @@ export default function Chat({message,setMessage,user,room}){
          { message.length >0 && message.map((m,i)=>{
            
            
-            return <Message type={m.type} text={m.text} time={m.time} file={m.file} source={m.source} cloudinary={m.cloudinary} key={i} name={m.name} mimetype={m.mimetype}/>;
+            return <Message type={m.type} text={m.text} time={m.time} file={m.file} source={m.source} cloudinary={m.cloudinary} key={i} name={m.name} mimetype={m.mimetype} user={m.user}/>;
          }) }
         
          </div>

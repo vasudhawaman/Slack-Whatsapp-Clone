@@ -3,6 +3,7 @@ import SendIcon from '@mui/icons-material/Send';
 import CloseIcon from '@mui/icons-material/Close';
 import './File.css';
 import { SocketContext } from "./context/SocketContext";
+import { UserContext } from "./context/UserContext";
 export function typeOfFile(format){
   switch(format){
        case 'wav':
@@ -27,6 +28,7 @@ export function typeOfFile(format){
 
  export default function File({setMessage,room,user,file,setFile}){
      const {socket} =useContext(SocketContext)
+     const {current} =useContext(UserContext)
       const [source ,setSrc] = useState("");
       const [type,setType] =useState("");
       const [name,setName] = useState("");
@@ -72,7 +74,7 @@ function handleChange(event) {
            socket.emit("send_message",{ 
             source:file, // sent as buffer cant send direct base64URL
             file:type,
-            user: user,
+            user:current.username,
             room:room,
             time:hr+":"+min,
             mimetype:file.type,
