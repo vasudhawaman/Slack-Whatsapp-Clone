@@ -30,7 +30,7 @@ export default function SpeechToText({text,setText,setMessage,room,user}){
         { !listening ? <button className="speech" onClick={()=>{
             SpeechRecognition.startListening() 
             
-        }}><VoiceChatIcon/></button> :
+        }}><VoiceChatIcon id="icon"/></button> :
         <button className="speech" onClick={()=>{
             SpeechRecognition.stopListening() 
             setText(transcript);

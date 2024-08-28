@@ -12,7 +12,7 @@ export default function NewHome() {
   const [room, setRoom] = useState("")
   const  {current} = useContext(UserContext);
 
-  // const  dimension = useWindowDimensions();
+   const  dimension = useWindowDimensions();
   const [message, setMessage] = useState([]);
   
   const { socket } = useContext(SocketContext);
@@ -72,9 +72,13 @@ export default function NewHome() {
           </div>
 
         </aside>
-       {user? <main className="chat" id="main">
+    {dimension.width >600 ? <> {user? <main className="chat" id="main">
           <Chat message={message} setMessage={setMessage} user={user} room={room} />
-        </main>:<Default/>}
+        </main>:<Default/>} </>  : 
+        <main className="chat" id="main">
+        <Chat message={message} setMessage={setMessage} user={user} room={room} />
+      </main>
+        }
       </section>
     </div>
   )
