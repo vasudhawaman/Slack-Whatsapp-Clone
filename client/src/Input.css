@@ -13,6 +13,11 @@
     width: 100%;
   
 }
+#icon{
+    @media (max-width: 600px) {
+        width: 0%;
+      }
+}
 .chat-input-form{
     display: flex;
     align-items: center;
