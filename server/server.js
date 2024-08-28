@@ -65,6 +65,12 @@ io.on("connection", (socket) => {
            console.log(result);
            io.to(data.room).emit('recieve_message',result);
         })
+        let q1 = "SELECT DISTINCT date FROM files WHERE room_id=?"
+         db.query(q1, [data.room],(err,result)=>{
+           if(err) throw err;
+           console.log(result);
+           io.to(data.room).emit('date_set',result);
+        })
     }); // join a chat that already exists 
     socket.on('send_message', (data) => {
         console.log("emitted")
@@ -98,6 +104,12 @@ io.on("connection", (socket) => {
     }
     try{
         console.log(data);
+        let q1 = "SELECT DISTINCT date FROM files WHERE room_id=?"
+        db.query(q1, [data.room],(err,result)=>{
+          if(err) throw err;
+          console.log(result);
+          io.to(data.room).emit('date_set',result);
+       })
           let q = "SELECT * FROM files WHERE room_id=? order by id asc"
         // //  data.file is of type buffer so convert to blob then store 
          // filesstored as buffer but which is
@@ -106,7 +118,7 @@ io.on("connection", (socket) => {
            console.log(result);
            io.to(data.room).emit('recieve_message',result);
         })
-        
+       
     }catch(err){
         console.log(err);
     }

@@ -8,15 +8,10 @@
     box-shadow: none;
     border: none;
     padding: 5px;
-    position:fixed;
+     position:fixed;
     bottom: 0px; 
     width: 100%;
   
-}
-#icon{
-    @media (max-width: 600px) {
-        width: 0%;
-      }
 }
 .chat-input-form{
     display: flex;
@@ -32,6 +27,7 @@
 }
 
 #chat-input{
+    
     margin-top: 3px;
     margin-bottom: 3px ;
     margin-left: 5px;
@@ -42,9 +38,4 @@
 }
 #sticker_file{
     display: none;
-}
-#message-button{
-    @media (max-width: 600px) {
-        width: 0%;
-      }
 }

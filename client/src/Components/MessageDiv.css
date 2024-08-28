@@ -1,0 +1,14 @@
+.message-div{
+     position: relative;
+    width: 100%;
+    text-align: center; 
+}
+.message-div > .date{
+    display: inline-block; 
+    background-color: rgb(3, 88, 56);
+    color: white; 
+    padding: 5px 10px; 
+    border-radius: 5px; 
+    margin-top: 2px;
+    margin-bottom: 2px;
+}

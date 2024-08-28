@@ -5,11 +5,11 @@ import Input from "./Input";
 import Profile from "./Profile";
 import { SocketContext } from "./context/SocketContext";
 import {UserContext} from "./context/UserContext";
+import MessageDiv from "./Components/MessageDiv";
 export default function Chat({message,setMessage,user,room}){
     
-      const {socket} = useContext(SocketContext);
-     
-     
+          const {socket} = useContext(SocketContext);
+           const [dates,setDates] =useState([]);
            let min =new Date().getMinutes();
            let hr = new Date().getHours();
            let date = new Date().getDate();
@@ -21,7 +21,9 @@ export default function Chat({message,setMessage,user,room}){
           }
      
       useEffect(()=>{
-     
+        socket.on("date_set",(data)=>{
+            setDates(data);
+        })
             socket.on("recieve_message",(data)=>{
                 // console.log("data",data)
                
@@ -64,7 +66,7 @@ export default function Chat({message,setMessage,user,room}){
               
             
             })
-                  
+                    
        
            },[socket]);
            
@@ -73,18 +75,9 @@ export default function Chat({message,setMessage,user,room}){
              <Profile link="pfp.png" user={user} room={room} /> 
 
          <div id="all"> 
-        
-         {/* all messages here */}
-         { message.length >0 && message.map((m,i)=>{
-           
-           
-            return <Message type={m.type} text={m.text} time={m.time} file={m.file} source={m.source} cloudinary={m.cloudinary} key={i} name={m.name} mimetype={m.mimetype} user={m.user}/>;
-         }) }
-        
+          <MessageDiv dates={dates} message={message}/>
          </div>
          <Input setMessage={setMessage} room={room} user={user}/>
-         
-        
         </div>
     );
 }

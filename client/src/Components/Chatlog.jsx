@@ -26,11 +26,9 @@ export default function Chatlog({ data, setRoom, setUser }) {
                 const input = document.querySelector("#input");
                 const form = document.querySelector(".chat-input-form");
                 const profile = document.querySelector("#profile");
-                const icon = document.querySelector("#icon");
-              
+    
                 chat.style.width = "100%";
                 input.style.width = "100%";
-                icon.style.width ="100%";
                 profile.style.display ="flex"
                 setUser(data.username);
                 setRoom(data.roomid)

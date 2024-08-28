@@ -1,34 +1,33 @@
 #main {
+  height: 100vh;
+  display: grid;
+  grid-auto-rows: 4rem calc(100vh - 4rem);
+}
+
+.main-view {
+  position: relative;
+  display: grid;
+  grid-template: auto 1fr / 1fr;
+  @media (min-width: 600px) {
+    grid-template: 1fr / minMax(20rem, 20%) 1fr;
+  }
+}
+aside.chat-rooms {
+  box-sizing: border-box;
+  overflow:auto;
+}  
+
+main.chat{
+  @media (max-width: 600px) {
+    width: 0%;
+  }
+    overflow: auto;
     height: 100vh;
-    display: grid;
-    grid-auto-rows: 4rem calc(100vh - 4rem);
-  }
+    background: url('../backgroundpart.png');
+    width: 100%;  
   
-  .main-view {
-    position: relative;
-    display: grid;
-    grid-template: auto 1fr / 1fr;
-    @media (min-width: 600px) {
-      grid-template: 1fr / minMax(20rem, 20%) 1fr;
-    }
-  }
-  aside.chat-rooms {
-    box-sizing: border-box;
-    overflow:auto;
-  }  
-  
-  main.chat{
-    @media (max-width: 600px) {
-      width: 0%;
-    }
-      overflow: auto;
-      height: 100vh;
-      background: url('../backgroundpart.png');
-      width: 100%;  
-    
-   
-  }
-  .logs{
-    margin-top: 50px;
-  }
-  
+ 
+}
+.logs{
+  margin-top: 50px;
+}
