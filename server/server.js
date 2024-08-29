@@ -62,52 +62,47 @@ io.on("connection", (socket) => {
         let q = "SELECT * FROM files WHERE room_id=? order by id asc"
          db.query(q, [data.room],(err,result)=>{
            if(err) throw err;
-           console.log(result);
+
            io.to(data.room).emit('recieve_message',result);
         })
         let q1 = "SELECT DISTINCT date FROM files WHERE room_id=?"
          db.query(q1, [data.room],(err,result)=>{
            if(err) throw err;
-           console.log(result);
            io.to(data.room).emit('date_set',result);
         })
     }); // join a chat that already exists 
     socket.on('send_message', (data) => {
-        console.log("emitted")
-        console.log("message:",data) // save in db under user id as mine data.user 
+     
+        // save in db under user id as mine data.user 
          if(!data.file){
              // purely text based
            
                try{
                 let q = "INSERT INTO files(`user`,`room_id`,`text`,`time`,`date`,`filename`) VALUES (?,?,?,?,?,?)"
-                console.log(typeof(data.room));
+               
                db.query(q, [data.user,data.room, data.text,data.time,data.date,"txt"],(err,result)=>{
                 if(err) throw err;
-                console.log(result);
                });
             }catch(err){
                 console.log(err);
             }
     }else {
              try{
-                console.log(data);
+
                  let q = "INSERT INTO files(`user`,`room_id`,`file`,`time`,`filename`,`mimetype`,`text`,`date`,`type`) VALUES (?,?,?,?,?,?,?,?,?)"
-            //  data.file is of type buffer so convert to blob then store 
-                // filesstored as buffer but which is
+
                 db.query(q, [data.user, data.room,data.source,data.time,data.name,data.mimetype,data.text,data.date,data.file],(err,result)=>{
                   if(err) throw err;
-                     console.log(result);
                        })
             }catch(err){
                 console.log(err);
             }
     }
     try{
-        console.log(data);
+
         let q1 = "SELECT DISTINCT date FROM files WHERE room_id=?"
         db.query(q1, [data.room],(err,result)=>{
           if(err) throw err;
-          console.log(result);
           io.to(data.room).emit('date_set',result);
        })
           let q = "SELECT * FROM files WHERE room_id=? order by id asc"
@@ -115,7 +110,6 @@ io.on("connection", (socket) => {
          // filesstored as buffer but which is
          db.query(q, [data.room],(err,result)=>{
            if(err) throw err;
-           console.log(result);
            io.to(data.room).emit('recieve_message',result);
         })
        

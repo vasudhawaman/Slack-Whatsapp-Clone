@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext,useRef} from "react";
 import "./Chat.css"
 import Message from "./Message";
 import Input from "./Input";
@@ -7,7 +7,7 @@ import { SocketContext } from "./context/SocketContext";
 import {UserContext} from "./context/UserContext";
 import MessageDiv from "./Components/MessageDiv";
 export default function Chat({message,setMessage,user,room}){
-    
+           const bottomRef = useRef(null);
           const {socket} = useContext(SocketContext);
            const [dates,setDates] =useState([]);
            let min =new Date().getMinutes();
@@ -19,14 +19,13 @@ export default function Chat({message,setMessage,user,room}){
           if( min <10){
                min = "0" + min;
           }
-     
+         
       useEffect(()=>{
         socket.on("date_set",(data)=>{
             setDates(data);
         })
             socket.on("recieve_message",(data)=>{
-                // console.log("data",data)
-               
+              
                  const promiseArr = data.map((m)=>{
                     return new Promise((resolve) => {
                         if (m.filename !== "txt") {
@@ -58,22 +57,18 @@ export default function Chat({message,setMessage,user,room}){
                     })
                    
                  })
-                 
-                   console.log("promiseArr",promiseArr)
                    Promise.all(promiseArr).then((results) => {
                     setMessage(results);
                   });
               
             
             })
-                    
-       
-           },[socket]);
+            bottomRef.current?.scrollIntoView({behavior: 'smooth'});
+           },[socket,message]);
            
     return(
         <div id="chat">
-             <Profile link="pfp.png" user={user} room={room} /> 
-
+         <Profile link="pfp.png" user={user} room={room} />
          <div id="all"> 
           <MessageDiv dates={dates} message={message}/>
          </div>

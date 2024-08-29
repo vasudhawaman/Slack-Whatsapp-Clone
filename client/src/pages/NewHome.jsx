@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useRef} from "react";
 import './NewHome.css';
 import Chat from "../Chat";
 import Search from "../Components/Search";
@@ -11,7 +11,7 @@ export default function NewHome() {
   const [user, setUser] = useState()
   const [room, setRoom] = useState("")
   const  {current} = useContext(UserContext);
-
+  
    const  dimension = useWindowDimensions();
   const [message, setMessage] = useState([]);
   
@@ -20,6 +20,7 @@ export default function NewHome() {
   let hr = new Date().getHours();
   const [data, setdata] = useState(null);
   const [users1, setusers] = useState();
+ 
   useEffect(() => {
     const url = `http://localhost:8000/register/contacts`;
     const fetchdata = async () => {

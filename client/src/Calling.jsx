@@ -1,13 +1,15 @@
-import React,{useEffect,useContext} from "react";
+import React,{useState,useEffect,useContext} from "react";
 import { SocketContext } from "./context/SocketContext";
 import {useNavigate} from "react-router-dom";
 import {Peer} from "peerjs";
 import Control from "./Components/Control";
-export default function Calling({user,stream}){
-    const peer =new Peer(user,{
-        host:"/",
-        port:"3001"
-      });
+
+export default function Calling({current,stream}){
+     const [peer,setPeer] = useState(new Peer(current,{
+      host:"/",
+      port:"3001"
+    }))
+
       const Navigate = useNavigate();
       function addVideoStream(video, stream) {
         const videoGrid = document.getElementById('video-grid');
@@ -19,8 +21,6 @@ export default function Calling({user,stream}){
       }
     
       peer.on("call", (call) => {
-       
-         
             console.log(stream);
             call.answer(stream);
             console.log("called call")
@@ -41,7 +41,8 @@ export default function Calling({user,stream}){
     useEffect(()=>{
   
         socket.on("on-call",(data)=>{
-                  console.log(stream);
+                  console.log("on-call",data);
+                  console.log(peer);
                   const call = peer.call(data.user, stream);
                   
                   const video = document.createElement('video')

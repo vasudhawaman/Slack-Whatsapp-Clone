@@ -5,14 +5,15 @@ import { SocketContext } from "./context/SocketContext";
 import Calling from "./Calling";
 import './Videocall.css';
 import { useLocation } from "react-router-dom";
+import { UserContext } from "./context/UserContext";
 export default function Videocall(){
 
  const [stream,setStream] =useState(null);
  const Navigate = useNavigate();
   const {socket} =useContext(SocketContext);
+  const {current} =useContext(UserContext);
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
-  const user = queryParams.get("user");
   const room = queryParams.get("room");
   useEffect(()=>{
   console.log("use effect ran ");
@@ -89,7 +90,7 @@ export default function Videocall(){
          endCall.addEventListener('click',()=>{
                socket.emit("end-call",{
                   room:room,
-                  user:user
+                  user:current.username
                });
                Navigate("/");
 
@@ -104,7 +105,7 @@ export default function Videocall(){
     return(
       <div className="container">
        <div>
-      <Calling user={user}  stream={stream}/> 
+      <Calling current={current.username} stream={stream}/> 
      </div>
        <div id="video-grid">
        </div>

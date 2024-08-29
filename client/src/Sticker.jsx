@@ -80,7 +80,7 @@ function sendMessage(dataURL){
    room:room,
    time:hr+":"+min,
    mimetype:'image/jpeg',
-   date:date
+   date:dateObj
  });
      
 }
@@ -102,7 +102,7 @@ function sendMessage(dataURL){
      return(
         <div>
         
-        <canvas id="canvas" hidden>
+        <canvas id="canvas"  hidden>
         <img src={sticker} id="image" hidden/> 
         
        
