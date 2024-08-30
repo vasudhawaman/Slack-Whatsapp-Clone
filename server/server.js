@@ -131,7 +131,7 @@ io.on("connection", (socket) => {
         socket.to(data.room).emit("on-call", data);
     })
     socket.on("end-call", (data) => {
-
+              console.log("end-call",data)
         socket.to(data.room).emit("call-end", data);
     })
 

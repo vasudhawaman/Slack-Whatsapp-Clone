@@ -38,7 +38,7 @@ export default function Profile({user,room}){
          
              },[socket]);
      function videoCall(){
-                socket.emit("join_call",{room:room,user:current.username});
+                 socket.emit("join_call",{room:room,user:current.username});
                  socket.emit("start_call",{room:room,user:current.username});
                  Navigate(`/call?user=${current.username}&room=${room}`);
               } 

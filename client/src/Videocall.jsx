@@ -9,6 +9,7 @@ import { UserContext } from "./context/UserContext";
 export default function Videocall(){
 
  const [stream,setStream] =useState(null);
+ const [join,setJoin] =useState(false);
  const Navigate = useNavigate();
   const {socket} =useContext(SocketContext);
   const {current} =useContext(UserContext);
@@ -24,6 +25,7 @@ export default function Videocall(){
     });
     
  socket.on("call-end",(data)=>{
+  console.log("call-end emiited")
       Navigate("/");
   }) 
   
@@ -32,6 +34,9 @@ export default function Videocall(){
  function JoinedCall(stream){
 
           console.log(stream,"myside")
+          socket.emit("join_call",{room:room,user:current.username});
+          socket.emit("start_call",{room:room,user:current.username});
+          setJoin(true)
           const myVideo = document.createElement('video');
           const myDiv =  document?.getElementById('controls');
           const button1 = document.createElement('button');
@@ -92,20 +97,18 @@ export default function Videocall(){
                   room:room,
                   user:current.username
                });
-               Navigate("/");
-
-              
+               Navigate("/");  
          })
            myDiv.append(button1);
            myDiv.append(button2);
            myDiv.append(endCall);
            videoGrid.append(myVideo);
 }
- 
+
     return(
       <div className="container">
        <div>
-      <Calling current={current.username} stream={stream}/> 
+    { join?  <Calling user={current.username} stream={stream}/> :null}
      </div>
        <div id="video-grid">
        </div>

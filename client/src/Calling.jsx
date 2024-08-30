@@ -1,40 +1,44 @@
-import React,{useState,useEffect,useContext} from "react";
+import React,{useState,useEffect,useContext,useRef} from "react";
 import { SocketContext } from "./context/SocketContext";
 import {useNavigate} from "react-router-dom";
 import {Peer} from "peerjs";
-import Control from "./Components/Control";
-
-export default function Calling({current,stream}){
-     const [peer,setPeer] = useState(new Peer(current,{
-      host:"/",
-      port:"3001"
-    }))
-
-      const Navigate = useNavigate();
-      function addVideoStream(video, stream) {
-        const videoGrid = document.getElementById('video-grid');
-        video.srcObject = stream
-        video.addEventListener('loadedmetadata', () => {
-          video.play()
-        })
-        videoGrid.append(video)
-      }
-    
-      peer.on("call", (call) => {
-            console.log(stream);
-            call.answer(stream);
-            console.log("called call")
-            const video = document.createElement('video') // Answer the call with an A/V stream.
-            call.on("stream", (remoteStream) => {
-             
-              addVideoStream(video, remoteStream)
-            });
-            call.on('close', () => {
-                video.remove()
-                
-            })  
+export default function Calling({user,stream}){
+     const peerRef = useRef(null);
+     const Navigate = useNavigate();
+     function addVideoStream(video, stream) {
+      const videoGrid = document.getElementById('video-grid');
+      video.srcObject = stream;
+      video.addEventListener('loadedmetadata', () => {
+        video.play();
       });
-   
+      videoGrid.append(video);
+    }
+
+  useEffect(() => {
+    peerRef.current = new Peer(user, {
+      host: "/",
+      port: "3001",
+    });
+
+    const peer = peerRef.current;
+
+    
+    peer.on("call", (call) => {
+      call.answer(stream);
+      const video = document.createElement('video');
+      call.on("stream", (remoteStream) => {
+        addVideoStream(video, remoteStream);
+      });
+      call.on("close", () => {
+        video.remove();
+      });
+    });
+
+    // return () => {
+    //   peer.disconnect();
+    //   peer.destroy();
+    // };
+  }, [user, stream]);
     
     const {socket} =useContext(SocketContext);
     
@@ -42,8 +46,8 @@ export default function Calling({current,stream}){
   
         socket.on("on-call",(data)=>{
                   console.log("on-call",data);
-                  console.log(peer);
-                  const call = peer.call(data.user, stream);
+                 
+                  const call = peerRef.current.call(data.user, stream);
                   
                   const video = document.createElement('video')
                   call.on("stream", (remoteStream) => {
@@ -52,13 +56,11 @@ export default function Calling({current,stream}){
                   });
             
          })
-         socket.on("call-end",(data)=>{
-          Navigate("/");
-      }) 
- 
+         socket.on("call-end",()=>{
+            Navigate("/");
+         })
        
-           
-        },[socket]);
+ },[socket]);
         return(
           <div className="call">
           </div>
