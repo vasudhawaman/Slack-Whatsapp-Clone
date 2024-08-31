@@ -1,7 +1,17 @@
-import React from 'react'
+import React,{useState} from 'react'
 import './UserFile.css'
 const ConnectionFile = ({user}) => {
-    console.log(user)
+  const [image, setImage] = useState("https://static.vecteezy.com/system/resources/previews/000/574/512/original/vector-sign-of-user-icon.jpg");
+  if (user.image != null) {
+    const { image, filename } = user;
+    const arrayBuffer = new Uint8Array(image.data);
+    const blob = new Blob([arrayBuffer], { type: filename });
+    const fr = new FileReader();
+    fr.onload = function () {
+      setImage(fr.result);
+    };
+    fr.readAsDataURL(blob);
+  }
     const handleonclick=async ()=>{
         const url='http://localhost:8000/register/createroom';
         const response=await fetch(url,{
@@ -13,7 +23,6 @@ const ConnectionFile = ({user}) => {
             body:JSON.stringify({receiver:user.id})
         })
         const res=await response.json();
-        console.log(res);
     }
     const handleonreject=async()=>{
         const url='http://localhost:8000/register/reject';
@@ -31,7 +40,7 @@ const ConnectionFile = ({user}) => {
   return (
     <div>
       <div className='contain'>
-        <img src={user.image} className='user-image'></img>
+        <img src={image} className='user-image'></img>
         <span className='user'>{user.username}</span>
         <button className='sendreq' onClick={handleonclick}>Accept</button>
         <button className='sendreq' onClick={handleonreject}>Reject</button>

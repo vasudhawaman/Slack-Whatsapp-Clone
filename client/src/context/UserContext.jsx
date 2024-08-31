@@ -19,6 +19,8 @@ export const UserContextProvider = (props) => {
                  setCurrent(json);
             }
             getUserinfo();
+        }else{
+            
         }
         }, [])
     return (
