@@ -3,7 +3,8 @@
         display: none;
       }
     display:flex;
-    position:fixed;
+    position: -webkit-sticky;
+    position:sticky;
     top: 0px;
     flex-direction: row;
     background-color: rgb(162, 238, 221);

@@ -66,15 +66,15 @@ export default function Input({setMessage,room,user}){
         <form className="chat-input-form" onSubmit={handleForm}>
            <AttachFileIcon onClick={()=>{
                document.getElementById("file").style.display ="block";
-           }} id="icon"/>
+           }} id="attach-icon"/>
            <textarea id="chat-input" type="text" placeholder="Write your Message here.." value={text} onChange={handleChange} name="text"/>
            <EmojiEmotionsIcon value={0}onClick={()=>{
                
                document.getElementById("emoji").style.display ="block"
            }}/>
-          <Emoji addEmoji={addEmoji}  id="icon"/>
-          <Voice setMessage={setMessage} room={room} user={user} id="icon"/>
-          <Video setMessage={setMessage} room={room} user={user} id="icon"/>
+          <Emoji addEmoji={addEmoji}  />
+          <Voice setMessage={setMessage} room={room} user={user} />
+          <Video setMessage={setMessage} room={room} user={user} />
             <button id="messagebtn"><SendIcon style={{ color : "whitesmoke " , padding: "2px"}}/></button>
 
        </form>

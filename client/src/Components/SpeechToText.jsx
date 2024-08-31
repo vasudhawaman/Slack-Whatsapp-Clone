@@ -35,13 +35,7 @@ export default function SpeechToText({text,setText,setMessage,room,user}){
             SpeechRecognition.stopListening() 
             setText(transcript);
         }}><GraphicEqIcon onClick={()=>{
-          setMessage((prev)=>{
-            return [...prev ,{
-                  text:text,
-                 type :"sent",
-                  time: hr +":"+min
-            }]}) 
-     
+        
        socket.emit("send_message",{ 
             text:text,
             user: user,
