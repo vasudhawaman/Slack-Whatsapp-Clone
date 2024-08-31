@@ -92,7 +92,6 @@ router.post('/signup', [
             if (!responseSent) {
                 let q2 = "SELECT * FROM users WHERE username=?"
                 db.query(q2, [req.body.username], async (err, name) => {
-                    console.log(name)
                     if (name.length > 0) {
                         return res.status(400).json({ error: "The person which has this username already exist. Choose different username" });
                     }
@@ -244,13 +243,11 @@ router.put('/updateinfo', verifyToken, upload.single('image'), (req, res) => {
         return res.json({ error: "No file uploaded" });
     }
     const userId = req.id;
-    console.log(req.file);
     const mimetype = req.file.mimetype;
     const imageData = req.file.buffer;
     const query = "UPDATE users SET image=?, filename=? WHERE id=?";
     db.query(query, [imageData, mimetype, userId], (err, result) => {
         if (err) {
-            console.error(err);
             return res.status(500).json({ error: err.message });
         }
         res.json({ success: "Info has been updated" });
@@ -323,13 +320,13 @@ router.post('/connect', verifyToken, async (req, res) => {
 
 router.post('/createroom', verifyToken, async (req, res) => {
     const q = 'SELECT roomid FROM whatsapp.room ORDER BY roomid DESC';
+    console.log(q);
     db.query(q, (err, result) => {
-        if (err) throw err
+        if (err){ console.log(err); throw err}
         const roomid = result[0].roomid + 1; //new room id => same time insert this into connection roomid 
         const q1 = "INSERT INTO room (userids,roomid) VALUES (?,?)"
         db.query(q1, [req.id, roomid], (err, result) => {
             if (err) throw err
-            console.log("yeye" + roomid)
             console.log("Room created successfully")
             const q2 = "INSERT INTO room (userids,roomid) VALUES (?,?)"
             db.query(q2, [req.body.receiver, roomid], (err, result) => {
@@ -377,9 +374,32 @@ router.delete('/reject', verifyToken, async (req, res) => {
     })
 })
 
-router.post('/update', async (req, res) => {
-    const { image, status } = req.body;
+router.post('/status', verifyToken, upload.single('file'), (req, res) => {
+    const q = "INSERT INTO status (`user_id`, `file`, `mimetype`, `starting_date`, `expiry_date`) VALUES (?, ?, ?, ?, ?)";
+    const startingDate = new Date();
+    const expiryDate = new Date(startingDate.getTime() + 1000 * 60 * 60 * 24);
+    function formatDateForMySQL(date) {
+        return date.toISOString().slice(0, 19).replace('T', ' ');
+    }
+
+    const formattedStartingDate = formatDateForMySQL(startingDate);
+    const formattedExpiryDate = formatDateForMySQL(expiryDate);
+    db.query(q, [req.id, req.file.buffer, req.file.mimetype, formattedStartingDate, formattedExpiryDate], (err, result) => {
+        if (err) {
+            console.error("Error updating status:", err);
+            return res.status(500).json({ error: "Failed to update status" });
+        }
+        console.log("Status updated successfully");
+        res.json({ success: "Status updated successfully" });
+    });
 
 })
-
+router.post('/creategroup',verifyToken,upload.single('file'),(req,res)=>{
+    const q="SELECT groupid FROM `group` ORDER BY groupid DESC";
+    db.query(q,(err,result)=>{
+        if(err) throw err;
+        res.json(result);
+    })
+    
+})
 module.exports = router;

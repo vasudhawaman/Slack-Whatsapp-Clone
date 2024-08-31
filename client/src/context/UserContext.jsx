@@ -4,7 +4,8 @@ export const UserContext = createContext();
 
 export const UserContextProvider = (props) => {
     const [current, setCurrent] = useState("");
-    const cookies = document.cookie;    
+    const cookies = document.cookie;
+      
         useEffect(() => {
             if(cookies!==""){
             async function getUserinfo() {
@@ -17,6 +18,8 @@ export const UserContextProvider = (props) => {
                 setCurrent(json);
             }
             getUserinfo();
+        }else{
+            
         }
         }, [])
     return (

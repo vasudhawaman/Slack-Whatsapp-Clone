@@ -4,7 +4,7 @@ import React from 'react'
 const EditProfile = () => {
     const [data, setdata] = useState({ image: "", status: "" });
     const [info, setInfo] = useState();
-    const [image, setImage] = useState(null);
+    const [image, setImage] = useState("https://static.vecteezy.com/system/resources/previews/000/574/512/original/vector-sign-of-user-icon.jpg");
     useEffect(() => {
         const getUserData = async () => {
             const url = "http://localhost:8000/register/getinfo";
@@ -17,6 +17,8 @@ const EditProfile = () => {
             });
             const data = await response.json();
             setInfo(data);
+            setdata({status: data.status})
+            if(data.image){
             const { image, filename } = data;
             const arrayBuffer = new Uint8Array(image.data);
             const blob = new Blob([arrayBuffer], { type: filename });
@@ -26,6 +28,7 @@ const EditProfile = () => {
             };
             fr.readAsDataURL(blob);
             setdata({ status: data.status, image: data.image })
+        }
         };
         getUserData();
     }, []);

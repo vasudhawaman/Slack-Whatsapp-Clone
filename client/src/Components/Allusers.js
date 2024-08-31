@@ -16,7 +16,7 @@ const Allusers = () => {
             }
         })
         const json=await response.json();
-  
+        
         setUsers(json)
       }
       getdata()
