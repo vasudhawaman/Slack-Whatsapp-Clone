@@ -68,7 +68,7 @@ export default function Chat({message,setMessage,user,room}){
            
     return(
         <div id="chat">
-         <Profile link="pfp.png" user={user} room={room} />
+          <Profile link="pfp.png" user={user} room={room} /> 
          <div id="all"> 
           <MessageDiv dates={dates} message={message}/>
          </div>

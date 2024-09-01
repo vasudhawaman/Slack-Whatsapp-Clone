@@ -4,10 +4,11 @@ export const UserContext = createContext();
 
 export const UserContextProvider = (props) => {
     const [current, setCurrent] = useState("");
-    const cookies = document.cookie;
-      
+       
         useEffect(() => {
-            if(cookies!==""){
+            const cookies = document.cookie; 
+            console.log(cookies);
+            if(cookies.token_for_talkpal !==""){
             async function getUserinfo() {
                 const url = 'http://localhost:8000/register/getinfo';
                 const response = await fetch(url, {
@@ -15,7 +16,7 @@ export const UserContextProvider = (props) => {
                     credentials: 'include',
                 });
                 const json = await response.json();
-                setCurrent(json);
+                 setCurrent(json);
             }
             getUserinfo();
         }else{

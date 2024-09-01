@@ -231,11 +231,14 @@ router.put('/changepass', async (req, res) => {
 })
 
 router.get('/getinfo', verifyToken, async (req, res) => {
-    const q1 = "SELECT * FROM users where id=?"
+   try{ const q1 = "SELECT * FROM users where id=?"
     db.query(q1, [req.id], (err, user) => {
         if (err) throw err
-        res.json(user[0])
+        res.status(200).json(user[0])
     })
+  }catch(err){
+      res.status(400).json({message:"No user"});
+  }
 })
 
 router.put('/updateinfo', verifyToken, upload.single('image'), (req, res) => {

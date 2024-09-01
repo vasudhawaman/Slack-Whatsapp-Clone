@@ -84,7 +84,7 @@ export default function Video({setMessage,room,user}){
 
         
         <div id="record" >
-            <button onClick={startRecording} type="button"id="startVideo"><CameraAltIcon style={{ color : "whitesmoke"}} /></button>
+            <button onClick={startRecording} type="button"id="startVideo"><CameraAltIcon style={{ color : "whitesmoke"}} id="icon"/></button>
             <button onClick={stopRecording} type="button" id="stopVideo" ><StopIcon /></button>
         </div>
      )

@@ -34,10 +34,9 @@ export default function Calling({user,stream}){
       });
     });
 
-    // return () => {
-    //   peer.disconnect();
-    //   peer.destroy();
-    // };
+    socket.on("call-end",(data)=>{
+      Navigate("/");
+   })
   }, [user, stream]);
     
     const {socket} =useContext(SocketContext);
@@ -56,7 +55,7 @@ export default function Calling({user,stream}){
                   });
             
          })
-         socket.on("call-end",()=>{
+         socket.on("call-end",(data)=>{
             Navigate("/");
          })
        

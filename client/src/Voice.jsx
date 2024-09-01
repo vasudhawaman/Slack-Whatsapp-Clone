@@ -117,7 +117,7 @@ export default function Voice({setMessage,room,user}){
 
 
     <div id="record" >
-      <button onClick={startRecording} type="button" id="startVoice"><KeyboardVoiceIcon style={{ color: "whitesmoke" }} /></button>
+      <button onClick={startRecording} type="button" id="startVoice"><KeyboardVoiceIcon style={{ color: "whitesmoke" }} id="icon"/></button>
       <button onClick={stopRecording} type="button" id="stopVoice" ><StopIcon /></button>
     </div>
   )
