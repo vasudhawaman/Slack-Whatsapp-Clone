@@ -23,6 +23,10 @@ import Allusers from './Components/Allusers';
 import Connection from './Components/Connection'
 import EditProfile from './Components/EditProfile';
 import Status from './Components/Status'
+import CreateGroup from './Components/CreateGroup';
+import AllGroup from './Components/AllGroup';
+import AddtoGroup from './Components/AddtoGroup';
+import Member from './Components/Member';
 function App() {
   const [otpState, setOtpState] = useState(null);
   const [otp1, setotp] = useState(null)
@@ -48,6 +52,10 @@ function App() {
           <Route path='/allusers' element={<Allusers />} />
           <Route path='/connection' element={<Connection />} />
           <Route path='/userprofile' element={<EditProfile/>}/>
+          <Route path='/creategroup' element={<CreateGroup/>}/>
+          <Route path='/allgroup' element={<AllGroup/>}/>
+          <Route path='/adduser/:id' element={<AddtoGroup/>}/>
+          <Route path='/groupmembers/:id' element={<Member/>}/>
         </Routes>
 
       </Router>
