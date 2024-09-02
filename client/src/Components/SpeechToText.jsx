@@ -4,15 +4,19 @@ import VoiceChatIcon from '@mui/icons-material/VoiceChat';
 import GraphicEqIcon from '@mui/icons-material/GraphicEq';
 import './SpeechToText.css';
 import {SocketContext} from "../context/SocketContext";
+import {UserContext} from "../context/UserContext";
 export default function SpeechToText({text,setText,setMessage,room,user}){
   const {socket} = useContext(SocketContext);
+  const {current} = useContext(UserContext);
   let min =new Date().getMinutes();
-     let hr = new Date().getHours();
-     
-    if( min <10){
-         min = "0" + min;
-    }
-    
+  let hr = new Date().getHours();
+  let date = new Date().getDate();
+  let month = new Date().getMonth() +1;
+  let year = new Date().getFullYear();
+  let dateObj = `${date}/${month}/${year}`;
+ if( min <10){
+      min = "0" + min;
+ }
     const {
         transcript,
         listening,
@@ -30,17 +34,19 @@ export default function SpeechToText({text,setText,setMessage,room,user}){
         { !listening ? <button className="speech" onClick={()=>{
             SpeechRecognition.startListening() 
             
-        }}><VoiceChatIcon id="icon"/></button> :
+        }}><VoiceChatIcon id="speech-icon"/></button> :
         <button className="speech" onClick={()=>{
             SpeechRecognition.stopListening() 
             setText(transcript);
         }}><GraphicEqIcon onClick={()=>{
         
-       socket.emit("send_message",{ 
-            text:text,
-            user: user,
-            room:room
-       });
+      //     socket.emit("send_message",{ 
+      //       text:text,
+      //       user:current.username,
+      //       room:room,
+      //       time: hr +":"+min,
+      //       date:dateObj
+      //  });
         }}/></button> }
          </>
         

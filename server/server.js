@@ -132,7 +132,7 @@ io.on("connection", (socket) => {
     })
     socket.on("end-call", (data) => {
               console.log("end-call",data)
-        socket.to(data.room).emit("call-end", data);
+              io.to(data.room).emit('call-end',data);
     })
 
 

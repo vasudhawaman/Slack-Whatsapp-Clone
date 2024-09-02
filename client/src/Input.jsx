@@ -71,8 +71,8 @@ export default function Input({setMessage,room,user}){
            <EmojiEmotionsIcon value={0}onClick={()=>{
                
                document.getElementById("emoji").style.display ="block"
-           }}/>
-          <Emoji addEmoji={addEmoji}  />
+           }} id="emoji-icon"/>
+          <Emoji addEmoji={addEmoji}  id="emoji-icon"/>
           <Voice setMessage={setMessage} room={room} user={user} />
           <Video setMessage={setMessage} room={room} user={user} />
             <button id="messagebtn"><SendIcon style={{ color : "whitesmoke " , padding: "2px"}}/></button>
@@ -80,11 +80,11 @@ export default function Input({setMessage,room,user}){
        </form>
        <StickyNote2TwoToneIcon onClick={()=>{
             document.getElementById("sticker").style.display ="block";
-       }}/>
+       }} id="sticker-icon"/>
         <SpeechToText text={text} setText={setText} setMessage={setMessage} room={room} user={user} id="icon"/>
     </div>
-     <File setMessage={setMessage} room={room} user={user} file={file} setFile={setFile} id="icon"/>
-    <StickerFile setMessage={setMessage} room={room} user={user} id="icon"/>
+     <File setMessage={setMessage} room={room} user={user} file={file} setFile={setFile} />
+    <StickerFile setMessage={setMessage} room={room} user={user} />
      </>
      )
 }

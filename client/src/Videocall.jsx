@@ -25,7 +25,10 @@ export default function Videocall(){
     });
     
  socket.on("call-end",(data)=>{
-  console.log("call-end emiited")
+      if (stream) {
+    stream.getTracks().forEach(track => track.stop());
+  }
+     setJoin(false);
       Navigate("/");
   }) 
   
@@ -97,7 +100,7 @@ export default function Videocall(){
                   room:room,
                   user:current.username
                });
-               Navigate("/");  
+                Navigate("/");  
          })
            myDiv.append(button1);
            myDiv.append(button2);

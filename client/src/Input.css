@@ -39,3 +39,23 @@
 #sticker_file{
     display: none;
 }
+#messagebtn{
+    @media (max-width: 600px) {
+        display: none;
+      }
+}
+#attach-icon{
+    @media (max-width: 600px) {
+        display: none;
+      }
+}
+#emoji-icon{
+    @media (max-width: 600px) {
+        display: none;
+      }
+}
+#sticker-icon{
+    @media (max-width: 600px) {
+        display: none;
+      }
+}

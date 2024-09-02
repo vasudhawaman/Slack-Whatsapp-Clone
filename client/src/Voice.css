@@ -1,4 +1,7 @@
 #startVoice{
+    @media (max-width: 600px) {
+       display: none;
+      }
     background-color: transparent;
     border: none;
     outline: none;
@@ -12,6 +15,9 @@
     box-shadow: none;
 }
 #startVideo{
+    @media (max-width: 600px) {
+        display: none;
+      }
     background-color: transparent;
     border: none;
     outline: none;

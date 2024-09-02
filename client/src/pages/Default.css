@@ -4,7 +4,7 @@
     text-align: center;
     justify-content: center;
     align-items: center;
-    color: rgb(162, 238, 221);;
+    color: rgb(2, 145, 133);
 }
 .infinity{
     margin-top: 50px;
@@ -14,10 +14,13 @@
     font-size: 20px;
     font-weight: bold;
     margin-left: 32%;
-    color: brown;
+    color: rgb(160, 52, 52);
 }
 .headingpp{
     font-size: 40px;
+    color: rgb(3, 73, 38);
+    font-weight: 700;
+    
 }
 @media screen and (max-width:600px) {
     .default{

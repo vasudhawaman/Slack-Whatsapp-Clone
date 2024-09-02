@@ -15,7 +15,7 @@ async function verifyToken(req, res, next) {
             next();
         }catch(err){
             console.log(err)
-            res.status(404).json({message:"Server Error"})
+            res.status(401).json({message:"Server Error"})
         }
     }
     

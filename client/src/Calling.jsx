@@ -4,6 +4,7 @@ import {useNavigate} from "react-router-dom";
 import {Peer} from "peerjs";
 export default function Calling({user,stream}){
      const peerRef = useRef(null);
+     const {socket} =useContext(SocketContext);
      const Navigate = useNavigate();
      function addVideoStream(video, stream) {
       const videoGrid = document.getElementById('video-grid');
@@ -31,15 +32,17 @@ export default function Calling({user,stream}){
       });
       call.on("close", () => {
         video.remove();
+        Navigate("/");
       });
     });
 
     socket.on("call-end",(data)=>{
+      console.log("ended",data)
       Navigate("/");
    })
-  }, [user, stream]);
+  }, [user, stream,socket]);
     
-    const {socket} =useContext(SocketContext);
+    
     
     useEffect(()=>{
   
@@ -55,9 +58,23 @@ export default function Calling({user,stream}){
                   });
             
          })
-         socket.on("call-end",(data)=>{
+         socket.on("call-end", ()=>{
+          if (stream) {
+            stream.getTracks().forEach(track => track.stop());
+          }
+
+              Navigate("/");
+         }); 
+
+    return () => {
+      socket.off("call-end", ()=>{
+        if (stream) {
+          stream.getTracks().forEach(track => track.stop());
+        }
             Navigate("/");
-         })
+      });
+      peerRef.current.destroy();
+    };
        
  },[socket]);
         return(
