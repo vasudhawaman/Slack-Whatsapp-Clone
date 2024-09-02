@@ -10,7 +10,7 @@ const verifyToken = require('../middleware/verifyUser');
 const db = require('../db');
 const JWT_SECRET = "krishkrish@123";
 const multer = require('multer');
-const upload = multer({ storage: multer.memoryStorage() });
+const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 50 * 1024 * 1024 } });
 
 // Register
 router.post('/cheak', [
@@ -325,7 +325,7 @@ router.post('/createroom', verifyToken, async (req, res) => {
     const q = 'SELECT roomid FROM whatsapp.room ORDER BY roomid DESC';
     console.log(q);
     db.query(q, (err, result) => {
-        if (err){ console.log(err); throw err}
+        if (err) { console.log(err); throw err }
         const roomid = result[0].roomid + 1; //new room id => same time insert this into connection roomid 
         const q1 = "INSERT INTO room (userids,roomid) VALUES (?,?)"
         db.query(q1, [req.id, roomid], (err, result) => {
@@ -397,12 +397,71 @@ router.post('/status', verifyToken, upload.single('file'), (req, res) => {
     });
 
 })
-router.post('/creategroup',verifyToken,upload.single('file'),(req,res)=>{
-    const q="SELECT groupid FROM `group` ORDER BY groupid DESC";
-    db.query(q,(err,result)=>{
-        if(err) throw err;
+router.post('/creategroup', verifyToken, upload.single('file'), (req, res) => {
+    const q = "SELECT groupid FROM `group` ORDER BY groupid DESC";
+    if (!req.file) {
+        console.error("No image uploaded");
+        return res.status(400).json({ error: "No image uploaded" });
+    }
+    if (!req.body.group_name) {
+        console.error("No group name provided");
+        return res.status(400).json({ error: "No group name provided" });
+    }
+    db.query(q, (err, result) => {
+        if (err) throw err;
+        const roomid = result[0].groupid + 1;
+        const q = "INSERT INTO `group` (`group_name`,`groupid`,`image`,`img_mimetype`,`adminid`) VALUES (?,?,?,?,?)";
+        db.query(q, [req.body.group_name, roomid, req.file.buffer, req.file.mimetype, req.id], (err, result) => {
+            if (err) throw err;
+            console.log("Group created successfully");
+            const q = "INSERT INTO `group_room` (`group_roomid`,`userid`) VALUES (?,?)";
+            db.query(q, [roomid, req.id], (err, result) => {
+                if (err) throw err;
+                console.log("User added successfully to group");
+            })
+            res.json({ success: "Group created successfully" });
+        })
+    })
+})
+router.get('/allgroup', verifyToken, (req, res) => {
+    const q = "SELECT * FROM `group` WHERE adminid=?";
+    db.query(q, [req.id], (err, result) => {
+        if (err) throw err;
         res.json(result);
     })
-    
 })
+router.post('/adduser', verifyToken, (req, res) => {
+    const q1 = "SELECT * FRom group_room WHERE group_roomid=? AND userid=?"
+    db.query(q1, [req.body.groupid, req.body.user_id], (err, result) => {
+        if (result) {
+            res.json("User is already added in group");
+        } else {
+            const q = "INSERT INTO group_room (group_roomid, userid) VALUES (?, ?)";
+            console.log(req.body);
+            db.query(q, [req.body.groupid, req.body.user_id], (err, result) => {
+                if (err) throw err;
+                console.log("User added successfully to group");
+                res.json({ success: "User added successfully to group" });
+            })
+        }
+    })
+})
+
+router.post('/getmember',verifyToken,(req,res)=>{
+    const q = "SELECT * FROM group_room JOIN users ON group_room.userid=users.id WHERE group_roomid=? AND group_room.userid !=?";
+    db.query(q, [req.body.groupid,req.id], (err, result) => {
+        if (err) throw err;
+        res.json(result);
+    })
+})
+
+router.delete('/remove',verifyToken,(req,res)=>{
+    const q = "DELETE FROM group_room WHERE group_roomid=? AND userid=?";
+    db.query(q, [req.body.groupid, req.body.user_id], (err, result) => {
+        if (err) throw err;
+        console.log("User removed successfully from group");
+        res.json({ success: "User removed successfully from group" });
+    })
+})
+
 module.exports = router;
