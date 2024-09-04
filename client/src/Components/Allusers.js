@@ -27,7 +27,7 @@ const Allusers = () => {
     }, [user])
     
   return (
-    <div>
+    <div className="user-header">
       <h1>All Users</h1>
       <p>This page will display all users registered on the platform.</p>
       {data && data.map(u=>{

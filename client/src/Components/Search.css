@@ -9,13 +9,16 @@
     width: 100%;
     max-height: 50px;
     display: flex;
-    flex-direction: row;
+    align-items: center;
+    justify-self: center;
 }
 
 .search-input{
-    margin-left: 9px;
-    margin-right: 9px;
+    margin-right: 2px;
     box-shadow: none;
     border: none;
     border-radius: 5px;
+    font-size: larger;
+    height: 100%;
+    padding: 4px;
 }

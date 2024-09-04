@@ -5,6 +5,9 @@
     width: 100%;
     padding: 5px;
 }
+.chatlog > img{
+    border: 2px solid #009688;
+}
 .chatlog > .information{
     margin-left:15px;
 }

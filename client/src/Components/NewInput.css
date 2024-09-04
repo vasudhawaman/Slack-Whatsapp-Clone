@@ -1,0 +1,31 @@
+.input-box{
+
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    background-color: rgb(211, 208, 208);
+    padding: 1%;
+    position:fixed;
+    bottom: 0px; 
+    width: 100%;
+
+}
+.input-box > input{
+    box-sizing: border-box;
+    width: calc(90% -50px);
+    border: none;
+    border-radius: 5px;
+    padding:1px;
+    height: 40px;
+    font-size: x-large;
+}
+
+.input-box> button {
+    width: calc(100% - 50px);
+    box-sizing: border-box;
+    height: 40px;
+    box-shadow: none;
+    border: none;
+    background-color: rgb(211, 208, 208);
+    border-radius: 100%;
+}

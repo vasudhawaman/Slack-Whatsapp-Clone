@@ -27,6 +27,7 @@ import CreateGroup from './Components/CreateGroup';
 import AllGroup from './Components/AllGroup';
 import AddtoGroup from './Components/AddtoGroup';
 import Member from './Components/Member';
+import NewInput from './Components/NewInput';
 function App() {
   const [otpState, setOtpState] = useState(null);
   const [otp1, setotp] = useState(null)
@@ -55,6 +56,7 @@ function App() {
           <Route path='/allgroup' element={<AllGroup/>}/>
           <Route path='/adduser/:id' element={<AddtoGroup/>}/>
           <Route path='/groupmembers/:id' element={<Member/>}/>
+          <Route path='/input' element={<NewInput/>}/>
         </Routes>
 
       </Router>
