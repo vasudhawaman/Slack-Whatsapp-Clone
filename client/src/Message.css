@@ -8,7 +8,7 @@
     margin-top: 5px;
     margin-bottom: 5px;
     margin-left: auto;
-    border-radius: 10px 0px 0px 10px;
+    border-radius: 10px 0px 10px 15px;
     padding-left: 1%;
     padding-right: 1%;
     padding-top: 5px; 
@@ -16,13 +16,17 @@
     color: black;
          
 }
+
+    /* HTML: <div class="triangle"></div> */
+
 #recieve{
+    text-align: left;
     margin-top: 5px;
     margin-bottom: 5px;
     margin-right: auto;
-    border-radius: 0px 10px 10px 0px;
-    padding-right: 1%;
-    padding-left: 1%;
+    border-radius: 10px 10px 10px 0px;
+    padding-right: 10px;
+    padding-left: 15px;
     padding-top: 5px; 
    background-color: #009688;
    color: whitesmoke;

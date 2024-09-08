@@ -1,4 +1,4 @@
-import React,{useState,useEffect, useContext} from "react";
+import React, { useState, useEffect, useContext } from "react";
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 import Video from "./Video";
 import SendIcon from '@mui/icons-material/Send';
@@ -13,78 +13,78 @@ import Sticker from "./Sticker";
 import SpeechToText from "./Components/SpeechToText";
 import StickerFile from "./StickerFile";
 import { UserContext } from "./context/UserContext";
-export default function Input({setMessage,room,user}){
-     const [text,setText] = useState("");
-     const [file,setFile] =useState("");
-     const [sticker,setSticker] =useState("");
-     const {socket} = useContext(SocketContext);
-     const {current} = useContext(UserContext);
-     let min =new Date().getMinutes();
+export default function Input({ setMessage, room, user }) {
+     const [text, setText] = useState("");
+     const [file, setFile] = useState("");
+     const [sticker, setSticker] = useState("");
+     const { socket } = useContext(SocketContext);
+     const { current } = useContext(UserContext);
+     let min = new Date().getMinutes();
      let hr = new Date().getHours();
      let date = new Date().getDate();
-     let month = new Date().getMonth() +1;
+     let month = new Date().getMonth() + 1;
      let year = new Date().getFullYear();
      let dateObj = `${date}/${month}/${year}`;
-    if( min <10){
-         min = "0" + min;
-    }
-     function sendMessage(){
-         
-          socket.emit("send_message",{ 
-               text:text,
-               user:current.username,
-               room:room,
-               time: hr +":"+min,
-               date:dateObj
+     if (min < 10) {
+          min = "0" + min;
+     }
+     function sendMessage() {
+
+          socket.emit("send_message", {
+               text: text,
+               user: current.username,
+               room: room,
+               time: hr + ":" + min,
+               date: dateObj
           });
-          
+
      }
-     function handleChange(e){
-           setText(e.target.value);
-           socket.emit("typing",{
-               room:room,
-               user:user
-           });
+     function handleChange(e) {
+          setText(e.target.value);
+          socket.emit("typing", {
+               room: room,
+               user: user
+          });
      }
-     function addEmoji(e){
-          setText((prev)=> {return prev + e.target.value});
+     function addEmoji(e) {
+          setText((prev) => { return prev + e.target.value });
           e.preventDefault();
      }
-      function handleForm(e){
-           e.preventDefault();
-           let min =new Date().getMinutes();
-           let hr = new Date().getHours();
-           sendMessage();
-           console.log(user)
-           setText("");
-      }
-      
-      
-     return(
-          <>
-    <div id="input">
-        <form className="chat-input-form" onSubmit={handleForm}>
-           <AttachFileIcon onClick={()=>{
-               document.getElementById("file").style.display ="block";
-           }} id="attach-icon"/>
-           <textarea id="chat-input" type="text" placeholder="Write your Message here.." value={text} onChange={handleChange} name="text"/>
-           <EmojiEmotionsIcon value={0}onClick={()=>{
-               
-               document.getElementById("emoji").style.display ="block"
-           }} id="emoji-icon"/>
-          <Emoji addEmoji={addEmoji}  id="emoji-icon"/>
-          <Voice setMessage={setMessage} room={room} user={user} />
-          <Video setMessage={setMessage} room={room} user={user} />
-            <button id="messagebtn"><SendIcon style={{ color : "whitesmoke " , padding: "2px"}}/></button>
+     function handleForm(e) {
+          e.preventDefault();
+          let min = new Date().getMinutes();
+          let hr = new Date().getHours();
+          sendMessage();
+          console.log(user)
+          setText("");
+     }
 
-       </form>
-       <StickyNote2TwoToneIcon onClick={()=>{
-            document.getElementById("sticker").style.display ="block";
-       }} id="sticker-icon"/>
-        <SpeechToText text={text} setText={setText} setMessage={setMessage} room={room} user={user} id="icon"/>
-    </div>
-     <File setMessage={setMessage} room={room} user={user} file={file} setFile={setFile} />
-    <StickerFile setMessage={setMessage} room={room} user={user} />
-     </>
+
+     return (
+          <>
+               <div id="input">
+                    <AttachFileIcon onClick={() => {
+                         document.getElementById("file").style.display = "block";
+                    }} id="attach-icon" />
+                    <form className="chat-input-form" onSubmit={handleForm}>
+
+                         <input id="chat-input" type="text" placeholder="Write your Message here.." value={text} onChange={handleChange} name="text" />
+                    </form>
+                    <EmojiEmotionsIcon value={0} onClick={() => {
+
+                         document.getElementById("emoji").style.display = "block"
+                    }} id="emoji-icon" />
+                    <Emoji addEmoji={addEmoji} id="emoji-icon" />
+                    <Voice setMessage={setMessage} room={room} user={user} />
+                    <Video setMessage={setMessage} room={room} user={user} />
+                    <button id="messagebtn"><SendIcon style={{ color: "whitesmoke ", padding: "2px" }} /></button>
+                    <StickyNote2TwoToneIcon onClick={() => {
+                         document.getElementById("sticker").style.display = "block";
+                    }} id="sticker-icon" />
+                    <SpeechToText text={text} setText={setText} setMessage={setMessage} room={room} user={user} id="icon" />
+               </div>
+               <File setMessage={setMessage} room={room} user={user} file={file} setFile={setFile} />
+               <StickerFile setMessage={setMessage} room={room} user={user} />
+          </>
      )
 }

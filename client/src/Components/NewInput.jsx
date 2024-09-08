@@ -4,12 +4,11 @@ import SendIcon from '@mui/icons-material/Send';
 export default function NewInput(){
 
     return (
-        <div className="input-box">
-            <input className="input-area" type="text" placeholder="Send Message"/>
-            <button >
-            <SendIcon style={{ color : "whitesmoke ",fontSize:"1.3em"
-            }}/>
-            </button>
-        </div>
+      <div className="input-chat-send">
+          <input type="text" placeholder="message..." className="chat-input-box"/>
+          <button>Send</button>
+      </div>
+      
+        
     )
 }

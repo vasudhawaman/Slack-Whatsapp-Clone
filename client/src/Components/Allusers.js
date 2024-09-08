@@ -1,6 +1,6 @@
 import React,{useEffect, useState} from 'react'
 import UserFile from './UserFile';
-
+import './Allusers.css';
 const Allusers = () => {
     const[user,setUsers]=useState();
     const[data,setdata]=useState()
@@ -28,7 +28,7 @@ const Allusers = () => {
     
   return (
     <div className="user-header">
-      <h1>All Users</h1>
+      <h1 className='user-heading'>All Users</h1>
       <p>This page will display all users registered on the platform.</p>
       {data && data.map(u=>{
         return <UserFile user={u}/>

@@ -25,27 +25,11 @@ export default function Chatlog({ data, setRoom, setUser }) {
                 const element = document.querySelector(".chat-rooms");
                 element.style.display = "none";
                 const chat = document.querySelector(".chat");
-                const input = document.querySelector("#input");
-                const voice = document.querySelector("#startVoice");
-                const video = document.querySelector("#startVideo");
-                const attach = document.querySelector("#attach-icon");
-                const sticker = document.querySelector("#sticker-icon");
-                const speech = document.querySelector("#speech-icon");
-                const emoji = document.querySelector("#emoji-icon");
-                const sendMessage = document.querySelector("#messagebtn");
-                const form = document.querySelector(".chat-input-form");
+                // const input = document.querySelector("#input");
                 const profile = document.querySelector("#profile");
-
                 chat.style.width = "100%";
-                input.style.width = "100%";
+                // input.style.width = "100%";
                 profile.style.display = "flex";
-                voice.style.display = "block";
-                video.style.display = "block";
-                attach.style.display = "block";
-                sendMessage.style.display ="block";
-                sticker.style.display ="block";
-                emoji.style.display ="block";
-                speech.style.display ="block";
                 setUser(data.username);
                 setRoom(data.roomid);
             }}>

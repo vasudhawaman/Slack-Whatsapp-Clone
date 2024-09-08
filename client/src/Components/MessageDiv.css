@@ -2,6 +2,8 @@
      position: relative;
     width: 100%;
     text-align: center; 
+    padding-left:1%;
+    padding-right:1%;
 }
 .message-div > .date{
     display: inline-block; 

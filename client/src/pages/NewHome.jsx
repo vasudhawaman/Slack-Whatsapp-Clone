@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect, useRef} from "react";
+import { useNavigate } from "react-router-dom";
 import './NewHome.css';
 import Chat from "../Chat";
 import Search from "../Components/Search";
@@ -7,11 +8,13 @@ import { UserContext } from "../context/UserContext";
 import Chatlog from "../Components/Chatlog";
 import useWindowDimensions from "../Components/Dimensions";
 import Default from "./Default";
+import Input from "../Input";
+import NewInput from "../Components/NewInput";
 export default function NewHome() {
   const [user, setUser] = useState()
   const [room, setRoom] = useState("")
   const  {current} = useContext(UserContext);
-  
+  const Navigate = useNavigate();
    const  dimension = useWindowDimensions();
   const [message, setMessage] = useState([]);
   
@@ -31,8 +34,14 @@ export default function NewHome() {
           'Content-Type': 'application/json',
         },
       })
-      const json = await response.json();
-      setdata(json);
+      if(response.status === 200){
+        const json = await response.json();
+        console.log(json);
+         setdata(json);
+      }else{
+            Navigate("/signin");
+      }
+     
     }
     fetchdata();
   }, [])
@@ -73,13 +82,23 @@ export default function NewHome() {
           </div>
 
         </aside>
-    {dimension.width >600 ? <> {user? <main className="chat" id="main">
+    {dimension.width >600 ? <> {user? 
+      <>
+    <main className="chat" id="main">
           <Chat message={message} setMessage={setMessage} user={user} room={room} />
-        </main>:<Default/>} </>  : 
+          
+        </main>
+        <NewInput />
+        </>
+        :<Default/>} </>  : 
+        <>
         <main className="chat" id="main">
         <Chat message={message} setMessage={setMessage} user={user} room={room} />
+       
       </main>
-        }
+      <NewInput />
+      </>}
+        
       </section>
     </div>
   )

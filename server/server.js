@@ -54,8 +54,11 @@ const io = new Server(server, {
 
 }); //max buffer set 
 app.use('/register', require('./routes/user'));
+let users =[]; // map socket ids to usernames
 io.on("connection", (socket) => {
-
+     socket.on("entered_talkpal",(data)=>{
+        users.push({socketId:socket.id,user:data.user});
+     })
     socket.on("join_chat", (data) => {
         console.log(`user ${data.user} has joined ${data.room}`)
         socket.join(data.room);
@@ -127,7 +130,7 @@ io.on("connection", (socket) => {
 
     socket.on("start_call", (data) => {
         console.log(data.room)
-        console.log(`user ${data.user} has joined ${data.room}`)
+        console.log(`user ${data.user} has joined ${data.room}`);
         socket.to(data.room).emit("on-call", data);
     })
     socket.on("end-call", (data) => {
