@@ -94,7 +94,6 @@ export default function NewHome() {
         <>
         <main className="chat" id="main">
         <Chat message={message} setMessage={setMessage} user={user} room={room} />
-       
       </main>
       <NewInput />
       </>}

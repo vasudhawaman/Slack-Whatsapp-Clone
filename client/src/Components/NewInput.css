@@ -8,10 +8,27 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: rgb(177, 226, 226);
+    background: linear-gradient(to left, #8f94fb, #4e54c8);
     height: 60px;
     box-sizing: border-box;
 }  
+.input-chat-send > button{
+    box-shadow: none;
+    border: none;
+    border-radius: 50%;
+}
+.input-chat-send >.send-icon{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 5px;
+    text-align: center;
+    color:white;
+    background-color: #ff488b;
+    height: 50px;
+    width: 50px;
+    border-radius: 100%;
+}
 .chat-input-box{
     width: 90%;
     height: 40px;

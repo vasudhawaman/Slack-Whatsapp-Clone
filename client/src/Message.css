@@ -12,8 +12,10 @@
     padding-left: 1%;
     padding-right: 1%;
     padding-top: 5px; 
-    background-color: rgb(185, 231, 167);
-    color: black;
+    background: linear-gradient(-225deg, #9704db 0%, #7918F2 48%, #4801FF 100%); 
+    /* background: radial-gradient(939px at 0.7% 2.4%, rgb(116, 106, 255) 0%, rgb(221, 221, 221) 100.2%); */
+    color: rgb(255, 255, 255);
+    box-shadow: rgba(44, 44, 44, 0.1) 0px 4px 6px -1px, rgba(41, 41, 41, 0.06) 0px 2px 4px -1px;
          
 }
 
@@ -28,8 +30,8 @@
     padding-right: 10px;
     padding-left: 15px;
     padding-top: 5px; 
-   background-color: #009688;
-   color: whitesmoke;
+    background: linear-gradient(to top, #dad4ec 0%, #dad4ec 1%, #f3e7e9 100%); 
+   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
 }
 #sent > .time{
    text-align: end;

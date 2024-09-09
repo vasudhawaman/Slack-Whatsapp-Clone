@@ -1,5 +1,5 @@
 .search{
-    background-color: rgb(162, 238, 221);
+    background: linear-gradient(to left, #8f94fb, #4e54c8);  
     z-index: 3;
     box-shadow: none;
     border: none;

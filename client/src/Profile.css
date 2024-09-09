@@ -7,13 +7,13 @@
     position:sticky;
     top: 0px;
     flex-direction: row;
-    background-color: rgb(162, 238, 221);
-    border-bottom: 2px solid rgb(197, 196, 196) ;
+    background: linear-gradient(to left, #8f94fb, #4e54c8);
     align-items: left;
     height: 40px;
     width: 100%;
     padding: 5px;
     z-index: 5;
+    color: #fafafc;
 }
 #pic{
     display: flex;
