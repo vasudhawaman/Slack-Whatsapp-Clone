@@ -9,9 +9,7 @@ async function verifyToken(req, res, next) {
     else{
         try {
             const user =await jwt.verify(req.cookies.token_for_talkpal, JWT_SECRET);
-            console.log("user",user)
             req.id = user.id;
-            console.log("req.id",req.id)
             next();
         }catch(err){
             console.log(err)

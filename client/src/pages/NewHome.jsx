@@ -54,7 +54,8 @@ export default function NewHome() {
     fetchdata();
   }, [])
   const getAllUsers=()=>{
-    if(allcontacts==false){
+    setcontact(false)
+    if(!allcontacts){
     const url="http://localhost:8000/register/allusers";
       const getdata=async()=>{
         const response=await fetch(url,{
@@ -88,6 +89,7 @@ export default function NewHome() {
     }
   }
   const getAllConnection = () => {
+    setallcontacts(false)
     if (!allcontact) {
       const url = 'http://localhost:8000/register/connect'
       const getdata = async () => {

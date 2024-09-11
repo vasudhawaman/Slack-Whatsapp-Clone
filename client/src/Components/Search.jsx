@@ -1,12 +1,24 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import './Search.css';
 import UseAnimations from "react-useanimations";
 import alertOctagon from 'react-useanimations/lib/alertOctagon';
 import { Link } from "react-router-dom";
 import { HiUserGroup } from "react-icons/hi2";
+import { UserContext } from "../context/UserContext";
 
 export default function Search() {
+  const { current } = useContext(UserContext);
+  const [userimage, setImage] = useState("https://static.vecteezy.com/system/resources/previews/000/574/512/original/vector-sign-of-user-icon.jpg");
+  if(current){
+  const arrayBuffer = new Uint8Array(current.image.data);
+  const blob = new Blob([arrayBuffer], { type: current.filename });
+  const fr = new FileReader();
+  fr.onload = function () {
+    setImage(fr.result);
+  };
+  fr.readAsDataURL(blob);
+}
   const [image, setimage] = useState();
   const [group, setGroupName] = useState('');
   const handleImageChange = (e) => {
@@ -58,10 +70,11 @@ export default function Search() {
           </svg>
         </Link> */}
         <HiUserGroup size={30} onClick={getGroup} />
-
-        {/* <div id="pic">
-            <img src="./vasudha.jpg" height="30px" width="30px" style={{borderRadius:"100%"}}/>
-            </div> */}
+          <Link to='/userprofile'>
+        <div id="pic">
+          <img src={userimage} height="30px" width="30px" style={{ borderRadius: "100%" }} />
+        </div>
+        </Link>
       </div>
       <div className="group">
         <label>Group name:</label>
