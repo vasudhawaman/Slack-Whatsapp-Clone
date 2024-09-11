@@ -1,113 +1,199 @@
-body{
-    background: #fbfff1;
-  }
-  @keyframes identifier {
-    
-  }
-  .containerx{
-    width:50%;
-    height: 600px;
-    margin-left: 25%;
-  }
-  .container1x{
-    background: #b4c5e4;
-    border: 2px solid black;
-    border-radius: 30px;
-    justify-content: center;
-    height:auto;
-    padding-bottom: 5%;
-    width:60%;
-    margin-left: 20%;
-  }
-  .wel1{
-    margin-top: 80px;
-    margin-bottom: 10px;
-    display:flex;
-    text-align: center;
-    justify-content: center;
-    font-family:Arial, Helvetica, sans-serif;
-    font-size: 40px;
-  }
-  .heading1{
-    margin-top: 0px;
-    color: #3d52d5;
-    font-size: 75px;
-    display: flex;
-    justify-content: center;
-    font-family: "Kaushan Script", cursive;
-  }
-  .email1{
-    width:80%;
-    margin-left: 10%;
-    height:10%;
-    background: #b4c5e4;
-    border:none;
-    outline:none;
-    border-bottom: 3px solid #090C9B;
-    text-align: center;
-  }
-  
-  .user1{
-    width: 80%;
-    margin-left: 10%;
-    text-align: center;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-  }
-  .ask1{
-    text-align: center;
-  }
-   /* .login{
-    width:20%;
-    margin-left: 40%; 
-    background-color: #090C9B;
-    text-align: center;
-    color:white;
-    cursor: pointer; 
-    margin-top: 20px;
-    height: 30px;
-    padding-top: 3px;
-    display: flex;
-    justify-content: center;
-  }
-  .log:hover{
-    background-color:#0b0ec3;
-    color: rgb(255, 255, 255);
-    box-shadow: 0px 0px  3px 3px #7b91ba;
-  } */
-  .google1{
-    text-decoration: none;
-    width: 60%;
-    height:40px;
-    margin-left: 20%;
-    margin-top: 20px;
-    display: flex;
-    justify-content: center;
-    border:2px solid black;
-    border-radius: 30px;
-    background-color: white;
-    padding-top: 7px;
-    font-size: larger;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    cursor: pointer;
-  }
-  .google1:hover{
-    background-color: rgb(234, 234, 234);
-    box-shadow: 0px 0px 1px 1px black;
-  }
-  .forget{
-    margin-top: 10px;
-    text-align: center;
-  }
-  @media screen and (max-width:814px)  {
-    .containerx{
-      width:90%;
-      margin-left:5%;
-    }
-    .container1x{
-      width:80%;
-      margin-left: 10%;
-    }
-  }
-  
-   
+body {
+  background: #f6f4f2;
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+}
 
+.containerx {
+  width: 100%;
+  background-color:transparent;
+  backdrop-filter: blur(10px);
+  /* background-color: #ffffff; */
+  max-width: 450px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 2px solid white;
+  border-radius: 12px;
+  /* box-shadow: rgb(214, 168, 233) 0px 0px 0px 1px, rgb(214, 168, 233) 0px 1px 1px -0.5px, rgb(214, 168, 233) 0px 3px 3px -1.5px, rgb(214, 168, 233) 0px 6px 6px -3px; */
+  text-align: center;
+  animation: fadeIn 1s ease-in-out; 
+  margin-top: 50px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.wel1 {
+  margin: 20px 0;
+  font-size: 28px;
+  color: #425664; 
+  font-weight: 600;
+  animation: slideIn 0.8s ease-out; 
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.heading1 {
+  margin-top: 0;
+  color: #f92c85; 
+  font-size: 60px;
+  font-family: "Kaushan Script", cursive;
+  animation: come 1s ease-out; 
+}
+
+@keyframes come {
+  0% {
+    transform: scale(0.0);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.container1x {
+  background: #ffffff; 
+  border: 1px solid #c6ad8f; 
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
+  margin-top: 20px;
+  animation: fadeIn 1s ease-in-out; 
+}
+
+.user1 {
+  font-size: 16px;
+  color: #425664; 
+  margin-bottom: 5px;
+}
+
+.email1 {
+  width: calc(100% - 20px);
+  margin: 10px 0;
+  height: 45px;
+  border: 1px solid #c6ad8f; 
+  border-radius: 8px;
+  padding: 0 15px;
+  font-size: 16px;
+  box-sizing: border-box;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.email1:focus {
+  border-color: #425664; 
+  outline: none;
+  box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
+}
+
+.login1 {
+  width: 100%;
+  height: 45px;
+  background-color: #f92c85; 
+  border: none;
+  border-radius: 25px;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-left: 0;
+  margin-top: 15px;
+  padding: auto;
+  padding-top: 10px;
+  transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+}
+
+.login1:hover {
+  background-color: #d22a7e;
+  transform: scale(1.05); 
+  box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
+}
+
+.forget {
+  margin-top: 10px;
+}
+
+.forget a {
+  color: #425664; 
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.3s; 
+}
+
+.forget a:hover {
+  color: #f92c85; 
+}
+
+.goog {
+  margin-top: 20px;
+}
+
+.google1 {
+  text-decoration: none;
+  width: 100%;
+  height: 45px;
+  background-color: #ffffff; 
+  border: 2px solid #c6ad8f; 
+  border-radius: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #425664;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+}
+
+.google1:hover {
+  background-color: #f6f4f2; 
+  transform: scale(1.05); 
+  box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
+}
+
+.ask1 {
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+.ask1 a {
+  color: #f92c85; 
+  text-decoration: none;
+  transition: color 0.3s; 
+}
+
+.ask1 a:hover {
+  color: #e579af; 
+}
+
+
+@media screen and (max-width: 768px) {
+  .containerx {
+    width: 95%;
+    padding: 15px;
+  }
+  
+  .login1, .google1 {
+    height: 40px;
+    font-size: 16px;
+  }
+}

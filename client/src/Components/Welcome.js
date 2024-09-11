@@ -3,6 +3,7 @@ import './welcome.css';
 import Terms from './Terms';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import StarBackground from './StarBackground';
 const Welcome = ({ setOtpState }) => {
 
     const [isChecked, setIsChecked] = useState(false);
@@ -55,6 +56,7 @@ const Welcome = ({ setOtpState }) => {
     }
     return (
         <>
+        <StarBackground/>
             <div className="container">
                 <p className="wel">Welcome To</p>
                 <h1 className="heading">TalkPal</h1>
@@ -75,7 +77,7 @@ const Welcome = ({ setOtpState }) => {
                 </div>
 
                 <div className='goog'><Link to='http://localhost:5000/auth/google'><button className='google' onClick={handleOnClick2} >Sign up with google</button></Link></div>
-                <p className="ask">Already have an account?<a href="/signin">Login</a></p>
+                <p className="ask" style={{color:'white'}}>Already have an account?<a href="/signin">Login</a></p>
             </div>
         </>
     );

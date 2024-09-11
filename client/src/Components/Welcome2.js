@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import './Welcome2.css'
 import { Link } from 'react-router-dom'
+import StarBackground from './StarBackground'
 export default function Welcome2() {
   const [credentials,setcredentials]=useState({username:"",password:""})
   const handlesubmit=async (e)=>{
@@ -27,7 +28,9 @@ export default function Welcome2() {
     console.log(credentials);
 }
   return (
-    <><div className="containerx">
+    <>
+    <StarBackground/>
+    <div className="containerx">
     <p className="wel1">Welcome To</p>
     <h1 className="heading1">TalkPal</h1>
     <div className="container1x">
@@ -41,7 +44,7 @@ export default function Welcome2() {
     </div>
     <div className='forget'><Link to='/forget'>Forget Password?</Link></div>
     <div className='goog'><Link to='http://localhost:8000/auth/google'><button className='google1'>Sign in with google</button></Link></div>
-    <p className="ask1">Don't have an account?<a href="/register">Sign up</a></p>
+    <p className="ask1" style={{color:'white'}}>Don't have an account?<a href="/register">Sign up</a></p>
     </div>
     
 

@@ -1,9 +1,10 @@
 import React from 'react'
 import './Terms.css'
+import StarBackground from './StarBackground'
 export default function Terms() {
   return (
     <>
-    
+    <StarBackground/>
     <div className='container12'>
     <div className="cont2">
     <h1>Terms and conditions</h1>

@@ -11,12 +11,9 @@ export default function Home() {
   const { socket } = useContext(SocketContext);
   let min = new Date().getMinutes();
   let hr = new Date().getHours();
-
   if (min < 10) {
     min = "0" + min;
   }
-
-
   function handleSubmit(e) {
     e.preventDefault();
     //localStorage.setItem("user",user);
@@ -24,9 +21,7 @@ export default function Home() {
   }
   return (
     <>
-
       <div className="layout">
-
         <div className="left">
           <form onSubmit={handleSubmit}>
             <input type="text" value={room} onChange={(e) => {
@@ -38,14 +33,9 @@ export default function Home() {
             <button>Submit</button>
           </form>
         </div>
-
-
-
-
         <div className="right">
           <Chat message={message} setMessage={setMessage} user={user} room={room} />
         </div>
-
 
       </div>
 

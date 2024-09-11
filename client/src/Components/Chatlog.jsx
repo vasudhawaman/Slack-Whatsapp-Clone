@@ -14,7 +14,6 @@ export default function Chatlog({ data, setRoom, setUser }) {
             setImage(fr.result);
         };
         fr.readAsDataURL(blob);
-        console.log(image1)
     }
 
 

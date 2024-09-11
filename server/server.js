@@ -4,7 +4,7 @@ const path = require('path');
 const fs = require("fs");
 const bodyParser = require('body-parser');
 const multer = require('multer')
-const upload = multer({ dest: 'uploads/' })
+const upload = multer({ dest: 'uploads/'})
 const session = require('express-session');
 const passport = require('passport');
 const cookieParser = require('cookie-parser');
@@ -50,12 +50,10 @@ const io = new Server(server, {
         origin: ["http://localhost:3000", "https://localhost:3001"],
         methods: ["GET", "POST"]
     },
-
-
 }); //max buffer set 
 app.use('/register', require('./routes/user'));
+app.use('/language',require('./routes/detect'))
 io.on("connection", (socket) => {
-
     socket.on("join_chat", (data) => {
         console.log(`user ${data.user} has joined ${data.room}`)
         socket.join(data.room);
