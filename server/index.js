@@ -7,20 +7,20 @@ const app = express();
 const port = 5000;
 const session=require('express-session');
 // connectToMongo();
-require('./OAuth/googleOauth')
-app.use(session({
-  secret: 'mysecret',
-  resave: false,
-  saveUninitialized: true,
-  cookie:{
-    maxAge: 30 * 24 * 60 * 60 * 1000,
-    httpOnly: true,
-    secure: false,
-    sameSite: 'none'
-  }
-}));
-app.use(passport.initialize());
-app.use(passport.session());
+// require('./OAuth/googleOauth')
+// app.use(session({
+//   secret: 'mysecret',
+//   resave: false,
+//   saveUninitialized: true,
+//   cookie:{
+//     maxAge: 30 * 24 * 60 * 60 * 1000,
+//     httpOnly: true,
+//     secure: false,
+//     sameSite: 'none'
+//   }
+// }));
+// app.use(passport.initialize());
+// app.use(passport.session());
 
 app.use(express.json());
 app.use(cookieParser());
@@ -44,18 +44,18 @@ app.get('/go', (req, res) => {
 app.use('/register', require('./routes/user'));
 
 
-app.get('/auth/google',
-  passport.authenticate('google', { scope: ['profile', 'email'] }));
+// app.get('/auth/google',
+//   passport.authenticate('google', { scope: ['profile', 'email'] }));
 
-app.get('/auth/google/callback',
-  passport.authenticate('google', { failureRedirect: 'http://localhost:3002' }),
-  (req, res) => {
-       const {token}=req.user;
-       console.log(token) 
-       res.cookie('token_for_talkpal',token,{
-            maxAge:24*60*60*7*1000*3,
-        }).redirect(`http://localhost:3000/allusers`)
-  });
+// app.get('/auth/google/callback',
+//   passport.authenticate('google', { failureRedirect: 'http://localhost:3002' }),
+//   (req, res) => {
+//        const {token}=req.user;
+//        console.log(token) 
+//        res.cookie('token_for_talkpal',token,{
+//             maxAge:24*60*60*7*1000*3,
+//         }).redirect(`http://localhost:3000/allusers`)
+//   });
 
 app.listen(port, () => {
   console.log(`http://localhost:${port}`);

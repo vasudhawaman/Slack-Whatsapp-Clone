@@ -1,6 +1,7 @@
 import React,{useState} from 'react'
 import './UserFile.css'
-import { TiTickOutline } from "react-icons/ti";
+import { TiTick } from "react-icons/ti";
+import { GiCancel } from "react-icons/gi";
 const ConnectionFile = ({user}) => {
   const [image, setImage] = useState("https://static.vecteezy.com/system/resources/previews/000/574/512/original/vector-sign-of-user-icon.jpg");
   if (user.image != null) {
@@ -40,11 +41,11 @@ const ConnectionFile = ({user}) => {
     }
   return (
     <div>
-      <div className='contain'>
+      <div className='containxx'>
         <img src={image} className='user-image'></img>
         <span className='user'>{user.username}</span>
-        <button className='sendreq' onClick={handleonclick}><TiTickOutline/></button>
-        <button className='sendreq' onClick={handleonreject}>Reject</button>
+        <button className='sendreq' onClick={handleonclick} style={{'height':'40px','width':'40px'}}><TiTick size={25}/></button>
+        <button className='sendreq' onClick={handleonreject} style={{'height':'40px','width':'40px'}}><GiCancel size={25}/></button>
       </div>
     </div>
   )

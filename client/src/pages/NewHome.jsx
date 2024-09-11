@@ -129,6 +129,7 @@ export default function NewHome() {
     }
   }
   const getAllConnection = () => {
+    setallcontacts(false)
     if (!allcontact) {
       const url = 'http://localhost:8000/register/connect'
       const getdata = async () => {

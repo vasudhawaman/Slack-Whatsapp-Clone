@@ -28,7 +28,7 @@ const UserFile = ({ user }) => {
   }
   return (
     <div>
-      <div className='contain'>
+      <div className='containxx'>
         <img src={image} className='user-image'></img>
         <span className='user'>{user.username}</span>
         <button className='sendreq' onClick={handleonclick}>Connect</button>

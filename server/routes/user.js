@@ -437,7 +437,7 @@ router.get('/allgroup', verifyToken, (req, res) => {
     
 })
 router.post('/adduser', verifyToken, (req, res) => {
-    const q1 = "SELECT * FRom group_room WHERE group_roomid=? AND userid=?"
+    const q1 = "SELECT * FROM group_room WHERE group_roomid=? AND userid=?"
     db.query(q1, [req.body.groupid, req.body.user_id], (err, result) => {
         if (result) {
             res.status(201).json("User is already added in group");
