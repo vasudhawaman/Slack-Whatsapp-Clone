@@ -17,6 +17,42 @@
     border: none;
     border-radius: 50%;
 }
+.box-lay{
+    position: fixed;
+    right:30px;
+    bottom: 65px;
+    background-color: white;
+    z-index: 20;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+.icon-wrap{
+
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center; 
+    justify-content: center;
+}
+.box-icon{
+     border-radius: 100%;
+     background-color: #ff488b;
+     text-align: center;
+     padding: 2px;
+    
+
+}
+.list{
+    display: inline-flex;
+}
+ .additional{
+    align-items: center;
+    text-align: center;
+    margin-right: 2px;
+     background-color:  #ff488b;
+     color: aliceblue;
+    border-radius: 50%;
+}
 .input-chat-send >.send-icon{
     display: flex;
     justify-content: center;

@@ -27,7 +27,6 @@ export default function Message(props){
            { props.file === 'image' ?  <img id='image' width="200px" src={props.source}/> : null}
           { props.file === 'video' ?  <video id='image' width="200px" src={props.source} controls/> : null}
           { props.file === 'audio' ? <><audio id='image' width="200px" src={props.source} controls/>
-          <VoiceToText cloudinary={props.cloudinary}/>
           </>  : null}
           { props.file === 'pdf' ?  <Pdf source={props.source} name={props.name} /> : null}
           { props.file === 'other' ?   

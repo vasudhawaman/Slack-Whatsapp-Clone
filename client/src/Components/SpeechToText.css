@@ -2,10 +2,5 @@
     outline: none;
       box-shadow: none;
       border: none;
-      background-color:rgb(162, 238, 221);
-}
-#speech-icon{
-  @media (max-width: 600px) {
-    display: none;
-  }
+      background: transparent;
 }

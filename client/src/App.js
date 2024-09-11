@@ -16,7 +16,6 @@ import Welcome2 from './Components/Welcome2';
 import OTP from './Components/OTP';
 import OTP1 from './Components/Otp1';
 import Password from './Components/Password';
-import User from './Components/User';
 import ForgetPass from './Components/Forgetpass';
 import Emoji1 from './Components/Emoji';
 import Allusers from './Components/Allusers';
@@ -47,7 +46,6 @@ function App() {
           <Route path='/forget' element={<ForgetPass setotp={setotp} />} />
           <Route path='/otp1' element={<OTP1 otp1={otp1} />} />
           <Route path='/password' element={<Password otp1={otp1} />} />
-          {/* <Route path='/userprofile' element={<User />} /> */}
           <Route path='/emoji' element={<Emoji1 />} />
           <Route path='/allusers' element={<Allusers />} />
           <Route path='/connection' element={<Connection />} />

@@ -39,6 +39,8 @@ export default function NewHome() {
         console.log(json);
          setdata(json);
       }else{
+        const json = await response.json();
+        console.log(json);
             Navigate("/signin");
       }
      
@@ -88,14 +90,14 @@ export default function NewHome() {
           <Chat message={message} setMessage={setMessage} user={user} room={room} />
           
         </main>
-        <NewInput />
+        <NewInput setMessage={setMessage} room={room} user={user}/>
         </>
         :<Default/>} </>  : 
         <>
         <main className="chat" id="main">
         <Chat message={message} setMessage={setMessage} user={user} room={room} />
       </main>
-      <NewInput />
+         <NewInput setMessage={setMessage} room={room} user={user}/>
       </>}
         
       </section>
