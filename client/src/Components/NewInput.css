@@ -26,6 +26,9 @@
     text-align: center;
     display: flex;
     flex-direction: column;
+    padding: 7px;
+    border-radius: 5px;
+    display: none;
 }
 .icon-wrap{
 
@@ -33,18 +36,28 @@
     flex-wrap: wrap;
     align-items: center; 
     justify-content: center;
+    padding: 3px;
 }
 .box-icon{
      border-radius: 100%;
      background-color: #ff488b;
      text-align: center;
      padding: 2px;
-    
-
+     margin-right: 2px;
+}
+.box-icon :hover{
+    border-radius: 100%;
+    background-color: #ff488b;
+    text-align: center;
+    padding: 2px;
+    margin-right: 2px;
 }
 .list{
+    width: 100%;
     display: inline-flex;
+    padding: 3px;
 }
+
  .additional{
     align-items: center;
     text-align: center;
@@ -76,7 +89,8 @@
 }
 @media (min-width: 600px) {
     .input-chat-send {
-        grid-column: 2 / 3; /* Input in the second column */
+        grid-column: 2 / 3; 
         grid-row: 2 / 3;
+       
       }
     }

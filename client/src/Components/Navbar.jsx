@@ -1,5 +1,5 @@
 import React from 'react'
-
+import { MdOutlineGroups2 } from "react-icons/md";
 export default  function Navbar() {
   return (
     
@@ -17,6 +17,7 @@ export default  function Navbar() {
                     <li>
                         <ion-icon name="ellipsis-vertical"></ion-icon>
                     </li>
+                    
                 </ul>
             </div>
     

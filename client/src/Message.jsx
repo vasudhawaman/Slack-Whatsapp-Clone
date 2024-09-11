@@ -21,7 +21,7 @@ export default function Message(props){
         <div id="message">
         <div id="sent">
             { props.grp ? <div id="user">
-                {props.user}
+                {props.user}(MYSELF)
             </div> : null}
            {props.text ? props.text : null}
            { props.file === 'image' ?  <img id='image' width="200px" src={props.source}/> : null}

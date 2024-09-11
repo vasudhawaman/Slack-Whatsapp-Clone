@@ -7,7 +7,7 @@ import { SocketContext } from "./context/SocketContext";
 import {UserContext} from "./context/UserContext";
 import MessageDiv from "./Components/MessageDiv";
 import NewInput from "./Components/NewInput";
-export default function Chat({message,setMessage,user,room}){
+export default function Chat({message,setMessage,user,room,pfp,group}){
            const bottomRef = useRef(null);
           const {socket} = useContext(SocketContext);
            const [dates,setDates] =useState([]);
@@ -70,9 +70,9 @@ export default function Chat({message,setMessage,user,room}){
     return(
         <>
         <div id="chat">
-          <Profile link="pfp.png" user={user} room={room} /> 
+          <Profile pfp={pfp} user={user} room={room} /> 
          <div id="all"> 
-          <MessageDiv dates={dates} message={message}/>
+          <MessageDiv dates={dates} message={message} group={group}/>
          </div>
         </div>
        

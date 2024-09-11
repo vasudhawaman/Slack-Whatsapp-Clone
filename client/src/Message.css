@@ -43,13 +43,13 @@
 }
 #recieve > #user{
     text-align: center;
-    color: whitesmoke;
+    color: rgb(31, 29, 29);
     font-size: x-small;
     
 }
 #sent > #user{
     text-align: center;
    font-weight: bold;
-    color: black;
+    color: rgb(252, 249, 249);
     
 }

@@ -32,6 +32,13 @@ main.chat{
     
  
 }
+.alluserhere{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 10px;
+  background: linear-gradient(to left, #8f94fb, #4e54c8); 
+}
 /* .logs{
   margin-top: 5px;
 } */

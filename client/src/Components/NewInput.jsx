@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import './NewInput.css';
 import AddIcon from '@mui/icons-material/Add';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
+import CloseIcon from '@mui/icons-material/Close';
 import Video from "../Video";
 import SendIcon from '@mui/icons-material/Send';
 import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
@@ -70,59 +71,62 @@ export default function NewInput({ setMessage, room, user }) {
   return (
 
     <>
-      <div className="box-lay">
-    
-          <div className="list">
+      <div className="box-lay" id="file-input"> 
+        <div className="list">
+           <CloseIcon onClick={()=>{
+                document.getElementById("file-input").style.display ="none";
+            }} />
+        </div>
+        <div className="list">
           <div className="box-icon">
+         
             <AttachFileIcon onClick={() => {
               document.getElementById("file").style.display = "block";
             }} id="attach-icon" />
           </div>
           <h4>Files</h4>
-          </div>
-          <div className="list">
+        </div>
+        <div className="list">
           <div className="box-icon">
             <StickyNote2TwoToneIcon onClick={() => {
               document.getElementById("sticker").style.display = "block";
             }} id="sticker-icon" />
           </div>
-          <h4>Files</h4>
-          </div>
-          <div className="list">
+          <h4>Sticker</h4>
+        </div>
+        <div className="list">
           <div className="box-icon">
             <SpeechToText text={text} setText={setText} setMessage={setMessage} room={room} user={user} id="icon" />
           </div>
-          <h4>Files</h4>
-          </div>
-          <div className="list">
+          <h4>Speech to text</h4>
+        </div>
+        <div className="list">
           <div className="box-icon"><Voice setMessage={setMessage} room={room} user={user} /></div>
           <h4>Voice record</h4>
-          </div>
-          <div className="list">
+        </div>
+        <div className="list">
           <div className="box-icon"> <Video setMessage={setMessage} room={room} user={user} /></div>
           <h4>Video Record</h4>
-          </div>
-          
-
-          <div className="box-icon">
-            <EmojiEmotionsIcon value={0} onClick={() => {
-
-              document.getElementById("emoji").style.display = "block"
-            }} />
-            <Emoji addEmoji={addEmoji} />
-          </div>
+        </div>
 
       </div>
-      <div className="input-chat-send">
+      <div className="input-chat-send" id="input">
+        <EmojiEmotionsIcon value={0} onClick={() => {
+
+          document.getElementById("emoji").style.display = "block"
+        }} />
+        <Emoji addEmoji={addEmoji} />
         <div className="additional">
-          <AddIcon />
+          <AddIcon onClick={()=>{
+             document.getElementById("file-input").style.display="block";
+          }}/>
         </div>
         <input type="text" placeholder="message..." className="chat-input-box" value={text} onChange={handleChange} name="text" />
         <div className="send-icon">
-          <SendIcon height="50px" onClick={()=>{
-                 sendMessage();
-                 setText("");
-          }}/>
+          <SendIcon height="50px" onClick={() => {
+            sendMessage();
+            setText("");
+          }} />
         </div>
       </div>
 

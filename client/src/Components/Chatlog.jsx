@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import './Chatlog.css';
 import useWindowDimensions from './Dimensions';
 
-export default function Chatlog({ data, setRoom, setUser }) {
+export default function Chatlog({ data, setRoom, setUser,setPFP ,group}) {
     const dimension = useWindowDimensions();
     const [image1, setImage] = useState('https://static.vecteezy.com/system/resources/previews/000/574/512/original/vector-sign-of-user-icon.jpg');
+  if(!group){
     const { image, filename } = data;
     if (image) {
         const arrayBuffer = new Uint8Array(image.data);
@@ -15,9 +16,24 @@ export default function Chatlog({ data, setRoom, setUser }) {
         };
         fr.readAsDataURL(blob);
     }
+  }  else{
+    const { image, img_mimetype} = data;
+    if (image) {
+        const arrayBuffer = new Uint8Array(image.data);
+        const blob = new Blob([arrayBuffer], { type: img_mimetype});
+        const fr = new FileReader();
+        fr.onload = function () {
+            setImage(fr.result);
+        };
+        fr.readAsDataURL(blob);
+    }
+    console.log("group-choose",data)
+  }
 
 
     return (
+        <>
+        {!group ? 
         <>
             {dimension.width < 600 ? <div className="chatlog" onClick={() => {
                 console.log("clicked this div");
@@ -60,6 +76,52 @@ export default function Chatlog({ data, setRoom, setUser }) {
             </div>
 
             }
+        </> : null }
+        {group ? 
+        <>
+            {dimension.width < 600 ? <div className="chatlog" onClick={() => {
+                console.log("clicked this div");
+                const element = document.querySelector(".chat-rooms");
+                element.style.display = "none";
+                const chat = document.querySelector(".chat");
+                // const input = document.querySelector("#input");
+                const profile = document.querySelector("#profile");
+                chat.style.width = "100%";
+                // input.style.width = "100%";
+                profile.style.display = "flex";
+                setUser(data.group_name);
+                setRoom(data.group_roomid);
+                setPFP(image1);
+            }}>
+
+                <div className='imgProfile'>
+                    <img src={image1} height="50px" width="50px" style={{ borderRadius: "100%" }} />
+                </div>
+                <div className='information'>
+                    <h1>{data.group_name}</h1>
+                    <p>last message</p>
+                </div>
+                <div className='unread'>
+                    <h1></h1>
+                    <p>1</p>
+                </div>
+
+            </div> : <div className="chatlog" onClick={() => { setUser(data.group_name); setRoom(data.group_roomid) ;setPFP(image1) }}>
+
+                <div className='imgProfile'>
+                    <img src={image1} height="30px" width="30px" style={{ borderRadius: "100%" }} />
+                </div>
+                <div className='information'>
+                    <h1>{data.group_name}</h1>
+                    <p>last message</p>
+                </div>
+                <div className='unread'>
+                    <p>1</p>
+                </div>
+            </div>
+
+            }
+        </> : null }
         </>
     )
 }

@@ -424,44 +424,78 @@ router.post('/creategroup', verifyToken, upload.single('file'), (req, res) => {
     })
 })
 router.get('/allgroup', verifyToken, (req, res) => {
-    const q = "SELECT * FROM `group` WHERE adminid=?";
-    db.query(q, [req.id], (err, result) => {
-        if (err) throw err;
-        res.json(result);
-    })
+    try{
+        const q = "SELECT * FROM `group` WHERE adminid=?";
+        db.query(q, [req.id], (err, result) => {
+            if (err) throw err;
+            res.json(result);
+        })
+    }catch(err){
+        console.log(err);
+        res.status(400).json({message:`Err ${err}`});
+    }
+    
 })
 router.post('/adduser', verifyToken, (req, res) => {
     const q1 = "SELECT * FRom group_room WHERE group_roomid=? AND userid=?"
     db.query(q1, [req.body.groupid, req.body.user_id], (err, result) => {
         if (result) {
-            res.json("User is already added in group");
+            res.status(201).json("User is already added in group");
         } else {
-            const q = "INSERT INTO group_room (group_roomid, userid) VALUES (?, ?)";
+            try{
+                const q = "INSERT INTO group_room (group_roomid, userid) VALUES (?, ?)";
             console.log(req.body);
             db.query(q, [req.body.groupid, req.body.user_id], (err, result) => {
                 if (err) throw err;
                 console.log("User added successfully to group");
                 res.json({ success: "User added successfully to group" });
             })
+            }catch(err){
+                res.status(400).json({message:`Err ${err}`});
+            }
+            
         }
     })
 })
 
 router.post('/getmember',verifyToken,(req,res)=>{
-    const q = "SELECT * FROM group_room JOIN users ON group_room.userid=users.id WHERE group_roomid=? AND group_room.userid !=?";
-    db.query(q, [req.body.groupid,req.id], (err, result) => {
-        if (err) throw err;
-        res.json(result);
-    })
+    try{
+        const q = "SELECT * FROM group_room JOIN users ON group_room.userid=users.id WHERE group_roomid=? AND group_room.userid !=?";
+        db.query(q, [req.body.groupid,req.id], (err, result) => {
+            if (err) throw err;
+            res.status(200).json(result);
+        })
+    }catch(err){
+        res.status(400).json({message:`Err ${err}`});
+    }
+    
 })
 
 router.delete('/remove',verifyToken,(req,res)=>{
-    const q = "DELETE FROM group_room WHERE group_roomid=? AND userid=?";
-    db.query(q, [req.body.groupid, req.body.user_id], (err, result) => {
+    try{
+        const q = "DELETE FROM group_room WHERE group_roomid=? AND userid=?";
+        db.query(q, [req.body.groupid, req.body.user_id], (err, result) => {
+            if (err) throw err;
+            console.log("User removed successfully from group");
+            res.status(200).json({ success: "User removed successfully from group" });
+        })
+    }catch(err){
+        res.status(400).json({message:`Err ${err}`});
+    }
+    
+})
+
+router.get('/getgroup',verifyToken,(req,res)=>{
+    try{
+        const q = "SELECT * FROM group_room JOIN `group` ON group_room.group_roomid=`group`.groupid WHERE group_room.userid=?";
+    db.query(q, [req.id], (err, result) => {
         if (err) throw err;
-        console.log("User removed successfully from group");
-        res.json({ success: "User removed successfully from group" });
+        res.status(200).json(result);
     })
+    }catch(err){
+        res.status(400).json({message:`Err ${err}`});
+    }
+    
 })
 
 module.exports = router;

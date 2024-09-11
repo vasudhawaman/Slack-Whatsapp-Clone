@@ -54,7 +54,6 @@ function App() {
           <Route path='/allgroup' element={<AllGroup/>}/>
           <Route path='/adduser/:id' element={<AddtoGroup/>}/>
           <Route path='/groupmembers/:id' element={<Member/>}/>
-          <Route path='/input' element={<NewInput/>}/>
         </Routes>
 
       </Router>
