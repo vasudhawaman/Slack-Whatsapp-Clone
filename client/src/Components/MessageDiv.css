@@ -2,13 +2,16 @@
      position: relative;
     width: 100%;
     text-align: center; 
+    padding-left:1%;
+    padding-right:1%;
 }
 .message-div > .date{
     display: inline-block; 
-    background-color: rgb(3, 88, 56);
-    color: white; 
+    background-color: rgb(255, 255, 255);
+    color: rgb(51, 50, 50); 
     padding: 5px 10px; 
     border-radius: 5px; 
     margin-top: 2px;
     margin-bottom: 2px;
 }
+

@@ -53,6 +53,7 @@ const io = new Server(server, {
 }); //max buffer set 
 app.use('/register', require('./routes/user'));
 app.use('/language',require('./routes/detect'))
+let users =[]; // map socket ids to usernames
 io.on("connection", (socket) => {
     socket.on("join_chat", (data) => {
         console.log(`user ${data.user} has joined ${data.room}`)
@@ -125,12 +126,12 @@ io.on("connection", (socket) => {
 
     socket.on("start_call", (data) => {
         console.log(data.room)
-        console.log(`user ${data.user} has joined ${data.room}`)
+        console.log(`user ${data.user} has joined ${data.room}`);
         socket.to(data.room).emit("on-call", data);
     })
     socket.on("end-call", (data) => {
               console.log("end-call",data)
-        socket.to(data.room).emit("call-end", data);
+              io.to(data.room).emit('call-end',data);
     })
 
 

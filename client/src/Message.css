@@ -8,24 +8,30 @@
     margin-top: 5px;
     margin-bottom: 5px;
     margin-left: auto;
-    border-radius: 10px 0px 0px 10px;
+    border-radius: 10px 0px 10px 15px;
     padding-left: 1%;
     padding-right: 1%;
     padding-top: 5px; 
-    background-color: rgb(185, 231, 167);
-    color: black;
+    background: linear-gradient(76.8deg, rgb(121, 45, 129) 3.6%, rgb(36, 31, 98) 90.4%);
+    /* background: radial-gradient(939px at 0.7% 2.4%, rgb(116, 106, 255) 0%, rgb(221, 221, 221) 100.2%); */
+    color: rgb(255, 255, 255);
+    box-shadow: rgba(44, 44, 44, 0.1) 0px 4px 6px -1px, rgba(41, 41, 41, 0.06) 0px 2px 4px -1px;
          
 }
+
+    /* HTML: <div class="triangle"></div> */
+
 #recieve{
+    text-align: left;
     margin-top: 5px;
     margin-bottom: 5px;
     margin-right: auto;
-    border-radius: 0px 10px 10px 0px;
-    padding-right: 1%;
-    padding-left: 1%;
+    border-radius: 10px 10px 10px 0px;
+    padding-right: 10px;
+    padding-left: 15px;
     padding-top: 5px; 
-   background-color: #009688;
-   color: whitesmoke;
+    background: linear-gradient(to top, #dad4ec 0%, #dad4ec 1%, #eed8f5 100%); 
+   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
 }
 #sent > .time{
    text-align: end;

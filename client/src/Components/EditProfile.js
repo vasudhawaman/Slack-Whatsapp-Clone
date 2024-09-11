@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import React from 'react'
+import StarBackground from "./StarBackground";
 
 const EditProfile = () => {
     const [data, setdata] = useState({ image: "", status: "" });
@@ -81,6 +82,7 @@ const EditProfile = () => {
     }
     return (
         <div>
+            <StarBackground/>
             <div className='cont'>
                 <h1 className='user-profile'>User Profile</h1>
                 {info ? (

@@ -42,7 +42,7 @@ export default function StickerFile({setMessage,room,user}){
                console.log(result);
                
         }}/>
-       {img && color ? <Sticker setMessage={setMessage} room={room} user={user} sticker={sticker} color={color}/> : null}
+       {img && color ? <Sticker setMessage={setMessage} room={room} user={user} sticker={sticker} setSticker={setSticker} color={color}/> : null}
        </form>
        </div>
     )

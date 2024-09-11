@@ -118,6 +118,29 @@ export default function Input({ setMessage, room, user }) {
                
                <File setMessage={setMessage} room={room} user={user} file={file} setFile={setFile} id="icon" />
                <StickerFile setMessage={setMessage} room={room} user={user} id="icon" />
+               <div id="input">
+                    <AttachFileIcon onClick={() => {
+                         document.getElementById("file").style.display = "block";
+                    }} id="attach-icon" />
+                    <form className="chat-input-form" onSubmit={handleForm}>
+
+                         <input id="chat-input" type="text" placeholder="Write your Message here.." value={text} onChange={handleChange} name="text" />
+                    </form>
+                    <EmojiEmotionsIcon value={0} onClick={() => {
+
+                         document.getElementById("emoji").style.display = "block"
+                    }} id="emoji-icon" />
+                    <Emoji addEmoji={addEmoji} id="emoji-icon" />
+                    <Voice setMessage={setMessage} room={room} user={user} />
+                    <Video setMessage={setMessage} room={room} user={user} />
+                    <button id="messagebtn"><SendIcon style={{ color: "whitesmoke ", padding: "2px" }} /></button>
+                    <StickyNote2TwoToneIcon onClick={() => {
+                         document.getElementById("sticker").style.display = "block";
+                    }} id="sticker-icon" />
+                    <SpeechToText text={text} setText={setText} setMessage={setMessage} room={room} user={user} id="icon" />
+               </div>
+               <File setMessage={setMessage} room={room} user={user} file={file} setFile={setFile} />
+               <StickerFile setMessage={setMessage} room={room} user={user} />
           </>
      )
 }

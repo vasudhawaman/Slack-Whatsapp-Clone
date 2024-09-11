@@ -11,7 +11,10 @@ export default function Message(props){
     console.log("myself",current);
     console.log("other",props.user)
     let type;
-   if(props.file === 'other')  type = props.mimetype.split('/')[1];
+   if(props.file === 'other') {
+    console.log(props.mimetype);
+    type = props.mimetype.split('/')[1];
+   } 
     return(
         <>
         { current.username === props.user ?

@@ -3,7 +3,7 @@
  import * as bodySegmentation from "@tensorflow-models/body-segmentation"
  import { SocketContext } from "./context/SocketContext";
  import { UserContext } from "./context/UserContext";
- export default function Sticker({setMessage,room,sticker,color}){
+ export default function Sticker({setMessage,room,sticker,setSticker,color}){
    const {socket} =useContext(SocketContext)
     const {current}=useContext(UserContext);
     const [final,setFinal]=useState(null);
@@ -12,7 +12,12 @@
     async  function onLoad(){
     
     try{
-      const img = document.getElementById('image');
+      const img = document.getElementById('image-sticker');
+      img.src = sticker;
+      img.onload = async () => {
+         const canvas = document.getElementById('canvas');
+         canvas.width = img.width; // Set canvas size to match the image
+         canvas.height = img.height;
       const segmenterConfig = {
          runtime: 'tfjs', // or 'tfjs'
          solutionPath: 'https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation',
@@ -28,10 +33,12 @@
       const opacity = 0.99;
       const maskBlurAmount = 3;
       const flipHorizontal = false;
-      const canvas = document.getElementById('canvas');
-
+      canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
+      
       await bodySegmentation.drawMask(
     canvas, img, backgroundDarkeningMask, opacity, maskBlurAmount, flipHorizontal);
+      //setLoading(false);
+      };
   
     } catch(err){
         throw err;
@@ -97,13 +104,13 @@ function sendMessage(dataURL){
         alert("Model not loaded!");
      }
       
-     },[loading])
+     },[sticker,color])
     
      return(
         <div>
         
         <canvas id="canvas"  hidden>
-        <img src={sticker} id="image" hidden/> 
+        <img  id="image-sticker" hidden/> 
         
        
         </canvas>
@@ -114,7 +121,8 @@ function sendMessage(dataURL){
          <button type="button" onClick={()=>{
           sendMessage(final);
           setFinal(null);
-          
+          setSticker("");
+          document.getElementById("stickerItem").reset();
        }}>Send Sticker</button>
        </>
          

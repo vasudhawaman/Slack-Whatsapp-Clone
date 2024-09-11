@@ -1,9 +1,14 @@
 .chatlog{
+     background-color: #17014e;
     display: inline-flex;
-    margin-top: 10px;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    color: aliceblue;
     width: 100%;
     padding: 5px;
+    border-bottom: 1px solid rgb(249, 249, 252);
+    
+}
+.chatlog > img{
+    border: 2px solid #ff488b;
 }
 .chatlog > .information{
     margin-left:15px;
@@ -17,7 +22,7 @@
  } 
 .chatlog > .unread >p{
    
-    background-color: #009688;
+    background-color: #ff488b;
     padding: 3px;
     border-radius: 100%;
     margin-right: 4px;

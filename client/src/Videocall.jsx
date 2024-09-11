@@ -25,10 +25,15 @@ export default function Videocall(){
     });
     
  socket.on("call-end",(data)=>{
-  console.log("call-end emiited")
+      if (stream) {
+    stream.getTracks().forEach(track => track.stop());
+  }
+     setJoin(false);
       Navigate("/");
   }) 
-  
+  return () => {
+    socket.off("call-end");
+  };
 },[socket])
   // this is okay
  function JoinedCall(stream){
@@ -38,6 +43,7 @@ export default function Videocall(){
           socket.emit("start_call",{room:room,user:current.username});
           setJoin(true)
           const myVideo = document.createElement('video');
+         
           const myDiv =  document?.getElementById('controls');
           const button1 = document.createElement('button');
           const button2 = document.createElement('button');
@@ -97,7 +103,7 @@ export default function Videocall(){
                   room:room,
                   user:current.username
                });
-               Navigate("/");  
+                Navigate("/");  
          })
            myDiv.append(button1);
            myDiv.append(button2);
@@ -106,7 +112,7 @@ export default function Videocall(){
 }
 
     return(
-      <div className="container">
+      <div className="container-video">
        <div>
     { join?  <Calling user={current.username} stream={stream}/> :null}
      </div>

@@ -8,6 +8,7 @@
   position: relative;
   display: grid;
   grid-template: auto 1fr / 1fr;
+  min-height: 100vh;
   @media (min-width: 600px) {
     grid-template: 1fr / minMax(20rem, 20%) 1fr;
   }
@@ -15,17 +16,20 @@
 aside.chat-rooms {
   box-sizing: border-box;
   overflow:auto;
+  background-color: #17014e;
 }  
 
 main.chat{
+  overflow: auto;
+  height: 100vh;
+  width: 100%;  
+  background: linear-gradient(-225deg, #9704db 0%, #7918F2 48%, #4801FF 100%),url('../backgroundpart.png') fixed; 
+  background: linear-gradient(-225deg, rgba(151, 4, 219, 0.8) 0%, rgba(121, 24, 242, 0.8) 48%, rgba(72, 1, 255, 0.8) 100%), url('../backgroundpart.png');
   @media (max-width: 600px) {
     width: 0%;
   }
-    overflow: auto;
-    height: 100vh;
-    background: url('../backgroundpart.png');
-    width: 100%;  
-  
+   
+    
  
 }
 /* .logs{

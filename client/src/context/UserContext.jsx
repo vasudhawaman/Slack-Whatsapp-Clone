@@ -1,10 +1,9 @@
 import React, { useEffect, useState, createContext } from 'react';
-
 export const UserContext = createContext();
 
 export const UserContextProvider = (props) => {
     const [current, setCurrent] = useState("");
-       
+   
         useEffect(() => {
             const cookies = document.cookie; 
             console.log(cookies);
@@ -15,8 +14,13 @@ export const UserContextProvider = (props) => {
                     method: "GET",
                     credentials: 'include',
                 });
-                const json = await response.json();
-                 setCurrent(json);
+                if(response.status===200){
+                    const json = await response.json();
+                    setCurrent(json);
+                }else{
+                    setCurrent("");
+                }
+                
             }
             getUserinfo();
         }else{

@@ -24,13 +24,11 @@ export default function Chatlog({ data, setRoom, setUser }) {
                 const element = document.querySelector(".chat-rooms");
                 element.style.display = "none";
                 const chat = document.querySelector(".chat");
-                const input = document.querySelector("#input");
-                const form = document.querySelector(".chat-input-form");
+                // const input = document.querySelector("#input");
                 const profile = document.querySelector("#profile");
-
                 chat.style.width = "100%";
-                input.style.width = "100%";
-                profile.style.display = "flex"
+                // input.style.width = "100%";
+                profile.style.display = "flex";
                 setUser(data.username);
                 setRoom(data.roomid);
             }}>

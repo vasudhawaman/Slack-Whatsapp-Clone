@@ -1,12 +1,27 @@
-#video-grid{
-    display: flex;
-    flex-wrap: wrap;
+/* #video-grid {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: center; 
+    align-items: center; 
+    width: 100%;
+    height: 85vh; 
+    gap: 10px; 
+  
+}
+
+#video-grid > video {
   width: 100%;
   
 }
-#video-grid > video{
-    flex: 50%;
+
+@media (min-width: 600px) {
+  
+  #video-grid > video {
+      width: 50%;
+  }
 }
+
 #controls{
     display: flex;
     align-items: center;
@@ -18,15 +33,21 @@
 #controls > button{
     box-shadow: none;
       border:none;
-      color: rgb(147, 147, 243);
-      background-color: black;
-      border-radius: 3px;
+      color: rgb(241, 3, 3);
+      background-color: rgb(253, 250, 250);
+      border-radius:100%;
+      height: 70px;
+      width: 70px;
      margin-top: 10px;
      margin-left: 20px;
     padding: 5px;
+    text-align: center;
 }
 #controls > button > svg{
     font-size: larger;
+}
+#controls > button > svg:hover{
+  font-size: medium;
 }
 #controls > button:hover{
     box-shadow: none;
@@ -36,6 +57,11 @@
      margin-top: 10px;
      margin-left: 20px;
       padding: 5px;
+      background-color: rgb(255, 253, 253);
+      border-radius:100%;
+      height: 60px;
+      width: 60px;
+      text-align: center;
       
 }
 @media (max-width: 800px) {
@@ -44,4 +70,99 @@
     }
   }
   
-  
+   */
+
+   /* Video grid container */
+   .container-video{
+    background-color: rgb(34, 32, 32);
+   }
+#video-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; 
+  align-items: center; 
+  width: 100%;
+  height: 85vh; /* Adjust as needed */
+  gap: 10px; /* Space between videos */
+  box-sizing: border-box; /* Ensure padding and border are included in width/height */
+}
+
+/* Style for individual video elements */
+#video-grid > video {
+  width: 100%; /* Full width by default */
+  height: auto; /* Maintain aspect ratio */
+  max-height: 100%; /* Ensure video does not exceed its container's height */
+  object-fit: cover; /* Cover the area of the video element */
+  box-sizing: border-box; /* Ensure padding and border are included in width/height */
+}
+
+/* Adjust video layout for larger screens */
+@media (min-width: 600px) {
+  /* Display two videos side by side */
+  #video-grid > video {
+    width: calc(50% - 10px); /* Two videos per row with gap adjustment */
+  }
+}
+
+/* Adjust video layout for very small screens */
+@media (max-width: 800px) {
+  #video-grid > video {
+    width: 100%; /* Full width on small screens */
+    max-width: 100%; /* Ensure video fits within container */
+    height: 50%;
+  }
+  #video-grid{
+     padding-bottom: 90px;
+  }
+}
+
+/* Controls section styling */
+#controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: black;
+  position: fixed;
+  bottom: 0px;
+  z-index:10;
+  width: 100%;
+  padding: 5px;
+  box-sizing: border-box; /* Ensure padding is included in width */
+  height: 90px;
+}
+
+#controls > button {
+  box-shadow: none;
+  border: none;
+  color: rgb(253, 250, 250);
+  background-color:rgb(241, 3, 3);
+  border-radius: 50%;
+  height: 70px;
+  width: 70px;
+  margin-top: 10px;
+  margin-left: 20px;
+  padding: 5px;
+  text-align: center;
+}
+
+#controls > button > svg {
+  font-size: larger;
+}
+
+#controls > button > svg:hover {
+  font-size: medium;
+}
+
+#controls > button:hover {
+  box-shadow: none;
+  border: none;
+  color: rgb(248, 7, 7);
+  background-color: rgb(255, 253, 253);
+  border-radius: 50%;
+  height: 60px;
+  width: 60px;
+  margin-top: 10px;
+  margin-left: 20px;
+  padding: 5px;
+  text-align: center;
+}
