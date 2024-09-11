@@ -464,4 +464,12 @@ router.delete('/remove',verifyToken,(req,res)=>{
     })
 })
 
+router.get('/getgroup',verifyToken,(req,res)=>{
+    const q = "SELECT * FROM group_room JOIN `group` ON group_room.group_roomid=`group`.groupid WHERE group_room.userid=?";
+    db.query(q, [req.id], (err, result) => {
+        if (err) throw err;
+        res.json(result);
+    })
+})
+
 module.exports = router;

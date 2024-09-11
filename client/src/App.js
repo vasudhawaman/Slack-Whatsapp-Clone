@@ -16,7 +16,6 @@ import Welcome2 from './Components/Welcome2';
 import OTP from './Components/OTP';
 import OTP1 from './Components/Otp1';
 import Password from './Components/Password';
-import User from './Components/User';
 import ForgetPass from './Components/Forgetpass';
 import Emoji1 from './Components/Emoji';
 import Allusers from './Components/Allusers';

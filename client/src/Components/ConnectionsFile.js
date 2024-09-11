@@ -1,5 +1,6 @@
 import React,{useState} from 'react'
 import './UserFile.css'
+import { TiTickOutline } from "react-icons/ti";
 const ConnectionFile = ({user}) => {
   const [image, setImage] = useState("https://static.vecteezy.com/system/resources/previews/000/574/512/original/vector-sign-of-user-icon.jpg");
   if (user.image != null) {
@@ -42,7 +43,7 @@ const ConnectionFile = ({user}) => {
       <div className='contain'>
         <img src={image} className='user-image'></img>
         <span className='user'>{user.username}</span>
-        <button className='sendreq' onClick={handleonclick}>Accept</button>
+        <button className='sendreq' onClick={handleonclick}><TiTickOutline/></button>
         <button className='sendreq' onClick={handleonreject}>Reject</button>
       </div>
     </div>

@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import './Welcome2.css'
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
+import StarBackground from './StarBackground'
 
 export default function ForgetPass({ setotp }) {
     const navigate = useNavigate()
@@ -29,7 +30,7 @@ export default function ForgetPass({ setotp }) {
         console.log(credentials);
     }
     return (
-        <><div className="containerx">
+        <><StarBackground/><div className="containerx">
             <p className="wel1">Change password</p>
             <h1 className="heading1">TalkPal</h1>
             <div className="container1x">

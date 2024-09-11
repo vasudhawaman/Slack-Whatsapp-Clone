@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import React from 'react'
 import StarBackground from "./StarBackground";
-
+import './User.css';
 const EditProfile = () => {
     const [data, setdata] = useState({ image: "", status: "" });
     const [info, setInfo] = useState();
@@ -84,13 +84,13 @@ const EditProfile = () => {
         <div>
             <StarBackground/>
             <div className='cont'>
-                <h1 className='user-profile'>User Profile</h1>
                 {info ? (
                     <>
                         <img src={ image} className='userImage' alt='User' />
+                        <img src={ image} className='userImage1' alt='User' />
                         <input type='file' id='image' name="image" onChange={e => { setdata({ image: e.target.files[0] }) }} style={{ display: 'none' }} />
                         <label htmlFor='image'>
-                            <div className='edit'>Edit profile</div>
+                            <div className='edit' style={{ boxShadow: 'rgb(143, 54, 252) 0px 48px 100px 0px' }}>Edit profile</div>
                         </label>
                         <h2 className='username'>{info.username}</h2>
                         <div className='user-info' >Email-Id: {info.email}</div>

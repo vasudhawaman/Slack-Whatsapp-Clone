@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './otp.css';
 import Welcome from './Welcome';
 import { useNavigate } from 'react-router-dom';
+import StarBackground from './StarBackground';
 
 export default function OTP1({otp1}) {
     const [otps, setOtp] = useState('');
@@ -22,6 +23,7 @@ export default function OTP1({otp1}) {
 
     return (
         <>
+        <StarBackground/>
             <div className="containerxx">
                 <p className="wel1x">Welcome To</p>
                 <h1 className="heading1x">TalkPal</h1>

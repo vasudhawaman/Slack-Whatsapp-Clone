@@ -7,8 +7,8 @@ body {
 
 .containerx {
   width: 100%;
-  background-color:transparent;
-  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(5px);
   /* background-color: #ffffff; */
   max-width: 450px;
   margin: 0 auto;
