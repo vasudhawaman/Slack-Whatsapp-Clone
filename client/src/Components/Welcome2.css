@@ -18,7 +18,7 @@ body {
   /* box-shadow: rgb(214, 168, 233) 0px 0px 0px 1px, rgb(214, 168, 233) 0px 1px 1px -0.5px, rgb(214, 168, 233) 0px 3px 3px -1.5px, rgb(214, 168, 233) 0px 6px 6px -3px; */
   text-align: center;
   animation: fadeIn 1s ease-in-out; 
-  margin-top: 50px;
+  margin-top: 10px;
 }
 
 @keyframes fadeIn {

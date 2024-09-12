@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import './Welcome2.css'
 import { Link } from 'react-router-dom'
+import StarBackground from './StarBackground';
 export default function Password({otp1}) {
   const [credentials,setcredentials]=useState({password:"",cpassword:""})
   const {email}=otp1;
@@ -32,9 +33,11 @@ export default function Password({otp1}) {
     console.log(credentials);
 }
   return (
-    <><div className="containerx">
-    <p className="wel1">Welcome To</p>
-    <h1 className="heading1">TalkPal</h1>
+    <>
+    <StarBackground/>
+    <div className="containerx">
+    <p className="wel1">Welcome </p>
+    <img src='Talkpal-logo.png' className='heading' height={200} width={200}></img>
     <div className="container1x">
     <p className="user1">Password:</p>
     <input type="password" className="email1" placeholder="Enter your passsword " name="password" onChange={handleonchange} id="Password"></input>

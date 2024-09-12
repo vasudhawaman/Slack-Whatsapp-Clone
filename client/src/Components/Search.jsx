@@ -1,16 +1,37 @@
-import React, { useState } from "react";
+import React, { useState ,useContext, useEffect} from "react";
 import './Search.css';
 import { HiUserGroup } from "react-icons/hi2";
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
+import { UserContext } from "../context/UserContext";
+import { Link } from "react-router-dom";
 export default function Search({setGroup}) {
   const [image, setimage] = useState();
   const [group, setGroupName] = useState('');
+  
   const handleImageChange = (e) => {
     setimage(e.target.files[0]);
   }
   const groupName = (e) => {
     setGroupName(e.target.value);
   }
+  const { current } = useContext(UserContext);
+  const[loading,setloading]=useState(false);
+  const [userimage, setImage] = useState("https://static.vecteezy.com/system/resources/previews/000/574/512/original/vector-sign-of-user-icon.jpg");
+  useEffect(()=>{
+    if(current){
+      const arrayBuffer = new Uint8Array(current.image.data);
+      const blob = new Blob([arrayBuffer], { type: current.filename });
+      const fr = new FileReader();
+      fr.onload = function () {
+        setImage(fr.result);
+      };
+      fr.readAsDataURL(blob);
+      setImage(fr.result);
+    }
+    setloading(true);
+    // console.log("hehe");
+  },[current])
+ 
 
   const createGroup = async () => {
     const formData = new FormData();
@@ -26,7 +47,6 @@ export default function Search({setGroup}) {
       body: formData
     })
     const json = await response.json();
-    console.log(json);
   }
 
   const getGroup = () => {
@@ -46,6 +66,11 @@ export default function Search({setGroup}) {
         <input className="search-input" type="text" placeholder="Search" name="text" />
         
         <GroupAddIcon  onClick={getGroup} />
+        <Link to='/userprofile'>
+        <div id="pic">
+          <img src={userimage} height="30px" width="30px" style={{ borderRadius: "100%" , marginLeft:'20px'}} />
+        </div>
+        </Link>
       </div>
       <div className="group">
         <label>Group name:</label>

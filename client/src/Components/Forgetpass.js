@@ -32,7 +32,7 @@ export default function ForgetPass({ setotp }) {
     return (
         <><StarBackground/><div className="containerx">
             <p className="wel1">Change password</p>
-            <h1 className="heading1">TalkPal</h1>
+            <img src='Talkpal-logo.png' className='heading' height={200} width={200}></img>
             <div className="container1x">
                 <p className="user1">Email</p>
                 <input type="text" className="email1" placeholder="Enter your email " name="email" onChange={handleonchange} id="email"></input>

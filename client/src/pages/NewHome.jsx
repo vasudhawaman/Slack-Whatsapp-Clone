@@ -71,6 +71,8 @@ export default function NewHome() {
     }
     if(group) getGroups();
     else{
+      setallcontacts(false);
+      setcontact(false);
       const url = `http://localhost:8000/register/contacts`;
       const fetchdata = async () => {
         const response = await fetch(url, {

@@ -243,7 +243,7 @@ router.get('/getinfo', verifyToken, async (req, res) => {
 
 router.put('/updateinfo', verifyToken, upload.single('image'), (req, res) => {
     if (!req.file) {
-        return res.json({ error: "No file uploaded" });
+        return res.status(403).json({ error: "No file uploaded" });
     }
     const userId = req.id;
     const mimetype = req.file.mimetype;
@@ -261,7 +261,7 @@ router.put('/updatestatus', verifyToken, (req, res) => {
     if (req.body.status) {
         const q = "UPDATE users SET status=? WHERE (id=?)"
         db.query(q, [req.body.status, req.id], (err, result) => {
-            if (err) throw err
+            if (err) res.status(400).json("Server error has been detected");
             res.json({ success: "Status has been updated" })
         })
     }
@@ -277,6 +277,8 @@ router.delete('/delete', verifyToken, async (req, res) => {
         if (result.length > 0) {
             console.log("User deleted successfully")
             res.json({ success: "User deleted successfully" })
+        }else{
+            res.status(400).json("Unable to delete");
         }
     })
 })
@@ -286,7 +288,7 @@ router.get('/allusers', verifyToken, (req, res) => {
     const q = "SELECT * FROM users WHERE id !=?"
     db.query(q, [req.id], (err, result) => {
         console.log(req.id)
-        if (err) throw err
+        if (err) res.status(400).json("server error has been detected");
         res.json(result)
     })
 })
@@ -300,7 +302,7 @@ router.post('/connection', verifyToken, async (req, res) => {
             const q3 = "INSERT INTO connections (`sender`,`receiver`,`status`) VALUES (?,?,?)"
             console.log(req.body)
             db.query(q3, [req.id, req.body.receiver, 0], (err, result) => {
-                if (err) throw err
+                if (err) res.status(400).json("server error has been detected");
                 console.log("Connection established")
                 res.json({ success: "Connection established" })
             })
@@ -316,7 +318,7 @@ router.post('/connection', verifyToken, async (req, res) => {
 router.post('/connect', verifyToken, async (req, res) => {
     const q = "SELECT * FROM connections JOIN users ON connections.sender = users.id WHERE connections.receiver =? AND connections.status = 0; "
     db.query(q, [req.id], (err, result) => {
-        if (err) throw err
+        if (err) res.status(400).json("server error has been detected");
         res.json(result)
     })
 })
@@ -325,19 +327,19 @@ router.post('/createroom', verifyToken, async (req, res) => {
     const q = 'SELECT roomid FROM whatsapp.room ORDER BY roomid DESC';
     console.log(q);
     db.query(q, (err, result) => {
-        if (err) { console.log(err); throw err }
+        if (err) { res.status(400).json("server error has been detected"); }
         const roomid = result[0].roomid + 1; //new room id => same time insert this into connection roomid 
         const q1 = "INSERT INTO room (userids,roomid) VALUES (?,?)"
         db.query(q1, [req.id, roomid], (err, result) => {
-            if (err) throw err
+            if (err) res.status(400).json("server error has been detected");
             console.log("Room created successfully")
             const q2 = "INSERT INTO room (userids,roomid) VALUES (?,?)"
             db.query(q2, [req.body.receiver, roomid], (err, result) => {
-                if (err) throw err
+                if (err) res.status(400).json("server error has been detected");
                 console.log("Room created successfully with other user")
                 const q4 = "UPDATE connections SET status=1 WHERE receiver=? and sender=? "
                 db.query(q4, [req.id, req.body.receiver], (err, result) => {
-                    if (err) throw err
+                    if (err) res.status(400).json("server error has been detected");
                     console.log("Connection status updated")
                     res.json({ success: "Room created successfully" })
                 })
@@ -371,7 +373,7 @@ router.post('/contacts', verifyToken, async (req, res) => {
 router.delete('/reject', verifyToken, async (req, res) => {
     const q = "DELETE FROM connections WHERE receiver=? and sender=?";
     db.query(q, [req.id, req.body.receiver], (err, result) => {
-        if (err) throw err;
+        if (err) res.status(400).json("server error has been detected");;
         console.log("Deleted connection succesfully");
         res.json({ success: "Deleted user successfully" })
     })
@@ -398,7 +400,7 @@ router.post('/status', verifyToken, upload.single('file'), (req, res) => {
 
 })
 router.post('/creategroup', verifyToken, upload.single('file'), (req, res) => {
-    const q = "SELECT groupid FROM `group` ORDER BY groupid DESC";
+    const q = 'SELECT roomid FROM whatsapp.room ORDER BY roomid DESC';
     if (!req.file) {
         console.error("No image uploaded");
         return res.status(400).json({ error: "No image uploaded" });
@@ -408,15 +410,15 @@ router.post('/creategroup', verifyToken, upload.single('file'), (req, res) => {
         return res.status(400).json({ error: "No group name provided" });
     }
     db.query(q, (err, result) => {
-        if (err) throw err;
-        const roomid = result[0].groupid + 1;
+        if (err) res.status(400).json("server error has been detected");;
+        const roomid = result[0].roomid + 1;
         const q = "INSERT INTO `group` (`group_name`,`groupid`,`image`,`img_mimetype`,`adminid`) VALUES (?,?,?,?,?)";
         db.query(q, [req.body.group_name, roomid, req.file.buffer, req.file.mimetype, req.id], (err, result) => {
-            if (err) throw err;
+            if (err) res.status(400).json("server error has been detected");;
             console.log("Group created successfully");
             const q = "INSERT INTO `group_room` (`group_roomid`,`userid`) VALUES (?,?)";
             db.query(q, [roomid, req.id], (err, result) => {
-                if (err) throw err;
+                if (err) res.status(400).json("server error has been detected");;
                 console.log("User added successfully to group");
             })
             res.json({ success: "Group created successfully" });
@@ -427,7 +429,7 @@ router.get('/allgroup', verifyToken, (req, res) => {
     try{
         const q = "SELECT * FROM `group` WHERE adminid=?";
         db.query(q, [req.id], (err, result) => {
-            if (err) throw err;
+            if (err) res.status(400).json("server error has been detected");;
             res.json(result);
         })
     }catch(err){
@@ -447,7 +449,7 @@ router.post('/adduser', verifyToken, (req, res) => {
                 const q = "INSERT INTO group_room (group_roomid, userid) VALUES (?, ?)";
             console.log(req.body);
             db.query(q, [req.body.groupid, req.body.user_id], (err, result) => {
-                if (err) throw err;
+                if (err) res.status(400).json("server error has been detected");;
                 console.log("User added successfully to group");
                 res.json({ success: "User added successfully to group" });
             })
@@ -463,7 +465,7 @@ router.post('/getmember',verifyToken,(req,res)=>{
     try{
         const q = "SELECT * FROM group_room JOIN users ON group_room.userid=users.id WHERE group_roomid=? AND group_room.userid !=?";
         db.query(q, [req.body.groupid,req.id], (err, result) => {
-            if (err) throw err;
+            if (err) res.status(400).json("server error has been detected");;
             res.status(200).json(result);
         })
     }catch(err){
@@ -476,7 +478,7 @@ router.delete('/remove',verifyToken,(req,res)=>{
     try{
         const q = "DELETE FROM group_room WHERE group_roomid=? AND userid=?";
         db.query(q, [req.body.groupid, req.body.user_id], (err, result) => {
-            if (err) throw err;
+            if (err) res.status(400).json("server error has been detected");;
             console.log("User removed successfully from group");
             res.status(200).json({ success: "User removed successfully from group" });
         })
@@ -490,7 +492,7 @@ router.get('/getgroup',verifyToken,(req,res)=>{
     try{
         const q = "SELECT * FROM group_room JOIN `group` ON group_room.group_roomid=`group`.groupid WHERE group_room.userid=?";
     db.query(q, [req.id], (err, result) => {
-        if (err) throw err;
+        if (err) res.status(400).json("server error has been detected");;
         res.status(200).json(result);
     })
     }catch(err){

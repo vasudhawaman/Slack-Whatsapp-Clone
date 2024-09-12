@@ -58,8 +58,11 @@ const Welcome = ({ setOtpState }) => {
         <>
         <StarBackground/>
             <div className="container">
-                <p className="wel">Welcome To</p>
-                <h1 className="heading">TalkPal</h1>
+                {/* 
+                 */}
+                <p className="wel">Welcome </p>
+                <img src='Talkpal-logo.png' className='heading' height={200} width={200}></img>
+                {/* <h1 className="heading">TalkPal</h1> */}
                 <div className="container1">
                     <p className="user">Enter your email:</p>
                     <input type="text" className="email" placeholder="Enter your email id" name="email" onChange={handleOnChange}></input>
@@ -76,7 +79,7 @@ const Welcome = ({ setOtpState }) => {
                     </div>
                 </div>
 
-                <div className='goog'><Link to='http://localhost:5000/auth/google'><button className='google' onClick={handleOnClick2} >Sign up with google</button></Link></div>
+                <div className='goog'><Link to='http://localhost:8000/auth/google'><button className='google' onClick={handleOnClick2} >Sign up with google</button></Link></div>
                 <p className="ask" style={{color:'white'}}>Already have an account?<a href="/signin">Login</a></p>
             </div>
         </>
