@@ -44,10 +44,10 @@ export default function Chatlog({ data, setRoom, setUser,setPFP ,group}) {
                 const element = document.querySelector(".chat-rooms");
                 element.style.display = "none";
                 const chat = document.querySelector(".chat");
-                // const input = document.querySelector("#input");
+                 const input = document.querySelector("#input");
                 const profile = document.querySelector("#profile");
                 chat.style.width = "100%";
-                // input.style.width = "100%";
+                 input.style.display = "flex";
                 profile.style.display = "flex";
                 setUser(data.username);
                 setRoom(data.roomid);
@@ -59,21 +59,17 @@ export default function Chatlog({ data, setRoom, setUser,setPFP ,group}) {
                 </div>
                 <div className='information'>
                     <h1>{data.username}</h1>
-                    <p>last message</p>
                 </div>
-                <div className='unread'>
-                    <h1></h1>
-                    <p>1</p>
-                </div>
+               
 
             </div> : <div className="chatlog" onClick={() => { setUser(data.username); setRoom(data.roomid); setPFP(image1); }}>
 
                 <div className='imgProfile'>
-                    <img src={image1} height="30px" width="30px" style={{ borderRadius: "100%" }} />
+                    <img src={image1} height="25px" width="25px" style={{ borderRadius: "100%"}} />
                 </div>
-                <div className='information'>
+                
                     <h1>{data.username}</h1>
-                </div>
+               
                 
             </div>
 
@@ -85,10 +81,10 @@ export default function Chatlog({ data, setRoom, setUser,setPFP ,group}) {
                 const element = document.querySelector(".chat-rooms");
                 element.style.display = "none";
                 const chat = document.querySelector(".chat");
-                // const input = document.querySelector("#input");
+                 const input = document.querySelector("#input");
                 const profile = document.querySelector("#profile");
                 chat.style.width = "100%";
-                // input.style.width = "100%";
+                 input.style.display = "flex";
                 profile.style.display = "flex";
                 setUser(data.group_name);
                 setRoom(data.group_roomid);
@@ -98,18 +94,18 @@ export default function Chatlog({ data, setRoom, setUser,setPFP ,group}) {
                 <div className='imgProfile'>
                     <img src={image1} height="50px" width="50px" style={{ borderRadius: "100%" }} />
                 </div>
-                <div className='information'>
+               
                     <h1>{data.group_name}</h1>
-                </div>
+              
               
             </div> : <div className="chatlog" onClick={() => { setUser(data.group_name); setRoom(data.group_roomid) ;setPFP(image1) }}>
 
                 <div className='imgProfile'>
                     <img src={image1} height="30px" width="30px" style={{ borderRadius: "100%" }} />
                 </div>
-                <div className='information'>
+               
                     <h1>{data.group_name}</h1>
-                </div>
+             
               {data.adminid === current.id ?  <Link to={`/adduser/${data.group_roomid}`} style={{textDecoration:"none",color:"white",height:"25px",width:"25px",marginLeft:"auto",borderRadius:"100%",paddingRight:"10px",backgroundColor:"#ff488b"
               }}>
                 <div className='unread'>

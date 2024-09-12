@@ -249,6 +249,7 @@ router.put('/updateinfo', verifyToken, upload.single('image'), (req, res) => {
     const userId = req.id;
     const mimetype = req.file.mimetype;
     const imageData = req.file.buffer;
+    console.log(userId,imageData,mimetype);
     const query = "UPDATE users SET image=?, filename=? WHERE id=?";
     db.query(query, [imageData, mimetype, userId], (err, result) => {
         if (err) {
