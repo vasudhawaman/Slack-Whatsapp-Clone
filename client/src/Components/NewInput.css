@@ -1,5 +1,8 @@
 
 .input-chat-send{
+    @media (max-width:600px) {
+         display: none;
+    }
     grid-row: 2;
     position:absolute;
     bottom: 0px; 
@@ -91,6 +94,5 @@
     .input-chat-send {
         grid-column: 2 / 3; 
         grid-row: 2 / 3;
-       
       }
     }

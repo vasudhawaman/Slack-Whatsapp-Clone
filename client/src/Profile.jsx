@@ -48,6 +48,8 @@ export default function Profile({ user, room, pfp, group }) {
           element.style.display = "block";
           const chat = document.querySelector(".chat");
           const profile = document.querySelector("#profile");
+          const input = document.querySelector("#input");
+          input.style.display ="flex";
           chat.style.width = "0%";
           profile.style.display = "none";
 
