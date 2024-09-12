@@ -19,6 +19,7 @@
     "assemblyai": "^4.4.3",
     "axios": "^1.6.8",
     "css-doodle": "^0.40.0",
+    "detectlanguage": "^2.1.0",
     "emoji-picker-react": "^4.11.1",
     "fabric": "^6.0.2",
     "peerjs": "^1.5.4",

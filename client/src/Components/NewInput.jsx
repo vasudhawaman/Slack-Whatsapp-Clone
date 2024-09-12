@@ -16,6 +16,9 @@ import SpeechToText from "../Components/SpeechToText";
 import StickerFile from "../StickerFile";
 import { UserContext } from "../context/UserContext";
 import countries from "../countries";
+import DetectLanguage from 'detectlanguage';
+const detectlanguage = new DetectLanguage('ec0c97301141116fd5cb97645cdf6f8c');
+
 export default function NewInput({ setMessage, room, user }) {
   const [text, setText] = useState("");
   const [file, setFile] = useState("");
@@ -34,6 +37,7 @@ export default function NewInput({ setMessage, room, user }) {
   const fromlang2 = (e) => {
     setcred(e.target.value);
     console.log(cred);
+    
   }
   if (min < 10) {
     min = "0" + min;
@@ -64,30 +68,47 @@ export default function NewInput({ setMessage, room, user }) {
     sendMessage();
     setText("");
   }
-
+  const translate = async () => {
+   
+    const json =  await detectlanguage.detect(text);
+    // setcred1(json.language)
+    console.log(json)
+    let detected = json[0].language;
+    let convert =cred.split("-");
+    let cred2 = convert[0];
+    let apiUrl = `https://api.mymemory.translated.net/get?q=${text}&langpair=${json[0].language}|${cred2}`;
+    console.log(cred);
+    const res = await fetch(apiUrl);
+    const data = await res.json();
+    setvalue(data.responseData.translatedText);
+    setText(data.responseData.translatedText)
+    console.log(data.responseData.translatedText);
+}
   return (
 
     <>
       <div className="box-lay" id="file-input"> 
-        <div className="list">
-           <CloseIcon onClick={()=>{
+        <div className="list"  onClick={()=>{
                 document.getElementById("file-input").style.display ="none";
-            }} />
+            }}>
+           <CloseIcon />
         </div>
-        <div className="list">
+       
+        <div className="list" onClick={() => {
+              document.getElementById("file").style.display = "block";
+            }}>
           <div className="box-icon">
          
-            <AttachFileIcon onClick={() => {
-              document.getElementById("file").style.display = "block";
-            }} id="attach-icon" />
+            <AttachFileIcon  id="attach-icon" />
           </div>
           <h4>Files</h4>
         </div>
-        <div className="list">
-          <div className="box-icon">
-            <StickyNote2TwoToneIcon onClick={() => {
+
+        <div className="list" onClick={() => {
               document.getElementById("sticker").style.display = "block";
-            }} id="sticker-icon" />
+            }}>
+          <div className="box-icon">
+            <StickyNote2TwoToneIcon  id="sticker-icon" />
           </div>
           <h4>Sticker</h4>
         </div>
@@ -105,7 +126,18 @@ export default function NewInput({ setMessage, room, user }) {
           <div className="box-icon"> <Video setMessage={setMessage} room={room} user={user} /></div>
           <h4>Video Record</h4>
         </div>
-
+        <div className="list" >
+              
+          <select className='lang2' onChange={fromlang2} >
+                              {Object.entries(countries).map(([code, name], index) => (
+                                   <option key={index} value={code}>
+                                        {name}
+                                   </option>
+                              ))}
+                         </select>
+                         <h4 style={{backgroundColor:"#ff488b" ,padding:"5px",border:"3px"}} onClick={translate}>Translate</h4>
+         
+        </div>
       </div>
       <div className="input-chat-send" id="input">
         <EmojiEmotionsIcon value={0} onClick={() => {

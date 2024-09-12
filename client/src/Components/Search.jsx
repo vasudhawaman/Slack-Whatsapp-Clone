@@ -1,6 +1,5 @@
 import React, { useState ,useContext, useEffect} from "react";
 import './Search.css';
-import { HiUserGroup } from "react-icons/hi2";
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import { UserContext } from "../context/UserContext";
 import { Link } from "react-router-dom";
@@ -15,10 +14,11 @@ export default function Search({setGroup}) {
     setGroupName(e.target.value);
   }
   const { current } = useContext(UserContext);
-  const[loading,setloading]=useState(false);
   const [userimage, setImage] = useState("https://static.vecteezy.com/system/resources/previews/000/574/512/original/vector-sign-of-user-icon.jpg");
   useEffect(()=>{
     if(current){
+      console.log("search",current);
+     if(current.image){
       const arrayBuffer = new Uint8Array(current.image.data);
       const blob = new Blob([arrayBuffer], { type: current.filename });
       const fr = new FileReader();
@@ -27,9 +27,9 @@ export default function Search({setGroup}) {
       };
       fr.readAsDataURL(blob);
       setImage(fr.result);
+     }
     }
-    setloading(true);
-    // console.log("hehe");
+   
   },[current])
  
 

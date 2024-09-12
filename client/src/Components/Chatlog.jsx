@@ -101,10 +101,7 @@ export default function Chatlog({ data, setRoom, setUser,setPFP ,group}) {
                 <div className='information'>
                     <h1>{data.group_name}</h1>
                 </div>
-                <div className='unread'>
-                    <p><AddIcon /></p>
-                </div>
-
+              
             </div> : <div className="chatlog" onClick={() => { setUser(data.group_name); setRoom(data.group_roomid) ;setPFP(image1) }}>
 
                 <div className='imgProfile'>
@@ -113,7 +110,8 @@ export default function Chatlog({ data, setRoom, setUser,setPFP ,group}) {
                 <div className='information'>
                     <h1>{data.group_name}</h1>
                 </div>
-              {data.adminid === current.id ?  <Link to={`/adduser/${data.group_roomid}`} style={{textDecoration:"none",color:"white"}}>
+              {data.adminid === current.id ?  <Link to={`/adduser/${data.group_roomid}`} style={{textDecoration:"none",color:"white",height:"25px",width:"25px",marginLeft:"auto",borderRadius:"100%",paddingRight:"10px",backgroundColor:"#ff488b"
+              }}>
                 <div className='unread'>
                    
                     <p><AddIcon /></p>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-
+import './Chatlog.css'
 const MemberOfGroup = ({ user, groupid }) => {
     const [image, setImage] = useState("https://static.vecteezy.com/system/resources/previews/000/574/512/original/vector-sign-of-user-icon.jpg");
     console.log(groupid)
@@ -32,12 +32,16 @@ const MemberOfGroup = ({ user, groupid }) => {
     }
     return (
         <div>
-            <div className='contain'>
-                <img src={image} className='user-image'></img>
-                <span className='user'>{user.username}</span>
-                <button className='sendreq' onClick={removeFromGroup}>Remove</button>
+        <div className="chatlog" >
+            <div className='imgProfile'>
+                <img src={image} height="30px" width="30px" style={{ borderRadius: "100%" }} />
+            </div>
+            <div className='information'>
+                <h1>{user.username}</h1>
             </div>
         </div>
+    </div>
+
     )
 }
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import AddUser from './AddUser';
-
+import AddUsersTogroup from './AddUsersTogroup';
 const AddtoGroup = () => {
     const location = useLocation();
     const groupid = location.pathname.slice(9);
@@ -33,7 +33,7 @@ const AddtoGroup = () => {
         <div>
             <div>
                 {data && data.map(u => {
-                    return <AddUser user={u} groupid={groupid}/>
+                    return <AddUsersTogroup user={u} groupid={groupid}/>
                 })}
             </div>
         </div>

@@ -10,6 +10,7 @@ const verifyToken = require('../middleware/verifyUser');
 const db = require('../db');
 const JWT_SECRET = "krishkrish@123";
 const multer = require('multer');
+const { errorMonitor } = require('nodemailer/lib/mailer');
 const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 50 * 1024 * 1024 } });
 
 // Register
@@ -442,7 +443,7 @@ router.post('/adduser', verifyToken, (req, res) => {
     console.log(req.body);``
     const q1 = "SELECT * FROM group_room WHERE group_roomid=? AND userid=?"
     db.query(q1, [req.body.groupid, req.body.user_id], (err, result) => {
-        if (result) {
+        if (result.length !== 0) {
             res.status(201).json("User is already added in group");
         } else {
             try{
