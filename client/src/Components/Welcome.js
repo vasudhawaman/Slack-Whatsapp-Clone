@@ -58,8 +58,11 @@ const Welcome = ({ setOtpState }) => {
         <>
         <StarBackground/>
             <div className="container">
-                <p className="wel">Welcome To</p>
-                <h1 className="heading">TalkPal</h1>
+                {/* 
+                 */}
+                <p className="wel">Welcome </p>
+                <img src='Talkpal-logo.png' className='heading' height={200} width={200}></img>
+                {/* <h1 className="heading">TalkPal</h1> */}
                 <div className="container1">
                     <p className="user">Enter your email:</p>
                     <input type="text" className="email" placeholder="Enter your email id" name="email" onChange={handleOnChange}></input>

@@ -42,8 +42,8 @@ export default function OTP({otpState}) {
         <>
         <StarBackground/>
             <div className="containerxx">
-                <p className="wel1x">Welcome To</p>
-                <h1 className="heading1x">TalkPal</h1>
+                <p className="wel1x">Welcome</p>
+                <img src='Talkpal-logo.png' className='heading' height={200} width={200}></img>
                 <div className="container1xx">
                     <p className="user1">OTP</p>
                     <input
