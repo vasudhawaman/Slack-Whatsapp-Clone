@@ -7,7 +7,7 @@ import Video from "../Video";
 import SendIcon from '@mui/icons-material/Send';
 import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
 import StickyNote2TwoToneIcon from '@mui/icons-material/StickyNote2TwoTone';
-import Emoji from "../Emoji";
+import Emoji from "./Emoji.js";
 import Voice from "../Voice";
 import File from "../File";
 import { SocketContext } from "../context/SocketContext";
@@ -56,10 +56,7 @@ export default function NewInput({ setMessage, room, user }) {
       user: user
     });
   }
-  function addEmoji(e) {
-    setText((prev) => { return prev + e.target.value });
-    e.preventDefault();
-  }
+  
   function handleForm(e) {
     e.preventDefault();
     let min = new Date().getMinutes();
@@ -115,7 +112,7 @@ export default function NewInput({ setMessage, room, user }) {
 
           document.getElementById("emoji").style.display = "block"
         }} />
-        <Emoji addEmoji={addEmoji} />
+        <Emoji setText={setText} />
         <div className="additional">
           <AddIcon onClick={()=>{
              document.getElementById("file-input").style.display="block";

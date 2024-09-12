@@ -5,7 +5,6 @@ import SendIcon from '@mui/icons-material/Send';
 import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
 import StickyNote2TwoToneIcon from '@mui/icons-material/StickyNote2TwoTone';
 import "./Input.css";
-import Emoji from "./Emoji";
 import Voice from "./Voice";
 import File from "./File";
 import { SocketContext } from "./context/SocketContext";
@@ -101,11 +100,7 @@ export default function Input({ setMessage, room, user }) {
                               ))}
                          </select>
                          
-                         <EmojiEmotionsIcon value={0} onClick={() => {
-
-                              document.getElementById("emoji").style.display = "block"
-                         }} />
-                         <Emoji addEmoji={addEmoji} />
+                        
                          <Voice setMessage={setMessage} room={room} user={user} />
                          <Video setMessage={setMessage} room={room} user={user} />
                          <button id="messagebtn"><SendIcon style={{ color: "whitesmoke ", padding: "2px" }} /></button>
@@ -130,7 +125,6 @@ export default function Input({ setMessage, room, user }) {
 
                          document.getElementById("emoji").style.display = "block"
                     }} id="emoji-icon" />
-                    <Emoji addEmoji={addEmoji} id="emoji-icon" />
                     <Voice setMessage={setMessage} room={room} user={user} />
                     <Video setMessage={setMessage} room={room} user={user} />
                     <button id="messagebtn"><SendIcon style={{ color: "whitesmoke ", padding: "2px" }} /></button>
