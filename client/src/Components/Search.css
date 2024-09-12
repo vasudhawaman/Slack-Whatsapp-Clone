@@ -27,13 +27,15 @@
     margin-left:50px ;
     display: none;
     position: fixed;
-    background-color: #8f94fb;
+    background-color: #fbc2f8;
+    border-radius: 10%;
+    border: 3px solid #8f94fb;
     width: 200px;
     height: 150px;
     margin-right: 0px;
     display: none;
     flex-direction: column;
-    padding: 10px 10px;
+    padding: 6px 20px;
 }
 
 .custom-file-input::-webkit-file-upload-button {
