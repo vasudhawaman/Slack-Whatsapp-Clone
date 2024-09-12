@@ -4,6 +4,7 @@ const User = require('../model/User');
 const jwt = require('jsonwebtoken')
 const env = require("dotenv");
 const db = require('../db')
+var token=''
 env.config();
 const oauth2Endpoint = 'https://accounts.google.com/o/oauth2/v2/auth';
 const JWT_SECRET = "krishkrish@123";
@@ -22,7 +23,9 @@ passport.use(new GoogleStrategy({
             if (result.length > 0) {
                 
                 const data1 = { id: result[0].id }
+                console.log(data1)
                 const token = jwt.sign(data1, JWT_SECRET, { expiresIn: '7 days' })
+                console.log(token);
                 return done(null,token, { message: 'Email already exists' });
             }
             if (result.length === 0) {
@@ -36,7 +39,7 @@ passport.use(new GoogleStrategy({
                             if (err) throw err;
                             if (result.length > 0) {
                                 const data1 = { id: result[0].id }
-                                const token = jwt.sign(data1, JWT_SECRET, { expiresIn: '7 days' })
+                                token = jwt.sign(data1, JWT_SECRET, { expiresIn: '7 days' })
                                 console.log(token)
                                 return done(null, token, { profile });
                             }
@@ -45,7 +48,7 @@ passport.use(new GoogleStrategy({
                 })
             }
         })
-        return done(null, { profile });
+        return done(null, { profile,token });
     }));
 
 passport.serializeUser((user, done) => {

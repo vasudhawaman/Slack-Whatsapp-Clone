@@ -400,7 +400,7 @@ router.post('/status', verifyToken, upload.single('file'), (req, res) => {
 
 })
 router.post('/creategroup', verifyToken, upload.single('file'), (req, res) => {
-    const q = "SELECT groupid FROM `group` ORDER BY groupid DESC";
+    const q = 'SELECT roomid FROM whatsapp.room ORDER BY roomid DESC';
     if (!req.file) {
         console.error("No image uploaded");
         return res.status(400).json({ error: "No image uploaded" });
@@ -411,7 +411,7 @@ router.post('/creategroup', verifyToken, upload.single('file'), (req, res) => {
     }
     db.query(q, (err, result) => {
         if (err) res.status(400).json("server error has been detected");;
-        const roomid = result[0].groupid + 1;
+        const roomid = result[0].roomid + 1;
         const q = "INSERT INTO `group` (`group_name`,`groupid`,`image`,`img_mimetype`,`adminid`) VALUES (?,?,?,?,?)";
         db.query(q, [req.body.group_name, roomid, req.file.buffer, req.file.mimetype, req.id], (err, result) => {
             if (err) res.status(400).json("server error has been detected");;
