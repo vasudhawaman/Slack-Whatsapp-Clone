@@ -37,7 +37,7 @@ export default function NewInput({ setMessage, room, user }) {
   const fromlang2 = (e) => {
     setcred(e.target.value);
     console.log(cred);
-    
+
   }
   if (min < 10) {
     min = "0" + min;
@@ -60,7 +60,7 @@ export default function NewInput({ setMessage, room, user }) {
       user: user
     });
   }
-  
+
   function handleForm(e) {
     e.preventDefault();
     let min = new Date().getMinutes();
@@ -69,46 +69,47 @@ export default function NewInput({ setMessage, room, user }) {
     setText("");
   }
   const translate = async () => {
-   
-    const json =  await detectlanguage.detect(text);
-    // setcred1(json.language)
-    console.log(json)
-    let detected = json[0].language;
-    let convert =cred.split("-");
-    let cred2 = convert[0];
-    let apiUrl = `https://api.mymemory.translated.net/get?q=${text}&langpair=${json[0].language}|${cred2}`;
-    console.log(cred);
-    const res = await fetch(apiUrl);
-    const data = await res.json();
-    setvalue(data.responseData.translatedText);
-    setText(data.responseData.translatedText)
-    console.log(data.responseData.translatedText);
-}
+
+    // const json = await detectlanguage.detect(text);
+    // // setcred1(json.language)
+    // console.log(json)
+    // let detected = json[0].language;
+    // let convert = cred.split("-");
+    // let cred2 = convert[0];
+    // console.log(detected,cred2,text);
+    // let apiUrl = `https://api.mymemory.translated.net/get?q=${text}&langpair=${json[0].language}|${cred2}`;
+    // console.log(cred);
+    // const res = await fetch(apiUrl);
+    // const data = await res.json();
+    // setvalue(data.responseData.translatedText);
+    // setText(data.responseData.translatedText)
+    // console.log(data.responseData.translatedText);
+  }
   return (
 
     <>
-      <div className="box-lay" id="file-input"> 
-        <div className="list"  onClick={()=>{
-                document.getElementById("file-input").style.display ="none";
-            }}>
-           <CloseIcon />
-        </div>
-       
+      <div className="box-lay" id="file-input">
         <div className="list" onClick={() => {
-              document.getElementById("file").style.display = "block";
-            }}>
+          document.getElementById("file-input").style.display = "none";
+        }}>
+          <CloseIcon />
+        </div>
+
+        <div className="list" onClick={() => {
+          document.getElementById("file").style.display = "block";
+        }}>
           <div className="box-icon">
-         
-            <AttachFileIcon  id="attach-icon" />
+
+            <AttachFileIcon id="attach-icon" />
           </div>
           <h4>Files</h4>
         </div>
 
         <div className="list" onClick={() => {
-              document.getElementById("sticker").style.display = "block";
-            }}>
+          document.getElementById("sticker").style.display = "block";
+        }}>
           <div className="box-icon">
-            <StickyNote2TwoToneIcon  id="sticker-icon" />
+            <StickyNote2TwoToneIcon id="sticker-icon" />
           </div>
           <h4>Sticker</h4>
         </div>
@@ -127,16 +128,16 @@ export default function NewInput({ setMessage, room, user }) {
           <h4>Video Record</h4>
         </div>
         <div className="list" >
-              
+
           <select className='lang2' onChange={fromlang2} >
-                              {Object.entries(countries).map(([code, name], index) => (
-                                   <option key={index} value={code}>
-                                        {name}
-                                   </option>
-                              ))}
-                         </select>
-                         <h4 style={{backgroundColor:"#ff488b" ,padding:"5px",border:"3px"}} onClick={translate}>Translate</h4>
-         
+            {Object.entries(countries).map(([code, name], index) => (
+              <option key={index} value={code}>
+                {name}
+              </option>
+            ))}
+          </select>
+          <h4 style={{ backgroundColor: "#ff488b", padding: "5px", border: "3px" }} onClick={translate}>Translate</h4>
+
         </div>
       </div>
       <div className="input-chat-send" id="input">
@@ -146,9 +147,9 @@ export default function NewInput({ setMessage, room, user }) {
         }} />
         <Emoji setText={setText} />
         <div className="additional">
-          <AddIcon onClick={()=>{
-             document.getElementById("file-input").style.display="block";
-          }}/>
+          <AddIcon onClick={() => {
+            document.getElementById("file-input").style.display = "block";
+          }} />
         </div>
         <input type="text" placeholder="message..." className="chat-input-box" value={text} onChange={handleChange} name="text" />
         <div className="send-icon">
