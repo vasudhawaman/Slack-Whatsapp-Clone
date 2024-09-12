@@ -65,7 +65,7 @@ export default function Chatlog({ data, setRoom, setUser,setPFP ,group}) {
             </div> : <div className="chatlog" onClick={() => { setUser(data.username); setRoom(data.roomid); setPFP(image1); }}>
 
                 <div className='imgProfile'>
-                    <img src={image1} height="30px" width="30px" style={{ borderRadius: "100%"}} />
+                    <img src={image1} height="25px" width="25px" style={{ borderRadius: "100%"}} />
                 </div>
                 
                     <h1>{data.username}</h1>

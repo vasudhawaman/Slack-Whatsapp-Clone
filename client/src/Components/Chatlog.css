@@ -3,9 +3,9 @@
     display: inline-flex;
     color: aliceblue;
     width: 98%;
-    padding: 5px;
+    padding:5px;
     border-bottom: 1px solid rgb(249, 249, 252);
-    min-height: 50px;
+    min-height:50px;
     box-sizing: border-box;
     
 }
@@ -22,13 +22,13 @@
 .chatlog > .unread >p{
    
     background-color: #ff488b;
-    padding: 3px;
+    padding:3px;
     border-radius: 100%;
-    margin-right: 4px;
+    margin-right:4px;
 }
  .imgProfile {
    
-    margin-right: 12px;
+    margin-right: 5px;
    
  }
  
