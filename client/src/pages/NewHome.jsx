@@ -210,7 +210,7 @@ export default function NewHome() {
               { allcontact && !allcontacts&& Array.isArray(users1) && users1.map(u=>{
                 return <ConnectionFile user={u}/>
               })}
-              {allcontacts&& !allcontact && Array.isArray(data) && data.map(u=>{
+              {allcontacts&& !allcontact && Array.isArray(users1) && users1.map(u=>{
                 return <UserFile user={u}/>
               })}
                {
