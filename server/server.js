@@ -141,7 +141,7 @@ app.get('/auth/google',
     passport.authenticate('google', { scope: ['profile', 'email'] }));
 
 app.get('/auth/google/callback',
-    passport.authenticate('google', { failureRedirect: 'http://localhost:3001' }),
+    passport.authenticate('google', { failureRedirect: 'http://localhost:3000' }),
     (req, res) => {
         console.log("hello");
         // console.log(req.user)
@@ -149,7 +149,7 @@ app.get('/auth/google/callback',
         // console.log(token)
         res.cookie('token_for_talkpal', req.user, {
             maxAge: 24 * 60 * 60 * 7 * 1000 * 3,
-        }).redirect(`http://localhost:3000/allusers`)
+        }).redirect(`http://localhost:3000`)
     });
 
 server.listen(port, () => {
