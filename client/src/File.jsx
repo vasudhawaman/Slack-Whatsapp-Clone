@@ -98,7 +98,8 @@ function handleChange(event) {
           <input type="file" name="avatar"  onChange={handleChange}/>
           { type === 'image' ?  <img id='content' width="200px"/> : null}
           { type === 'video' ?  <video id='content' width="200px" controls/> : null}
-          <button onClick={addTochat} type="button" id="startVoice"><SendIcon style={{ color : "whitesmoke " , padding: "2px"}}/></button>
+    
+          <button onClick={addTochat} type="button" id="startVoice"><SendIcon style={{ color : "#ff488b" , padding: "2px"}}/></button>
           </form>
          </div>
          

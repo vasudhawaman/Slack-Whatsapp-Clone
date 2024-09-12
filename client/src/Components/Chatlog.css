@@ -9,6 +9,9 @@
     box-sizing: border-box;
     
 }
+.chatlog > h1{
+    color: #ff488b;
+}
 .chatlog > .information{
     margin-left:15px;
 }
