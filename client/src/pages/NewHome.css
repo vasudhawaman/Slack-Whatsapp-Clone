@@ -2,6 +2,7 @@
   height: 100vh;
   display: grid;
   grid-auto-rows: 4rem calc(100vh - 4rem);
+  background-color: #17014e;
 }
 
 .main-view {
@@ -28,9 +29,7 @@ main.chat{
   @media (max-width: 600px) {
     width: 0%;
   }
-   
-    
- 
+  
 }
 .alluserhere{
   display: flex;
@@ -39,6 +38,3 @@ main.chat{
   padding: 10px;
   background: linear-gradient(to left, #8f94fb, #4e54c8); 
 }
-/* .logs{
-  margin-top: 5px;
-} */

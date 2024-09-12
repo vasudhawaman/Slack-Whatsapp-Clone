@@ -1,9 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import './Chatlog.css';
 import useWindowDimensions from './Dimensions';
-
+import { UserContext } from '../context/UserContext';
+import AddIcon from '@mui/icons-material/Add';
+import { Link } from 'react-router-dom';
 export default function Chatlog({ data, setRoom, setUser,setPFP ,group}) {
     const dimension = useWindowDimensions();
+    const {current} =useContext(UserContext);
+    console.log(current);
     const [image1, setImage] = useState('https://static.vecteezy.com/system/resources/previews/000/574/512/original/vector-sign-of-user-icon.jpg');
   if(!group){
     const { image, filename } = data;
@@ -47,6 +51,7 @@ export default function Chatlog({ data, setRoom, setUser,setPFP ,group}) {
                 profile.style.display = "flex";
                 setUser(data.username);
                 setRoom(data.roomid);
+                setPFP(image1);
             }}>
 
                 <div className='imgProfile'>
@@ -61,18 +66,15 @@ export default function Chatlog({ data, setRoom, setUser,setPFP ,group}) {
                     <p>1</p>
                 </div>
 
-            </div> : <div className="chatlog" onClick={() => { setUser(data.username); setRoom(data.roomid) }}>
+            </div> : <div className="chatlog" onClick={() => { setUser(data.username); setRoom(data.roomid); setPFP(image1); }}>
 
                 <div className='imgProfile'>
                     <img src={image1} height="30px" width="30px" style={{ borderRadius: "100%" }} />
                 </div>
                 <div className='information'>
                     <h1>{data.username}</h1>
-                    <p>last message</p>
                 </div>
-                <div className='unread'>
-                    <p>1</p>
-                </div>
+                
             </div>
 
             }
@@ -80,7 +82,6 @@ export default function Chatlog({ data, setRoom, setUser,setPFP ,group}) {
         {group ? 
         <>
             {dimension.width < 600 ? <div className="chatlog" onClick={() => {
-                console.log("clicked this div");
                 const element = document.querySelector(".chat-rooms");
                 element.style.display = "none";
                 const chat = document.querySelector(".chat");
@@ -99,11 +100,9 @@ export default function Chatlog({ data, setRoom, setUser,setPFP ,group}) {
                 </div>
                 <div className='information'>
                     <h1>{data.group_name}</h1>
-                    <p>last message</p>
                 </div>
                 <div className='unread'>
-                    <h1></h1>
-                    <p>1</p>
+                    <p><AddIcon /></p>
                 </div>
 
             </div> : <div className="chatlog" onClick={() => { setUser(data.group_name); setRoom(data.group_roomid) ;setPFP(image1) }}>
@@ -113,11 +112,16 @@ export default function Chatlog({ data, setRoom, setUser,setPFP ,group}) {
                 </div>
                 <div className='information'>
                     <h1>{data.group_name}</h1>
-                    <p>last message</p>
                 </div>
+              {data.adminid === current.id ?  <Link to={`/adduser/${data.group_roomid}`} style={{textDecoration:"none",color:"white"}}>
                 <div className='unread'>
-                    <p>1</p>
+                   
+                    <p><AddIcon /></p>
+                    
+                
                 </div>
+                </Link>
+                : null}
             </div>
 
             }

@@ -20,7 +20,7 @@ const Member = () => {
             })
             const data = await response.json()
             setMembers(data);
-            console.log(members);
+            console.log("memebers",members);
             setLoading(true);
         }
         getData();

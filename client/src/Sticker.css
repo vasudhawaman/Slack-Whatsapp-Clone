@@ -5,30 +5,51 @@
     position: fixed;
     bottom: 20px;
     z-index: 5;
-    
     width: 20%;
     padding: 5px;
-    background-color: rgb(200, 204, 203);
-    border-radius: 2px;
-    padding: 2px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 5px;
+    padding: 5px;
    
 }
-/* In your CSS file (e.g., styles.css) */
-.loader {
-    border: 16px solid #f3f3f3; /* Light grey */
-    border-top: 16px solid #3498db; /* Blue */
-    border-radius: 50%;
-    width: 120px;
-    height: 120px;
-    animation: spin 2s linear infinite;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-  
   @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
   }
-  
+  .sticker-button{
+    background-color: #f92c85;
+    border: none;
+    color: white;
+    font-size: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 15px;
+    padding: 5px;
+    border-radius: 2px;
+  }
+  .sticker-file-input::-webkit-file-upload-button {
+    visibility: hidden;
+  }
+  .sticker-file-input::before {
+
+    margin-top: 10px;
+    content: 'Select Sticker Image';
+    display: inline-block;
+    background: linear-gradient(top, #f9f9f9, #e3e3e3);
+    border: 1px solid #999;
+    border-radius: 3px;
+    padding: 5px 8px;
+    outline: none;
+    white-space: nowrap;
+    -webkit-user-select: none;
+    cursor: pointer;
+    text-shadow: 1px 1px #fff;
+    font-weight: 700;
+    font-size: 10pt;
+  }
+  .sticker-file-input:hover::before {
+    border-color: rgb(82, 80, 80);
+  }
+  .sticker-file-input:active::before {
+    background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
+  }

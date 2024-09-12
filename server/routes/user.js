@@ -437,6 +437,7 @@ router.get('/allgroup', verifyToken, (req, res) => {
     
 })
 router.post('/adduser', verifyToken, (req, res) => {
+    console.log(req.body);``
     const q1 = "SELECT * FROM group_room WHERE group_roomid=? AND userid=?"
     db.query(q1, [req.body.groupid, req.body.user_id], (err, result) => {
         if (result) {

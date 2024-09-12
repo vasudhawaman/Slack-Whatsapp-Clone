@@ -70,7 +70,7 @@ export default function Chat({message,setMessage,user,room,pfp,group}){
     return(
         <>
         <div id="chat">
-          <Profile pfp={pfp} user={user} room={room} /> 
+          <Profile pfp={pfp} user={user} room={room} group={group}/> 
          <div id="all"> 
           <MessageDiv dates={dates} message={message} group={group}/>
          </div>

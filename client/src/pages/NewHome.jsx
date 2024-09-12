@@ -14,7 +14,6 @@ import alertOctagon from 'react-useanimations/lib/alertOctagon';
 import ConnectionFile from "../Components/ConnectionsFile";
 import { FaUser } from "react-icons/fa";
 import UserFile from "../Components/UserFile";
-import { Link } from "react-router-dom";
 import GroupIcon from '@mui/icons-material/Group';
 export default function NewHome() {
   const [user, setUser] = useState()
@@ -83,7 +82,6 @@ export default function NewHome() {
         })
         if (response.status === 200) {
           const json = await response.json();
-          // console.log(json);
           setdata(json);
         } else {
           Navigate("/signin");
@@ -146,7 +144,6 @@ export default function NewHome() {
         })
         const data = await response.json()
         setdata(data);
-        // console.log(data)
         setcontact(true)
       }
       getdata()
@@ -162,7 +159,6 @@ export default function NewHome() {
         })
         const data = await response.json()
         setdata(data);
-        // console.log(data)
         setcontact(false)
       }
       getdata()

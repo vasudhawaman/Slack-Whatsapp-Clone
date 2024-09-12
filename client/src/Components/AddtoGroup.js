@@ -32,7 +32,6 @@ const AddtoGroup = () => {
     return (
         <div>
             <div>
-                <h1>Add users to group</h1>
                 {data && data.map(u => {
                     return <AddUser user={u} groupid={groupid}/>
                 })}

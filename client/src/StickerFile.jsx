@@ -28,7 +28,7 @@ export default function StickerFile({setMessage,room,user}){
               setColor(null);
               
           }} style={{ paddingLeft: "2%"}}/>
-       {color ? <input type="file" name="avatar"  onChange={handleSticker}/> : null}
+       {color ? <input type="file" name="avatar"  className="sticker-file-input" onChange={handleSticker}/> : null}
         <input type="color" id="favcolor" name="favcolor"  onChange={(e)=>{
                  const hex2rgb = (hex) => {
                     const r = parseInt(hex.slice(1, 3), 16);
