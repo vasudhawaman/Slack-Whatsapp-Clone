@@ -45,7 +45,6 @@ export default function NewHome() {
       })
       if (response.status === 200) {
         const json = await response.json();
-        console.log(json);
         setdata(json);
       } else {
         Navigate("/signin");
@@ -56,6 +55,8 @@ export default function NewHome() {
   }, [])
   useEffect(()=>{
     async function getGroups(){
+      setallcontacts(false);
+      setcontact(false);
       const url = `http://localhost:8000/register/getgroup`;
       const response = await fetch(url, {
         method: 'GET',
@@ -63,7 +64,7 @@ export default function NewHome() {
       })
       if (response.status === 200) {
         const json = await response.json();
-        console.log("groups",json);
+        // console.log("groups",json);
          setusers(json);
       } else {
         Navigate("/signin");
@@ -82,7 +83,7 @@ export default function NewHome() {
         })
         if (response.status === 200) {
           const json = await response.json();
-          console.log(json);
+          // console.log(json);
           setdata(json);
         } else {
           Navigate("/signin");
@@ -95,8 +96,10 @@ export default function NewHome() {
     
   
   const getAllUsers=()=>{
-    if(allcontacts==false){
-    const url="http://localhost:8000/register/getgroup";
+    setGroup(false);
+    setcontact(false);
+    if(!allcontacts){
+    const url="http://localhost:8000/register/allusers";
       const getdata=async()=>{
         const response=await fetch(url,{
             method: "GET",
@@ -122,13 +125,14 @@ export default function NewHome() {
         })
         const data = await response.json()
         setdata(data);
-        console.log(data)
+        // console.log(data)
         setallcontacts(false)
       }
       getdata()
     }
   }
   const getAllConnection = () => {
+    setGroup(false);
     setallcontacts(false)
     if (!allcontact) {
       const url = 'http://localhost:8000/register/connect'
@@ -142,7 +146,7 @@ export default function NewHome() {
         })
         const data = await response.json()
         setdata(data);
-        console.log(data)
+        // console.log(data)
         setcontact(true)
       }
       getdata()
@@ -158,7 +162,7 @@ export default function NewHome() {
         })
         const data = await response.json()
         setdata(data);
-        console.log(data)
+        // console.log(data)
         setcontact(false)
       }
       getdata()
@@ -167,6 +171,7 @@ export default function NewHome() {
   }
   useEffect(() => {
     setusers(data);
+    console.log(users1);
   }, [data])
 
   if (min < 10) {
@@ -207,10 +212,10 @@ export default function NewHome() {
                 )
               })
             }
-              { allcontact && !allcontacts&& Array.isArray(users1) && users1.map(u=>{
+              {!group && allcontact && !allcontacts&& Array.isArray(users1) && users1.map(u=>{
                 return <ConnectionFile user={u}/>
               })}
-              {allcontacts&& !allcontact && Array.isArray(data) && data.map(u=>{
+              {!group && allcontacts&& !allcontact && Array.isArray(users1) && users1.map(u=>{
                 return <UserFile user={u}/>
               })}
                {
