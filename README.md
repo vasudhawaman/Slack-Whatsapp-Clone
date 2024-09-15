@@ -13,7 +13,7 @@
 ### OTP Verification: Added layer of security for user authentication.
 
 ## Real-Time Communication
-###(Socket.io: Implemented for real-time messaging capabilities.)
+### (Socket.io: Implemented for real-time messaging capabilities.)
 ### 1. *Private Chat Rooms*: Enables direct messaging between users.
 ### 2.*Group Chats*: Facilitates communication within groups.Only the admin(one who created the group) can add users to the group.All users within group can view other users.
 ### 3.*Video/Audio Recording*: Supports recording of video and audio during chats.
@@ -70,5 +70,5 @@ peerjs --port 3001
 ```
 ### 6. Enter SQL inside mySQL workbench:Enter SQL provided in info.sql in server directory.
 
-### 7. App is live at: [http://localhost:3000]([http://localhost:3000)
+### 7. App is live at: [http://localhost:3000](http://localhost:3000)
 
