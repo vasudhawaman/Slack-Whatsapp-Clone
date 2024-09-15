@@ -68,7 +68,17 @@ Open new terminal and repeat step 3 and then type following command:
 cd client
 peerjs --port 3001
 ```
-### 6. Enter SQL inside mySQL workbench:Enter SQL provided in info.sql in server directory.
+### 6. Enter SQL inside mySQL workbench:Enter SQL provided in info.sql in server directory under whatsapp database.
+### 7. Place following in the .env in server directory
+```bash
+EMAIL_USER="your_email"
+EMAIL_PASS="your_password"
+CLIENT_ID="your_auth_clientid"
+CLIENT_SECRET='your_oauth_secret'
+DB_PASSWORD='your_mySQLpassword'
+JWT_SECRET='your_JWT_secret'
 
-### 7. App is live at: [http://localhost:3000](http://localhost:3000)
+```
+
+### 8. App is live at: [http://localhost:3000](http://localhost:3000)
 
