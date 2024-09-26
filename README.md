@@ -10,7 +10,7 @@
 ## Authentication
 ### JWT Authentication: Secure user authentication using JSON Web Tokens.
 ### Google OAuth Integration: Allows users to sign in using their Google accounts.
-### OTP Verification: Added layer of security for user authentication.
+### OTP Verification: Added layer of security for user authentication using nodemailer.
 
 ## Real-Time Communication
 ### (Socket.io: Implemented for real-time messaging capabilities.)
