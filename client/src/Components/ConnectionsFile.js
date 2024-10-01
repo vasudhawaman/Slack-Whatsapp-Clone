@@ -15,7 +15,7 @@ const ConnectionFile = ({user}) => {
     fr.readAsDataURL(blob);
   }
     const handleonclick=async ()=>{
-        const url='http://localhost:8000/register/createroom';
+        const url=`${process.env.REACT_APP_BACKEND}/register/createroom`;
         const response=await fetch(url,{
             method:'POST',
             credentials:'include',
@@ -27,7 +27,7 @@ const ConnectionFile = ({user}) => {
         const res=await response.json();
     }
     const handleonreject=async()=>{
-        const url='http://localhost:8000/register/reject';
+        const url=`${process.env.REACT_APP_BACKEND}/register/reject`;
         const response= await fetch(url,{
             method:'DELETE',
             credentials:'include',

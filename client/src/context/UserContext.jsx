@@ -9,7 +9,7 @@ export const UserContextProvider = (props) => {
             console.log(cookies);
             if(cookies.token_for_talkpal !==""){
             async function getUserinfo() {
-                const url = 'http://localhost:8000/register/getinfo';
+                const url = `${process.env.REACT_APP_BACKEND}/register/getinfo`;
                 const response = await fetch(url, {
                     method: "GET",
                     credentials: 'include',

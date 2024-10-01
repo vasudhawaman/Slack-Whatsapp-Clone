@@ -6,7 +6,7 @@ const AllGroup = () => {
     const [loading, setLoading] = useState(false);
     useEffect(() => {
         const getGroups = async () => {
-            const url = "http://localhost:8000/register/allgroup";
+            const url = `${process.env.REACT_APP_BACKEND}/register/allgroup`;
             const response = await fetch(url, {
                 method: 'GET',
                 credentials: 'include',

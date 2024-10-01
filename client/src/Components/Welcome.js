@@ -21,7 +21,7 @@ const Welcome = ({ setOtpState }) => {
         else {
 
             if (credentials.password === credentials.cpassword) {
-                const url = 'http://localhost:8000/register/cheak';
+                const url = `${process.env.REACT_APP_BACKEND}/register/cheak`;
                 const response = await fetch(url, {
                     method: "POST",
                     credentials: 'include',
@@ -48,7 +48,7 @@ const Welcome = ({ setOtpState }) => {
         }
     };
     const handleOnClick2 = () => {
-        window.location.href = 'http://localhost:8000/auth/google';
+        window.location.href = `${process.env.REACT_APP_BACKEND}/auth/google`;
     }
     const handleOnChange = (e) => {
         setcredentials({ ...credentials, [e.target.name]: e.target.value })
@@ -79,7 +79,7 @@ const Welcome = ({ setOtpState }) => {
                     </div>
                 </div>
 
-                <div className='goog'><Link to='http://localhost:8000/auth/google'><button className='google' onClick={handleOnClick2} >Sign up with google</button></Link></div>
+                <div className='goog'><Link to={`${process.env.REACT_APP_BACKEND}/auth/google`}><button className='google' onClick={handleOnClick2} >Sign up with google</button></Link></div>
                 <p className="ask" style={{color:'white'}}>Already have an account?<a href="/signin">Login</a></p>
             </div>
         </>

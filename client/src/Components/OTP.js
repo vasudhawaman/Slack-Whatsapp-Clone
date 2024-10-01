@@ -14,7 +14,7 @@ export default function OTP({otpState}) {
         if (otps != otp) {
             alert("OTP entered is incorrect");
         } else {
-            const url = 'http://localhost:8000/register/signup';
+            const url = `${process.env.REACT_APP_BACKEND}/register/signup`;
             const response = await fetch(url, {
                 method: "POST",
                 credentials: 'include',

@@ -8,7 +8,7 @@ const EditProfile = () => {
     const [image, setImage] = useState("https://static.vecteezy.com/system/resources/previews/000/574/512/original/vector-sign-of-user-icon.jpg");
     useEffect(() => {
         const getUserData = async () => {
-            const url = "http://localhost:8000/register/getinfo";
+            const url = `${process.env.REACT_APP_BACKEND}/register/getinfo`;
             const response = await fetch(url, {
                 method: 'GET',
                 credentials: 'include',
@@ -39,7 +39,7 @@ const EditProfile = () => {
         const form = new FormData();
         form.append('image', data.image);
         form.append('status', data.status);
-        const url = "http://localhost:8000/register/updateinfo";
+        const url = `${process.env.REACT_APP_BACKEND}/register/updateinfo`;
         const response = await fetch(url, {
             method: 'PUT',
             credentials: 'include',
@@ -48,7 +48,7 @@ const EditProfile = () => {
         const res = await response.json();
         console.log(res);
 
-        const url2="http://localhost:8000/register/updatestatus";
+        const url2=`${process.env.REACT_APP_BACKEND}/register/updatestatus`;
         const response2=await fetch(url2,{
             method:'PUT',
             credentials: 'include',
@@ -67,7 +67,7 @@ const EditProfile = () => {
         console.log(data)
     }
     const onLogout=async()=>{
-        const url = "http://localhost:8000/register/logout";
+        const url = `${process.env.REACT_APP_BACKEND}/register/logout`;
         const response = await fetch(url, {
             method: 'POST',
             credentials: 'include',

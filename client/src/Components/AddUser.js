@@ -19,7 +19,7 @@ const AddUser = (user) => {
     }
     const addUsers = async () => {
         
-        const url = "http://localhost:8000/register/adduser";
+        const url = `${process.env.REACT_APP_BACKEND}/register/adduser`;
         const response = await fetch(url, {
             method: "POST",
             credentials: 'include',

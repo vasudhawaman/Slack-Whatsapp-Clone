@@ -6,7 +6,7 @@ const Allusers = () => {
     const[data,setdata]=useState()
 
     useEffect(() => {
-      const url="http://localhost:8000/register/allusers"
+      const url=`${process.env.REACT_APP_BACKEND}/register/allusers`
       const getdata=async()=>{
         const response=await fetch(url,{
             method: "GET",

@@ -9,7 +9,7 @@ const Member = () => {
     const [members, setMembers] = useState([]);
     useEffect(()=>{
         const getData = async () => {
-            const url = `http://localhost:8000/register/getmember`;
+            const url = `${process.env.REACT_APP_BACKEND}/register/getmember`;
             const response = await fetch(url, {
                 method: "POST",
                 credentials: 'include',

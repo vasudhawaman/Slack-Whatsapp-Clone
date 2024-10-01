@@ -9,7 +9,7 @@ export default function Password({otp1}) {
   const handlesubmit=async (e)=>{
     e.preventDefault();
     if(credentials.password===credentials.cpassword){
-    const url='http://localhost:8000/register/changepass';
+    const url=`${process.env.REACT_APP_BACKEND}/register/changepass`;
         const response = await fetch(url, {
             method: "PUT",
             credentials: 'include',

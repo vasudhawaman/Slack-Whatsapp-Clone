@@ -6,7 +6,7 @@ export default function Welcome2() {
   const [credentials,setcredentials]=useState({username:"",password:""})
   const handlesubmit=async (e)=>{
     e.preventDefault();
-    const url='http://localhost:8000/register/login';
+    const url=`${process.env.REACT_APP_BACKEND}/register/login`;
         const response = await fetch(url, {
             method: "POST",
             credentials: 'include',
@@ -43,7 +43,7 @@ export default function Welcome2() {
     {/* </div> */}
     </div>
     <div className='forget'><Link to='/forget'>Forget Password?</Link></div>
-    <div className='goog'><Link to='http://localhost:8000/auth/google'><button className='google1'>Sign in with google</button></Link></div>
+    <div className='goog'><Link to={`${process.env.REACT_APP_BACKEND}/auth/google`}><button className='google1'>Sign in with google</button></Link></div>
     <p className="ask1" style={{color:'white'}}>Don't have an account?<a href="/register">Sign up</a></p>
     </div>
     

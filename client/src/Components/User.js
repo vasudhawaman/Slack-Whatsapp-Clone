@@ -9,7 +9,7 @@ const User = () => {
     const[image2,setImage]=useState('https://static.vecteezy.com/system/resources/previews/000/574/512/original/vector-sign-of-user-icon.jpg');
     useEffect(() => {
         const getUserData = async () => {
-                const url = "http://localhost:8000/register/getinfo";
+                const url = `${process.env.REACT_APP_BACKEND}/register/getinfo`;
                 const response = await fetch(url, {
                     method: 'GET',
                     credentials: 'include',

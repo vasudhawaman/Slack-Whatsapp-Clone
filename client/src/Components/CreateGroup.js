@@ -13,7 +13,7 @@ const CreateGroup = () => {
         const formData=new FormData();
         formData.append('file',image);
         formData.append('group_name',group);
-        const url="http://localhost:8000/register/creategroup";
+        const url=`${process.env.REACT_APP_BACKEND}/register/creategroup`;
         const response=await fetch(url,{
             method: 'POST',
             credentials: 'include',

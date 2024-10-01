@@ -432,7 +432,7 @@ db.query(q, (err, result) => {
         console.log("Group created successfully");
 
         const insertGroupRoomQuery = "INSERT INTO `group_room` (`group_roomid`, `userid`) VALUES (?, ?)";
-        db.query(insertGroupRoomRoomQuery, [roomid, req.id], (err, result) => {
+        db.query(insertGroupRoomQuery, [roomid, req.id], (err, result) => {
             if (err) {
                 console.error("Error adding user to group:", err);
                 return res.status(500).json({ error: "Server error has been detected" });

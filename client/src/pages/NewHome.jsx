@@ -33,7 +33,7 @@ export default function NewHome() {
   const [users1, setusers] = useState();
 
   useEffect(() => {
-    const url = `http://localhost:8000/register/contacts`;
+    const url = `${process.env.REACT_APP_BACKEND}/register/contacts`;
     const fetchdata = async () => {
       const response = await fetch(url, {
         method: 'POST',
@@ -56,7 +56,7 @@ export default function NewHome() {
     async function getGroups(){
       setallcontacts(false);
       setcontact(false);
-      const url = `http://localhost:8000/register/getgroup`;
+      const url = `${process.env.REACT_APP_BACKEND}/register/getgroup`;
       const response = await fetch(url, {
         method: 'GET',
         credentials: 'include',
@@ -72,7 +72,7 @@ export default function NewHome() {
     else{
       setallcontacts(false);
       setcontact(false);
-      const url = `http://localhost:8000/register/contacts`;
+      const url = `${process.env.REACT_APP_BACKEND}/register/contacts`;
       const fetchdata = async () => {
         const response = await fetch(url, {
           method: 'POST',
@@ -98,7 +98,7 @@ export default function NewHome() {
     setGroup(false);
     setcontact(false);
     if(!allcontacts){
-    const url="http://localhost:8000/register/allusers";
+    const url=`${process.env.REACT_APP_BACKEND}/register/allusers`;
       const getdata=async()=>{
         const response=await fetch(url,{
             method: "GET",
@@ -113,7 +113,7 @@ export default function NewHome() {
       getdata()
     setallcontacts(true);}
       else{
-        const url = 'http://localhost:8000/register/contacts'
+        const url = `${process.env.REACT_APP_BACKEND}/register/contacts`
       const getdata = async () => {
         const response = await fetch(url, {
           method: 'POST',
@@ -134,7 +134,7 @@ export default function NewHome() {
     setGroup(false);
     setallcontacts(false)
     if (!allcontact) {
-      const url = 'http://localhost:8000/register/connect'
+      const url = `${process.env.REACT_APP_BACKEND}/register/connect`
       const getdata = async () => {
         const response = await fetch(url, {
           method: 'POST',
@@ -149,7 +149,7 @@ export default function NewHome() {
       }
       getdata()
     }else{
-      const url = 'http://localhost:8000/register/contacts'
+      const url = `${process.env.REACT_APP_BACKEND}/register/contacts`
       const getdata = async () => {
         const response = await fetch(url, {
           method: 'POST',
@@ -244,5 +244,5 @@ export default function NewHome() {
       </section>
     </div>
   )
-  //finally grid laggayi yay
+  
 }

@@ -9,7 +9,7 @@ export default function ForgetPass({ setotp }) {
     const [credentials, setcredentials] = useState({ email: "" })
     const handlesubmit = async (e) => {
         e.preventDefault();
-        const url = 'http://localhost:8000/register/checkmail';
+        const url = `${process.env.REACT_APP_BACKEND}/register/checkmail`;
         const response = await fetch(url, {
             method: "POST",
             credentials: 'include',

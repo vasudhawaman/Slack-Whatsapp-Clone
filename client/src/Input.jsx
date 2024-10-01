@@ -65,7 +65,7 @@ export default function Input({ setMessage, room, user }) {
           setText("");
      }
      const translate = async () => {
-          const url = 'http://localhost:8000/language/detect';
+          const url = `${process.env.REACT_APP_BACKEND}language/detect`;
           const response = await fetch(url, {
                method: "POST",
                headers: {

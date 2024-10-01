@@ -14,7 +14,7 @@ const UserFile = ({ user }) => {
   }
   const handleonclick = async () => {
     console.log(user.id)
-    const url = 'http://localhost:8000/register/connection'
+    const url = `${process.env.REACT_APP_BACKEND}/register/connection`
     const response = await fetch(url, {
       method: 'POST',
       credentials: 'include',

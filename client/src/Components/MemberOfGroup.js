@@ -15,7 +15,7 @@ const MemberOfGroup = ({ user, groupid }) => {
     }
 
     const removeFromGroup = async () => {
-        const url = "http://localhost:8000/register/remove";
+        const url = `${process.env.REACT_APP_BACKEND}/register/remove`;
         const response = await fetch(url, {
             method: "DELETE",
             credentials: 'include',

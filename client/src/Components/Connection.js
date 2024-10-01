@@ -4,7 +4,7 @@ import ConnectionFile from './ConnectionsFile'
 const Connection = () => {
     const[user,setUsers]=useState();
     const[data,setdata]=useState()
-    const url='http://localhost:8000/register/connect'
+    const url=`${process.env.REACT_APP_BACKEND}/register/connect`
     useEffect(()=>{
         const getdata=async ()=>{
             const response=await fetch(url,{
