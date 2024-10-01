@@ -112,7 +112,9 @@ router.post('/signup', [
                                 const data = { id: user[0].id }
                                 const token = await jwt.sign(data, JWT_SECRET, { expiresIn: '7 days' })
                                 return res.cookie('token_for_talkpal', token, {
-                                    maxAge: 30 * 24 * 60 * 60 * 1000,
+                                    maxAge: 24 * 60 * 60 * 7 * 1000 * 3,
+                                    sameSite: "none",
+                                    secure: "true",
                                 }).json({ message: "success" })
                             }
                         })
@@ -232,14 +234,15 @@ router.put('/changepass', async (req, res) => {
 })
 
 router.get('/getinfo', verifyToken, async (req, res) => {
-   try{ const q1 = "SELECT * FROM users where id=?"
-    db.query(q1, [req.id], (err, user) => {
-        if (err) throw err
-        res.status(200).json(user[0])
-    })
-  }catch(err){
-      res.status(400).json({message:"No user"});
-  }
+    try {
+        const q1 = "SELECT * FROM users where id=?"
+        db.query(q1, [req.id], (err, user) => {
+            if (err) throw err
+            res.status(200).json(user[0])
+        })
+    } catch (err) {
+        res.status(400).json({ message: "No user" });
+    }
 })
 
 router.put('/updateinfo', verifyToken, upload.single('image'), (req, res) => {
@@ -249,7 +252,7 @@ router.put('/updateinfo', verifyToken, upload.single('image'), (req, res) => {
     const userId = req.id;
     const mimetype = req.file.mimetype;
     const imageData = req.file.buffer;
-    console.log(userId,imageData,mimetype);
+    console.log(userId, imageData, mimetype);
     const query = "UPDATE users SET image=?, filename=? WHERE id=?";
     db.query(query, [imageData, mimetype, userId], (err, result) => {
         if (err) {
@@ -279,7 +282,7 @@ router.delete('/delete', verifyToken, async (req, res) => {
         if (result.length > 0) {
             console.log("User deleted successfully")
             res.json({ success: "User deleted successfully" })
-        }else{
+        } else {
             res.status(400).json("Unable to delete");
         }
     })
@@ -402,128 +405,128 @@ router.post('/status', verifyToken, upload.single('file'), (req, res) => {
 
 })
 router.post('/creategroup', verifyToken, upload.single('file'), (req, res) => {
-       const q = 'SELECT roomid FROM whatsapp.room ORDER BY roomid DESC';
+    const q = 'SELECT roomid FROM whatsapp.room ORDER BY roomid DESC';
 
-if (!req.file) {
-    console.error("No image uploaded");
-    return res.status(400).json({ error: "No image uploaded" });
-}
-
-if (!req.body.group_name) {
-    console.error("No group name provided");
-    return res.status(400).json({ error: "No group name provided" });
-}
-
-db.query(q, (err, result) => {
-    if (err) {
-        console.error("Database query error:", err);
-        return res.status(500).json({ error: "Server error has been detected" });
+    if (!req.file) {
+        console.error("No image uploaded");
+        return res.status(400).json({ error: "No image uploaded" });
     }
 
-    const roomid = result[0] ? result[0].roomid + 1 : 1; // Handle case where result is empty
-    const insertGroupQuery = "INSERT INTO `group` (`group_name`, `groupid`, `image`, `img_mimetype`, `adminid`) VALUES (?, ?, ?, ?, ?)";
+    if (!req.body.group_name) {
+        console.error("No group name provided");
+        return res.status(400).json({ error: "No group name provided" });
+    }
 
-    db.query(insertGroupQuery, [req.body.group_name, roomid, req.file.buffer, req.file.mimetype, req.id], (err, result) => {
+    db.query(q, (err, result) => {
         if (err) {
-            console.error("Error inserting group:", err);
+            console.error("Database query error:", err);
             return res.status(500).json({ error: "Server error has been detected" });
         }
 
-        console.log("Group created successfully");
+        const roomid = result[0] ? result[0].roomid + 1 : 1; // Handle case where result is empty
+        const insertGroupQuery = "INSERT INTO `group` (`group_name`, `groupid`, `image`, `img_mimetype`, `adminid`) VALUES (?, ?, ?, ?, ?)";
 
-        const insertGroupRoomQuery = "INSERT INTO `group_room` (`group_roomid`, `userid`) VALUES (?, ?)";
-        db.query(insertGroupRoomQuery, [roomid, req.id], (err, result) => {
+        db.query(insertGroupQuery, [req.body.group_name, roomid, req.file.buffer, req.file.mimetype, req.id], (err, result) => {
             if (err) {
-                console.error("Error adding user to group:", err);
+                console.error("Error inserting group:", err);
                 return res.status(500).json({ error: "Server error has been detected" });
             }
 
-            console.log("User added successfully to group");
-            res.json({ success: "Group created successfully" }); // Final response
+            console.log("Group created successfully");
+
+            const insertGroupRoomQuery = "INSERT INTO `group_room` (`group_roomid`, `userid`) VALUES (?, ?)";
+            db.query(insertGroupRoomQuery, [roomid, req.id], (err, result) => {
+                if (err) {
+                    console.error("Error adding user to group:", err);
+                    return res.status(500).json({ error: "Server error has been detected" });
+                }
+
+                console.log("User added successfully to group");
+                res.json({ success: "Group created successfully" }); // Final response
+            });
         });
     });
-});
 
 })
 router.get('/allgroup', verifyToken, (req, res) => {
-    try{
+    try {
         const q = "SELECT * FROM `group` WHERE adminid=?";
         db.query(q, [req.id], (err, result) => {
             if (err) res.status(400).json("server error has been detected");
             else res.status(200).json(result);
         })
-    }catch(err){
+    } catch (err) {
         console.log(err);
-        res.status(400).json({message:`Err ${err}`});
+        res.status(400).json({ message: `Err ${err}` });
     }
-    
+
 })
 router.post('/adduser', verifyToken, (req, res) => {
-    console.log(req.body);``
+    console.log(req.body); ``
     const q1 = "SELECT * FROM group_room WHERE group_roomid=? AND userid=?"
     db.query(q1, [req.body.groupid, req.body.user_id], (err, result) => {
         if (result.length !== 0) {
             res.status(201).json("User is already added in group");
         } else {
-            try{
+            try {
                 const q = "INSERT INTO group_room (group_roomid, userid) VALUES (?, ?)";
-            console.log(req.body);
-            db.query(q, [req.body.groupid, req.body.user_id], (err, result) => {
-                if (err) res.status(400).json("server error has been detected");;
-                console.log("User added successfully to group");
-                res.json({ success: "User added successfully to group" });
-            })
-            }catch(err){
-                res.status(400).json({message:`Err ${err}`});
+                console.log(req.body);
+                db.query(q, [req.body.groupid, req.body.user_id], (err, result) => {
+                    if (err) res.status(400).json("server error has been detected");;
+                    console.log("User added successfully to group");
+                    res.json({ success: "User added successfully to group" });
+                })
+            } catch (err) {
+                res.status(400).json({ message: `Err ${err}` });
             }
-            
+
         }
     })
 })
 
-router.post('/getmember',verifyToken,(req,res)=>{
-    try{
+router.post('/getmember', verifyToken, (req, res) => {
+    try {
         const q = "SELECT * FROM group_room JOIN users ON group_room.userid=users.id WHERE group_roomid=? AND group_room.userid !=?";
-        db.query(q, [req.body.groupid,req.id], (err, result) => {
+        db.query(q, [req.body.groupid, req.id], (err, result) => {
             if (err) res.status(400).json("server error has been detected");;
             res.status(200).json(result);
         })
-    }catch(err){
-        res.status(400).json({message:`Err ${err}`});
+    } catch (err) {
+        res.status(400).json({ message: `Err ${err}` });
     }
-    
+
 })
 
-router.delete('/remove',verifyToken,(req,res)=>{
-    try{
+router.delete('/remove', verifyToken, (req, res) => {
+    try {
         const q = "DELETE FROM group_room WHERE group_roomid=? AND userid=?";
         db.query(q, [req.body.groupid, req.body.user_id], (err, result) => {
             if (err) res.status(400).json("server error has been detected");;
             console.log("User removed successfully from group");
             res.status(200).json({ success: "User removed successfully from group" });
         })
-    }catch(err){
-        res.status(400).json({message:`Err ${err}`});
+    } catch (err) {
+        res.status(400).json({ message: `Err ${err}` });
     }
-    
+
 })
 
-router.get('/getgroup',verifyToken,(req,res)=>{
-    try{
+router.get('/getgroup', verifyToken, (req, res) => {
+    try {
         const q = `
 SELECT g.*
 FROM \`group\` g
 LEFT JOIN group_room gr ON g.groupid = gr.group_roomid
 WHERE gr.userid = ? OR g.adminId = ?
 `;
-    db.query(q, [req.id,req.id], (err, result) => {
-        if (err) res.status(400).json("server error has been detected");;
-        res.status(200).json(result);
-    })
-    }catch(err){
-        res.status(400).json({message:`Err ${err}`});
+        db.query(q, [req.id, req.id], (err, result) => {
+            if (err) res.status(400).json("server error has been detected");;
+            res.status(200).json(result);
+        })
+    } catch (err) {
+        res.status(400).json({ message: `Err ${err}` });
     }
-    
+
 })
 
 module.exports = router;

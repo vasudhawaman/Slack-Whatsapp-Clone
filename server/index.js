@@ -105,8 +105,6 @@ io.on("connection", (socket) => {
           io.to(data.room).emit('date_set',result);
        })
           let q = "SELECT * FROM files WHERE room_id=? order by id asc"
-        // //  data.file is of type buffer so convert to blob then store 
-         // filesstored as buffer but which is
          db.query(q, [data.room],(err,result)=>{
            if(err) throw err;
            io.to(data.room).emit('recieve_message',result);
@@ -147,7 +145,9 @@ app.get('/auth/google/callback',
         const {token}=req.user;
         console.log(req.user);
         res.cookie('token_for_talkpal', String(token), {
-            maxAge: 24 * 60 * 60 * 7 * 1000 * 3,
+            maxAge:24*60*60*7*1000*3,
+               sameSite:"none",
+              secure:"true",
         });
         res.redirect(`http://localhost:3000`);
     });
