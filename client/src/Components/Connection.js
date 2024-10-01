@@ -16,14 +16,12 @@ const Connection = () => {
             })
             const data=await response.json()
             setUsers(data);
-            console.log(data)
         }
         getdata()
     },[])
 
     useEffect(()=>{
         setdata(user)
-        console.log(data)
      },[user])
     
   return (

@@ -19,7 +19,6 @@ export default function ForgetPass({ setotp }) {
             body: JSON.stringify({ email: credentials.email })
         });
         const json = await response.json();
-        console.log(json.message === 'success');
         if (json.message === 'success') {
             setotp({ otp: json.otp, email: credentials.email })
             navigate('/otp1')
@@ -27,7 +26,7 @@ export default function ForgetPass({ setotp }) {
     }
     const handleonchange = (e) => {
         setcredentials({ ...credentials, [e.target.name]: e.target.value })
-        console.log(credentials);
+        
     }
     return (
         <><StarBackground/><div className="containerx">

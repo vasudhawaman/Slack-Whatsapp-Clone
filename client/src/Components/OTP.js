@@ -24,7 +24,6 @@ export default function OTP({otpState}) {
                 body: JSON.stringify({ username: credentials.username, password: credentials.password, email: credentials.email })
             });
             const json = await response.json();
-            console.log(json);
             if(json.message==='success'){
                 Navigate('/')
             }

@@ -20,7 +20,7 @@ const CreateGroup = () => {
             body: formData
         })
         const json =await response.json();
-        console.log(json);
+        
     }
   return (
     <div>

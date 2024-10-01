@@ -7,7 +7,6 @@ import { Link } from 'react-router-dom';
 export default function Chatlog({ data, setRoom, setUser,setPFP ,group}) {
     const dimension = useWindowDimensions();
     const {current} =useContext(UserContext);
-    console.log(current);
     const [image1, setImage] = useState('https://static.vecteezy.com/system/resources/previews/000/574/512/original/vector-sign-of-user-icon.jpg');
   if(!group){
     const { image, filename } = data;
@@ -31,7 +30,7 @@ export default function Chatlog({ data, setRoom, setUser,setPFP ,group}) {
         };
         fr.readAsDataURL(blob);
     }
-    console.log("group-choose",data)
+    
   }
 
 

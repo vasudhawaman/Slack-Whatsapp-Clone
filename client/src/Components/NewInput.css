@@ -48,13 +48,7 @@
      padding: 2px;
      margin-right: 2px;
 }
-.box-icon :hover{
-    border-radius: 100%;
-    background-color: #ff488b;
-    text-align: center;
-    padding: 2px;
-    margin-right: 2px;
-}
+
 .list{
     width: 100%;
     display: inline-flex;

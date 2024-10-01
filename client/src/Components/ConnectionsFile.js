@@ -37,7 +37,6 @@ const ConnectionFile = ({user}) => {
             body:JSON.stringify({receiver:user.id})
         })
         const res=await response.json()
-        console.log(res);
     }
   return (
     <div>

@@ -29,7 +29,7 @@ const AddUser = (user) => {
             body:JSON.stringify({groupid:Number(groupid),user_id:user.user.id})
         })
         const json=await response.json();
-        console.log(json);
+        
     }
     return (
          <div className="user-wrapper" style={{width:"100%"}}>

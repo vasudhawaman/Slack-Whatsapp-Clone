@@ -19,7 +19,6 @@ export default function Password({otp1}) {
             body: JSON.stringify({email:email, password:credentials.password})
           });
           const json= await response.json();
-          console.log(json);
           if(json.message){
             alert(json.message)
           }
@@ -30,7 +29,6 @@ export default function Password({otp1}) {
   }
   const handleonchange=(e)=>{
     setcredentials({...credentials,[e.target.name]:e.target.value})
-    console.log(credentials);
 }
   return (
     <>

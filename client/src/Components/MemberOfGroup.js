@@ -28,7 +28,6 @@ const MemberOfGroup = ({ user, groupid }) => {
             })
         })
         const json = await response.json();
-        console.log(json);
     }
     return (
         <div>

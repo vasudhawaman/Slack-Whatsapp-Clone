@@ -449,8 +449,8 @@ router.get('/allgroup', verifyToken, (req, res) => {
     try{
         const q = "SELECT * FROM `group` WHERE adminid=?";
         db.query(q, [req.id], (err, result) => {
-            if (err) res.status(400).json("server error has been detected");;
-            res.json(result);
+            if (err) res.status(400).json("server error has been detected");
+            else res.status(200).json(result);
         })
     }catch(err){
         console.log(err);

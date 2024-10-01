@@ -46,8 +46,6 @@ const EditProfile = () => {
             body: form
         });
         const res = await response.json();
-        console.log(res);
-
         const url2=`${process.env.REACT_APP_BACKEND}/register/updatestatus`;
         const response2=await fetch(url2,{
             method:'PUT',
@@ -58,13 +56,11 @@ const EditProfile = () => {
             body:JSON.stringify({status:data.status})
         })
         const res2=await response2.json();
-        console.log(res2);
     };
 
     const onHandleChange = (e) => {
         const { name, value } = e.target;
         setdata({ ...data, [name]: value })
-        console.log(data)
     }
     const onLogout=async()=>{
         const url = `${process.env.REACT_APP_BACKEND}/register/logout`;
@@ -75,9 +71,7 @@ const EditProfile = () => {
                 'Content-Type': 'application/json'
             }
         });
-        console.log("hello");
         const data = await response.json();
-        console.log(data);
         window.location.href = '/register';
     }
     return (

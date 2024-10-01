@@ -20,7 +20,6 @@ const GroupComp = (group) => {
         setImage(fr.result);
       };
       fr.readAsDataURL(blob);
-      console.log(fr);
       setImage(fr.result);
     }
   },[])

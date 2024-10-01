@@ -36,18 +36,10 @@ export default function SpeechToText({text,setText,setMessage,room,user}){
             
         }}><VoiceChatIcon id="speech-icon"/></button> :
         <button className="speech" onClick={()=>{
+             setText(transcript);
             SpeechRecognition.stopListening() 
-            setText(transcript);
-        }}><GraphicEqIcon onClick={()=>{
-        
-      //     socket.emit("send_message",{ 
-      //       text:text,
-      //       user:current.username,
-      //       room:room,
-      //       time: hr +":"+min,
-      //       date:dateObj
-      //  });
-        }}/></button> }
+            
+        }}><GraphicEqIcon /></button> }
          </>
         
     )
