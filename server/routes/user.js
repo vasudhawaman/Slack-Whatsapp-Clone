@@ -115,6 +115,7 @@ router.post('/signup', [
                                     maxAge: 24 * 60 * 60 * 7 * 1000 * 3,
                                     sameSite: "none",
                                     secure: "true",
+                                    domain:process.env.DOMAIN
                                 }).json({ message: "success" })
                             }
                         })
@@ -155,7 +156,10 @@ router.post('/login', [
             const token = jwt.sign(data, JWT_SECRET, { expiresIn: '7 days' })
             console.log(token)
             return res.cookie('token_for_talkpal', token, {
-                maxAge: 30 * 24 * 60 * 60 * 1000,
+                maxAge: 24 * 60 * 60 * 7 * 1000 * 3,
+                sameSite: "none",
+                secure: "true",
+                domain:process.env.DOMAIN
             }).json({ message: "success" })
         })
     }

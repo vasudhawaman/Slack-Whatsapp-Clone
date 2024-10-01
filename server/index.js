@@ -148,6 +148,7 @@ app.get('/auth/google/callback',
             maxAge:24*60*60*7*1000*3,
                sameSite:"none",
               secure:"true",
+              domain: process.env.DOMAIN
         });
         res.redirect(`http://localhost:3000`);
     });
