@@ -47,7 +47,7 @@ const server = http.createServer(app);
 const io = new Server(server, {
     maxHttpBufferSize: 1e9, // max 100MB for files 
     cors: {
-        origin: "https://talk-pal-alpha.vercel.app/",
+        origin: "https://talk-pal-alpha.vercel.app",
         methods: ["GET", "POST"]
     },
 }); //max buffer set 
