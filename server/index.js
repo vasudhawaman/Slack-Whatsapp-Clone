@@ -38,7 +38,7 @@ app.use(passport.session());
 
 app.use(cookieParser());
 app.use(cors({
-    origin: '*',
+    origin: 'https://talk-pal-alpha.vercel.app',
     credentials: true
 }));
 
@@ -47,7 +47,7 @@ const server = http.createServer(app);
 const io = new Server(server, {
     maxHttpBufferSize: 1e9, // max 100MB for files 
     cors: {
-        origin: "*",
+        origin: "https://talk-pal-alpha.vercel.app/",
         methods: ["GET", "POST"]
     },
 }); //max buffer set 
