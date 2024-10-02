@@ -139,7 +139,7 @@ app.get('/auth/google',
     passport.authenticate('google', { scope: ['profile', 'email'] }));
 
 app.get('/auth/google/callback',
-    passport.authenticate('google', { failureRedirect: 'http://localhost:3000/register' }),
+    passport.authenticate('google', { failureRedirect: 'https://talk-pal-alpha.vercel.app/register' }),
     (req, res) => {
         console.log("hello");
         const {token}=req.user;
@@ -150,7 +150,7 @@ app.get('/auth/google/callback',
               secure:"true",
               domain: process.env.DOMAIN
         });
-        res.redirect(`http://localhost:3000`);
+        res.redirect(`https://talk-pal-alpha.vercel.app/`);
     });
 
 server.listen(port, () => {
