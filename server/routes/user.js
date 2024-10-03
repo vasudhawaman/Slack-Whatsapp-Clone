@@ -14,35 +14,48 @@ const { errorMonitor } = require('nodemailer/lib/mailer');
 const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 50 * 1024 * 1024 } });
 
 // Register
-router.post('/cheak', [
+app.post('/register', [
     body('email', "Enter the correct email").isEmail(),
-    body('password', "Enter mininmun 6 letter passowrd").isLength(6)
+    body('password', "Enter minimum 6 letter password").isLength({ min: 6 })
 ], async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
     }
-    let responseSent = 0;
+    
+    let responseSent = false;
     let q1 = "SELECT * FROM users WHERE email=?";
+
     db.query(q1, [req.body.email], (err, emailResults) => {
+        if (err) {
+            console.error("Database query error:", err);
+            return res.status(500).json({ error: 'Internal server error' });
+        }
+
         if (emailResults.length > 0) {
             if (!responseSent) {
                 responseSent = true;
                 return res.status(400).json({ error: 'An account with this email already exists' });
             }
         }
+
         if (!responseSent) {
-            let q2 = "SELECT * FROM users WHERE username=?"
+            let q2 = "SELECT * FROM users WHERE username=?";
             db.query(q2, [req.body.username], (err, name) => {
+                if (err) {
+                    console.error("Database query error:", err);
+                    return res.status(500).json({ error: 'Internal server error' });
+                }
+
                 if (name.length > 0) {
-                    return res.status(400).json({ error: "The person which has this username already exist. Choose different username" });
+                    return res.status(400).json({ error: "The person with this username already exists. Choose a different username" });
                 } else {
                     function OTP() {
                         const min = 100000;
                         const max = 999999;
-                        const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
-                        return randomNumber;
+                        return Math.floor(Math.random() * (max - min + 1)) + min;
                     }
+
                     const otp = OTP();
                     const transporter = nodemailer.createTransport({
                         service: "gmail",
@@ -50,28 +63,30 @@ router.post('/cheak', [
                             user: process.env.EMAIL_USER,
                             pass: process.env.EMAIL_PASS
                         }
-                    })
+                    });
 
-                    const mailoptions = {
+                    const mailOptions = {
                         from: process.env.EMAIL_USER,
                         to: req.body.email,
                         subject: `OTP for TalkPal`,
-                        html: `<p>The OTP for logging in the TalkPal is ${otp}.</p><br></br><p>Do not share it with anyone.</p>`
-                    }
-                    transporter.sendMail(mailoptions, (error, info) => {
+                        html: `<p>The OTP for logging in the TalkPal is ${otp}.</p><br/><p>Do not share it with anyone.</p>`
+                    };
+
+                    transporter.sendMail(mailOptions, (error, info) => {
                         if (error) {
-                            console.log("email is not sent");
+                            console.log("Email not sent:", error);
+                            return res.status(500).json({ error: 'Error sending email' });
                         } else {
-                            console.log("email is sent successfully");
+                            console.log("Email sent successfully:", info.response);
                         }
-                    })
+                    });
+
                     res.json({ 'okay': 123, 'otp': otp });
                 }
-            })
+            });
         }
-    })
-}
-)
+    });
+});
 
 // Login
 router.post('/signup', [
