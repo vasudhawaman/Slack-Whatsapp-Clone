@@ -22,6 +22,3 @@ const peerServer = ExpressPeerServer(server, {
 app.use('/peerjs', peerServer);
 
 // Fallback route to serve the frontend for any unmatched routes
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
-});
