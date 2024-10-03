@@ -18,9 +18,12 @@ export default function Calling({ user, stream }) {
   }
 
   useEffect(() => {
+   
+    
     peerRef.current = new Peer(user, {
-      host: "/",
-      port: "3001",
+      host: 'peer-talkpal.onrender.com', 
+      secure: true, 
+      path: '/peerjs',
     });
 
     const peer = peerRef.current;
