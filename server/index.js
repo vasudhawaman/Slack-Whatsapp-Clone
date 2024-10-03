@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({
 const cors = require('cors');
 const http = require('http');
 const { Server } = require('socket.io');
-const port = 8000;
+const port = process.env.PORT|| 8000;
 // create a new connectionn 
 app.use(session({
     secret: 'mysecret',
@@ -29,7 +29,8 @@ app.use(session({
         maxAge: 30 * 24 * 60 * 60 * 1000,
         httpOnly: true,
         secure: false,
-        sameSite: 'none'
+        sameSite: 'none',
+        domain:'talkpal-backend.onrender.com'
     }
 }));
 app.use(passport.initialize());
@@ -39,7 +40,9 @@ app.use(passport.session());
 app.use(cookieParser());
 app.use(cors({
     origin: 'https://talk-pal-alpha.vercel.app',
-    credentials: true
+    methods: ["GET", "POST","PATCH","PUT","DELETE"],
+    credentials:true
+    
 }));
 
 
@@ -48,7 +51,8 @@ const io = new Server(server, {
     maxHttpBufferSize: 1e9, // max 100MB for files 
     cors: {
         origin: "https://talk-pal-alpha.vercel.app",
-        methods: ["GET", "POST"]
+        methods: ["GET", "POST","PATCH","PUT","DELETE"],
+        credentials:true
     },
 }); //max buffer set 
 app.use('/register', require('./routes/user'));
@@ -148,7 +152,8 @@ app.get('/auth/google/callback',
             maxAge:24*60*60*7*1000*3,
                sameSite:"none",
               secure:"true",
-              domain: process.env.DOMAIN
+               domain:'talkpal-backend.onrender.com',
+               httpOnly:true
         });
         res.redirect(`https://talk-pal-alpha.vercel.app/`);
     });
