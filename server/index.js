@@ -10,12 +10,9 @@ const passport = require('passport');
 const cookieParser = require('cookie-parser');
 const db = require("./db");
 const app = express();
-app.use(express.json());
+
 require('./OAuth/googleOauth')
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-    extended: false
-}));
+
 const cors = require('cors');
 const http = require('http');
 const { Server } = require('socket.io');
@@ -44,6 +41,7 @@ app.use(cors({
     credentials:true
     
 }));
+app.use(express.json());
 
 
 const server = http.createServer(app);
@@ -55,6 +53,10 @@ const io = new Server(server, {
         credentials:true
     },
 }); //max buffer set 
+
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
 app.use('/register', require('./routes/user'));
 app.use('/language',require('./routes/detect'))
 let users =[]; // map socket ids to usernames
