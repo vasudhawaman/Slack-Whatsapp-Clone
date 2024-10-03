@@ -54,11 +54,7 @@ const io = new Server(server, {
     },
 }); //max buffer set 
 
-app.use(bodyParser.urlencoded({
-    extended: false
-}));
-app.use('/register', require('./routes/user'));
-app.use('/language',require('./routes/detect'))
+
 let users =[]; // map socket ids to usernames
 io.on("connection", (socket) => {
     socket.on("join_chat", (data) => {
@@ -140,7 +136,11 @@ io.on("connection", (socket) => {
 
 
 })
-
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
+app.use('/register', require('./routes/user'));
+app.use('/language',require('./routes/detect'))
 app.get('/auth/google',
     passport.authenticate('google', { scope: ['profile', 'email'] }));
 
