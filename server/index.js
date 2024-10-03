@@ -39,6 +39,7 @@ app.use(passport.session());
 app.use(cookieParser());
 app.use(cors({
     origin: 'https://talk-pal-alpha.vercel.app',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], 
     credentials: true
 }));
 
