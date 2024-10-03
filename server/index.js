@@ -18,6 +18,13 @@ const http = require('http');
 const { Server } = require('socket.io');
 const port = process.env.PORT|| 8000;
 // create a new connectionn 
+app.use(cors({
+    origin: 'https://talk-pal-alpha.vercel.app',
+    methods: ["GET", "POST","PATCH","PUT","DELETE"],
+    credentials:true
+    
+}));
+app.use(cookieParser());
 app.use(session({
     secret: 'mysecret',
     resave: false,
@@ -33,16 +40,8 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-
-app.use(cookieParser());
-app.use(cors({
-    origin: 'https://talk-pal-alpha.vercel.app',
-    methods: ["GET", "POST","PATCH","PUT","DELETE"],
-    credentials:true
-    
-}));
 app.use(express.json());
-
+app.use(express.urlencoded({ extended: false }));
 
 const server = http.createServer(app);
 const io = new Server(server, {
@@ -54,8 +53,6 @@ const io = new Server(server, {
     },
 }); //max buffer set 
 
-
-let users =[]; // map socket ids to usernames
 io.on("connection", (socket) => {
     socket.on("join_chat", (data) => {
         console.log(`user ${data.user} has joined ${data.room}`)
@@ -136,9 +133,8 @@ io.on("connection", (socket) => {
 
 
 })
-app.use(bodyParser.urlencoded({
-    extended: false
-}));
+
+
 app.use('/register', require('./routes/user'));
 app.use('/language',require('./routes/detect'))
 app.get('/auth/google',
@@ -163,10 +159,5 @@ app.get('/auth/google/callback',
 server.listen(port, () => {
     console.log(`Server started on ${port}`);
 });
-app.post('/upload', upload.single('avatar'), function (req, res, next) {
-    // req.file is the `avatar` file
-    // req.body will hold the text fields, if there were any
-    console.log(req.file);
-    console.log("uploaded");
-})
+
 
