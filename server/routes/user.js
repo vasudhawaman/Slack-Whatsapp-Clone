@@ -350,7 +350,7 @@ router.post('/connect', verifyToken, async (req, res) => {
 })
 
 router.post('/createroom', verifyToken, async (req, res) => {
-    const q = 'SELECT roomid FROM whatsapp.room ORDER BY roomid DESC';
+    const q = 'SELECT roomid FROM defaultdb.room ORDER BY roomid DESC';
     console.log(q);
     db.query(q, (err, result) => {
         if (err) { res.status(400).json("server error has been detected"); }
@@ -426,7 +426,7 @@ router.post('/status', verifyToken, upload.single('file'), (req, res) => {
 
 })
 router.post('/creategroup', verifyToken, upload.single('file'), (req, res) => {
-    const q = 'SELECT roomid FROM whatsapp.room ORDER BY roomid DESC';
+    const q = 'SELECT roomid FROM defaultdb.room ORDER BY roomid DESC';
 
     if (!req.file) {
         console.error("No image uploaded");
