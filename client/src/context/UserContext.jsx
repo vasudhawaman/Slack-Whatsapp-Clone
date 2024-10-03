@@ -1,10 +1,9 @@
 import React, { useEffect, useState, createContext } from 'react';
-import { useNavigate } from 'react-router-dom';
 export const UserContext = createContext();
 
 export const UserContextProvider = (props) => {
     const [current, setCurrent] = useState("");
-     const navigate = useNavigate();
+    
         useEffect(() => {
             const cookies = document.cookie; 
             console.log(cookies);
