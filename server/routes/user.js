@@ -14,7 +14,7 @@ const { errorMonitor } = require('nodemailer/lib/mailer');
 const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 50 * 1024 * 1024 } });
 
 // Register
-app.post('/register', [
+router.post('/register', [
     body('email', "Enter the correct email").isEmail(),
     body('password', "Enter minimum 6 letter password").isLength({ min: 6 })
 ], async (req, res) => {
