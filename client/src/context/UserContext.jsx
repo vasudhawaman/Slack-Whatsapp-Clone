@@ -19,12 +19,13 @@ export const UserContextProvider = (props) => {
                     setCurrent(json);
                 }else{
                     setCurrent("");
+                    window.location.href='/signin';
                 }
                 
             }
             getUserinfo();
         }else{
-            
+             window.location.href='/signin';
         }
         }, [])
     return (
