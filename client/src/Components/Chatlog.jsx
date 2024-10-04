@@ -30,7 +30,7 @@ export default function Chatlog({ data, setRoom, setUser,setPFP ,group}) {
         };
         fr.readAsDataURL(blob);
     }
-    console.log(room);
+    
   }
 
 
