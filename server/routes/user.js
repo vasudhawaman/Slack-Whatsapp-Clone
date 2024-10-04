@@ -350,34 +350,29 @@ router.post('/connect', verifyToken, async (req, res) => {
 })
 
 router.post('/createroom', verifyToken, async (req, res) => {
-    const q = 'SELECT roomid FROM defaultdb.room ORDER BY roomid DESC';
+    const q = 'SELECT roomid FROM whatsapp.room ORDER BY roomid DESC';
     console.log(q);
-    
-    try {
-        const result = await db.query(q); // Use Promise-based query
-        const roomid = (result[0]?.roomid || 0) + 1; // new room id
-
-        const q1 = "INSERT INTO room (userids, roomid) VALUES (?, ?)";
-        await db.query(q1, [req.id, roomid]); // Insert first user
-        
-        console.log("Room created successfully");
-
-        const q2 = "INSERT INTO room (userids, roomid) VALUES (?, ?)";
-        await db.query(q2, [req.body.receiver, roomid]); // Insert other user
-        
-        console.log("Room created successfully with other user");
-
-        const q4 = "UPDATE connections SET status=1 WHERE receiver=? AND sender=?";
-        await db.query(q4, [req.id, req.body.receiver]); // Update connection status
-        
-        console.log("Connection status updated");
-
-        res.json({ success: "Room created successfully" }); // Send response
-    } catch (err) {
-        console.error(err); // Log the error
-        res.status(400).json("Server error has been detected"); // Send error response
-    }
-});
+    db.query(q, (err, result) => {
+        if (err) { res.status(400).json("server error has been detected"); }
+        const roomid = result[0].roomid + 1; //new room id => same time insert this into connection roomid 
+        const q1 = "INSERT INTO room (userids,roomid) VALUES (?,?)"
+        db.query(q1, [req.id, roomid], (err, result) => {
+            if (err) res.status(400).json("server error has been detected");
+            console.log("Room created successfully")
+            const q2 = "INSERT INTO room (userids,roomid) VALUES (?,?)"
+            db.query(q2, [req.body.receiver, roomid], (err, result) => {
+                if (err) res.status(400).json("server error has been detected");
+                console.log("Room created successfully with other user")
+                const q4 = "UPDATE connections SET status=1 WHERE receiver=? and sender=? "
+                db.query(q4, [req.id, req.body.receiver], (err, result) => {
+                    if (err) res.status(400).json("server error has been detected");
+                    console.log("Connection status updated")
+                    res.json({ success: "Room created successfully" })
+                })
+            })
+        })
+    })
+})
 
 
 router.post('/contacts', verifyToken, async (req, res) => {
