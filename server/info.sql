@@ -7,7 +7,7 @@ CREATE TABLE `connections` (
 CREATE TABLE `files` (
     id INT AUTO_INCREMENT PRIMARY KEY,
     room_id INT NOT NULL,
-    filename TEXT NOT NULL,
+    filename TEXT ,
     time TEXT,
     mimetype TEXT,
     text LONGTEXT,
