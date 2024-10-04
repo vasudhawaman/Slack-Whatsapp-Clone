@@ -61,7 +61,7 @@ const Welcome = ({ setOtpState }) => {
                 {/* 
                  */}
                 <p className="wel">Welcome </p>
-                <img src='/Talkpal-logo.png' className='heading' height={200} width={200}></img>
+                <img src='/images/Talkpal-logo.png' className='heading' height={200} width={200}></img>
                 {/* <h1 className="heading">TalkPal</h1> */}
                 <div className="container1">
                     <p className="user">Enter your email:</p>
