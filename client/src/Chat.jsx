@@ -22,6 +22,7 @@ export default function Chat({message,setMessage,user,room,pfp,group}){
           }
          
       useEffect(()=>{
+        console.log("roojoined",room);
         socket.on("date_set",(data)=>{
             setDates(data);
         })
