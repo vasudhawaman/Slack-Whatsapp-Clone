@@ -23,7 +23,7 @@ export default function Calling({ user, stream }) {
     peerRef.current = new Peer(user, {
       host: 'peer-talkpal.onrender.com', 
       secure: true, 
-      path: '/peerjs',
+      path: '/',
     });
 
     const peer = peerRef.current;
