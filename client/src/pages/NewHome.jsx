@@ -84,6 +84,7 @@ export default function NewHome() {
         if (response.status === 200) {
           const json = await response.json();
           setdata(json);
+          console.log("contacts",json);
         } else {
           Navigate("/signin");
         }
@@ -180,7 +181,7 @@ export default function NewHome() {
   }
 
   useEffect(() => {
-
+     console.log(room);
     if (room) {
       socket.emit("join_chat", { room: room, user: current.username });
     }
