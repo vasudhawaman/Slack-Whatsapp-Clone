@@ -32,7 +32,7 @@ export default function Welcome2() {
     <StarBackground/>
     <div className="containerx">
     <p className="wel">Welcome </p>
-    <img src='./Talkpal-logo.png' className='heading' height={200} width={200}></img>
+    <img src='https://talk-pal-alpha.vercel.app/TalkPal-logo.png' className='heading' height={200} width={200}></img>
     <div className="container1x">
     <p className="user1">Username</p>
     <input type="text" className="email1" placeholder="Enter your username " name="username" onChange={handleonchange} id="username"></input>

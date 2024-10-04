@@ -35,7 +35,7 @@ export default function Password({otp1}) {
     <StarBackground/>
     <div className="containerx">
     <p className="wel1">Welcome </p>
-    <img src='/Talkpal-logo.png' className='heading' height={200} width={200}></img>
+    <img src='https://talk-pal-alpha.vercel.app/TalkPal-logo.png' className='heading' height={200} width={200}></img>
     <div className="container1x">
     <p className="user1">Password:</p>
     <input type="password" className="email1" placeholder="Enter your passsword " name="password" onChange={handleonchange} id="Password"></input>
