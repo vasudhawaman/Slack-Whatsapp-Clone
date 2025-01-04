@@ -81,4 +81,4 @@ JWT_SECRET='your_JWT_secret'
 ```
 
 ### 8. App is live at: [http://localhost:3000](http://localhost:3000)
-### 9. [![Demo Video](https://www.canva.com/design/DAGbNm-c2VI/9yHgXGjCfEU7-5Bowox2cQ/watch?utm_content=DAGbNm-c2VI&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=hbed4d0936c)]
+### 9. Or watch directly: [Watch here](https://www.canva.com/design/DAGbNm-c2VI/9yHgXGjCfEU7-5Bowox2cQ/watch?utm_content=DAGbNm-c2VI&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=hbed4d0936c)
